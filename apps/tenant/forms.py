@@ -1,27 +1,27 @@
 # -*- encoding:utf-8 -*-
 from django import forms
-from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
+# from django.contrib.auth.models import User
+# from django.contrib.auth.forms import UserCreationForm
 
 from .models import Tenant
 
 
-class UserTenantForm(UserCreationForm):
-
-    class Meta:
-        model = User
-        fields = [
-            'username',
-            'first_name',
-            'last_name',
-            'email',
-        ]
-        labels = {
-            'username': 'Nombre de usuario',
-            'first_name': 'Nombre',
-            'last_name': 'Apellidos',
-            'email': 'Correo',
-        }
+# class UserTenantForm(UserCreationForm):
+#
+#     class Meta:
+#         model = User
+#         fields = [
+#             'username',
+#             'first_name',
+#             'last_name',
+#             'email',
+#         ]
+#         labels = {
+#             'username': 'Nombre de usuario',
+#             'first_name': 'Nombre',
+#             'last_name': 'Apellidos',
+#             'email': 'Correo',
+#         }
 
 
 class TenantForm(forms.ModelForm):
@@ -33,7 +33,7 @@ class TenantForm(forms.ModelForm):
             'nit',
             # 'logo',
             'razon_social',
-            'nombre_comercial',
+            # 'nombre_comercial',
             'telefono',
             'correo',
             'ciudad',
@@ -43,7 +43,7 @@ class TenantForm(forms.ModelForm):
             'nit': 'Nit',
             # 'logo': 'Logo',
             'razon_social': 'Razón social',
-            'nombre_comercial': 'Nombre Comercial',
+            # 'nombre_comercial': 'Nombre Comercial',
             'telefono': 'Teléfono',
             'correo': 'Correo electrónico',
             'ciudad': 'Ciudad',
@@ -53,7 +53,7 @@ class TenantForm(forms.ModelForm):
             'nit': forms.NumberInput(attrs={'class': 'form-control'}),
             # 'logo': forms.FileInput(attrs={'class': 'form-control'}),
             'razon_social': forms.TextInput(attrs={'class': 'form-control'}),
-            'nombre_comercial': forms.TextInput(attrs={'class': 'form-control'}),
+            # 'nombre_comercial': forms.TextInput(attrs={'class': 'form-control'}),
             'telefono': forms.NumberInput(attrs={'class': 'form-control'}),
             'correo': forms.EmailInput(attrs={'class': 'form-control'}),
             'ciudad': forms.TextInput(attrs={'class': 'form-control'}),
