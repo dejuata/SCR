@@ -34,7 +34,12 @@ SCR
               <li><a href="#">Inicio</a></li>
               <li><a href="#">Beneficios</a></li>
               <li><a href="#">Clientes</a></li>
-              <li><a href="#">Planes</a></li>
+              <li><a href="#">Pagar</a></li>
+              {% if user.is_authenticated %}
+                <li><a href="{% url 'logout' %}" class="btn btn-danger">Salir</a></li>
+              {% else %}
+                <li><a href="{% url 'login' %}" class="btn btn-warning">Iniciar sesión</a></li>
+              {% endif %}
             </ul>
           </div>
         </div>
@@ -54,7 +59,7 @@ SCR
                 <div class="col-md-6 header-description ">
                   <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book</p>
                   <div class="header-call-to-action">
-                    <a href="/sign_up" class="btn btn-success btn-lg header-call-to-action-btn">Comienza Ya!</a>
+                    <a href="/usuario/registrar" class="btn btn-success btn-lg header-call-to-action-btn">Comienza Ya!</a>
                   </div>
                 </div>
               </div>

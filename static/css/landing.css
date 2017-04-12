@@ -63,3 +63,21 @@
 .navbar {
     margin-bottom: 0 !important;
 }
+
+/*esto no deberia ir aqui*/
+.login{
+    margin: 15vh auto;
+    position: relative;
+    z-index: 1;
+    background: #FFFFFF;
+    max-width: 400px;
+    padding: 45px;
+    text-align: center;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+.login__title{
+    padding-bottom: 10px;
+}
+.login__btn{
+    width: 100%;
+}
