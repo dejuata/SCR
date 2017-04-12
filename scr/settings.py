@@ -24,12 +24,14 @@ SHARED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.admin',
+    'apps.usuarios'
 )
 
 TENANT_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.auth',
     'django.contrib.messages',
+    'apps.usuarios'
 )
 
 INSTALLED_APPS = list(set(SHARED_APPS + TENANT_APPS))

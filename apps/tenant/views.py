@@ -2,7 +2,7 @@ from django.views.generic import CreateView
 # from django.contrib.auth.models import User
 
 from .models import Tenant, Domain
-from .forms import TenantForm#, UserTenantForm
+from .forms import TenantForm  # UserTenantForm
 
 
 # class RegistroUserTenant(CreateView):
