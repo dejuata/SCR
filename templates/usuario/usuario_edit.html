@@ -1,0 +1,79 @@
+{% extends 'base/base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+Editar Perfil
+{% endblock %}
+
+{% block extrastatic %}
+<link rel="stylesheet" href="{% static 'css/perfil.css' %}"/>
+<link rel="stylesheet" href="{% static 'css/login.css' %}"/>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="login sign-up">
+    <div class="panel panel-info">
+      <div class="panel-heading" style="text-align:center;font-size:22px">Tus Datos:</div>
+      <div class="panel-body">
+        <div class="row">
+          <div class="">
+
+          </div>
+          <div class="col-md-5 perfil-left">
+            <div class="circulo">
+            </div>
+          </div>
+          <div class="col-md-7 perfil-right">
+            <form action="" method="post" style="width:100%">
+            {% csrf_token %}
+            <div class="perfil-nombre">
+              <div class="form-group">
+                {{ form.first_name.label_tag }}
+                {{ form.first_name.errors }}                
+                {{ form.first_name }}
+              </div>
+              <div class="form-group">
+                {{ form.last_name.label_tag }}
+                {{ form.last_name.errors }}
+                {{ form.last_name }}
+              </div>
+            </div>
+            <div class="perfil-nombre">
+              <div class="form-group">
+                {{ form.username.label_tag }}
+                {{ form.username.errors }}
+                {{ form.username }}
+              </div>
+              <div class="form-group">
+                {{ form.email.label_tag }}
+                {{ form.email.errors }}
+                {{ form.email }}
+              </div>
+            </div>
+            <div class="perfil-nombre">
+              <div class="form-group">
+                {{ form.password1.label_tag }}
+                {{ form.password1.errors }}
+                <input class="form-control" id="password1" name="password1" type="password" value="" >
+              </div>
+              <div class="form-group margin-left">
+                {{ form.password2.label_tag }}
+                {{ form.password2.errors }}
+                <input class="form-control" id="password2" name="password2" type="password" value="" >
+              </div>
+            </div>
+            <div class="perfil-btn">
+              <input class="btn btn-success perfil-btn-editar" type="submit" value="Actualizar">
+            </div>
+          </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="eliminar-btn">
+      <a href="{% url 'usuario:usuario_delete' user.id %}" class="btn btn-danger">Eliminar cuenta</a>
+    </div>
+  </div>
+  </div>
+{% endblock %}

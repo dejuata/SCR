@@ -8,18 +8,92 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="{% static 'css/bootstrap-theme.css' %}"/>
-  <title>{% block title %} Document {% endblock %}</title>
+  <title>{% block title %} Document {% endblock %}| SCR</title>
 </head>
 <body>
   {% block navbar %}
+  <!-- navbar -->
+  <nav class="navbar navbar-default " style="margin-bottom: 0;">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">SCR</a>
+      </div>
+
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav navbar-right nav-btn">
+          <li><a href="/">Inicio</a></li>
+          <li><a href="#">Beneficios</a></li>
+          <li><a href="#">Clientes</a></li>
+          <li><a href="#">Planes</a></li>
+          {% if user.is_authenticated %}
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" style="text-transform:uppercase" data-toggle="dropdown" role="button" aria-expanded="false">
+                {{ user.username }} <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="{% url 'usuario:usuario_profile' %}">Ver Perfil</a></li>
+                <li><a href="{% url 'registrar-empresa' %}">Pagar</a></li>
+                <li><a href="{% url 'logout' %}">Salir</a></li>
+              </ul>
+            </li>
+          {% else %}
+            <li>
+              {% block navbar-btn %}
+              <a href="{% url 'tenant_login' %}" style="padding: 0 10px !important;">
+                <button  class="btn btn-warning">Iniciar sesión</button>
+              </a>
+              {% endblock navbar-btn %}
+            </li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- end navbar -->
   {% endblock %}
 
   {% block content %}
   {% endblock%}
 
+
+
+  <!-- modal -->
+  <div class="modal fade" id="modalEmergente">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        {% block modal-title %}
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title"></h4>
+        </div>
+        {% endblock %}
+        {% block modal-body %}
+        <div class="modal-body">
+        </div>
+        {% endblock %}
+        {% block modal-footer %}
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+        {% endblock %}
+      </div>
+    </div>
+  </div>
+  <!-- end modal -->
+
   {% block extrajs %}
   <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
   <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  {% endblock %}
+
+  {% block filejs %}
   {% endblock %}
 </body>
 </html>

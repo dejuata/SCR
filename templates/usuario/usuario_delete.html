@@ -1,0 +1,29 @@
+{% load staticfiles %}
+
+{% block extrastatic %}
+<link rel="stylesheet" href="{% static 'css/perfil.css' %}"/>
+<link rel="stylesheet" href="{% static 'css/login.css' %}"/>
+{% endblock %}
+
+{% block modal-title %}
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+  <h4 class="modal-title">Eliminar Cuenta</h4>
+</div>
+{% endblock %}
+
+{% block modal-body %}
+<div class="modal-body">
+  <form method="post" action="delete/{{ user.id }}">
+      {% csrf_token %}
+      <h3>Está seguro que desea eliminar su cuenta?</h3>
+</div>
+{% endblock %}
+
+{% block modal-footer %}
+<div class="modal-footer">
+  <button class="btn btn-danger" type="submit">Si, eliminar</button>
+  <a class="btn btn-default" href="{% url 'usuario:usuario_profile' %}">Cancelar</a>
+  </form>
+</div>
+{% endblock %}

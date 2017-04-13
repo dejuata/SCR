@@ -1,0 +1,65 @@
+{% extends 'base/base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+Registrar
+{% endblock %}
+
+{% block extrastatic %}
+<link rel="stylesheet" href="{% static 'css/navbar.css' %}"/>
+<link rel="stylesheet" href="{% static 'css/login.css' %}"/>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+	<div class="login sign-up">
+	<div class="panel panel-success">
+	  <div class="panel-heading" style="text-align:center;font-size:22px">Regístrate</div>
+	  <div class="panel-body">
+			<div class="col-sm-7 login-left">
+				<h4>Con un Usuario y contraseña:</h4>
+				<br>
+			<form method="post">
+				{% csrf_token %}
+				{{ form.first_name.errors }}
+				{{ form.last_name.errors }}
+				<div class="form-group form-input">					
+					<input class="form-control" type="text" name="first_name" placeholder="Nombre">
+					<input class="form-control margin-left" type="text" name="last_name" placeholder="Apellido">
+				</div>
+				{{ form.username.errors }}
+				<div class="form-group form-input">
+					<input class="form-control" type="text" name="username" placeholder="Nombre de usuario">
+			  </div>
+				{{ form.email.errors }}
+				<div class="form-group form-input">
+					<input class="form-control" type="email" name="email" placeholder="Correo electrónico">
+				</div>
+				{{ form.password.errors }}
+				<div class="form-group form-input">
+					<input class="form-control" type="password" name="password1" placeholder="Contraseña">
+					<input class="form-control margin-left" type="password" name="password2" placeholder="Confirmar contraseña">
+				</div>
+				<div class="form-group form-input">
+					<button class="btn btn-primary login-btn" type="submit">Guardar</button>
+				</div>
+			</form>
+			</div>
+			<div class="col-sm-5 login-right">
+				<h4>Con tus Redes sociales:</h4>
+				<br>
+				<div class="form-group">
+					<a href="#" class="btn btn-info btn-signup login-btn btn-face">Facebook</a>
+				</div>
+				<div class="form-group">
+					<a href="#" class="btn btn-info btn-signup login-btn btn-twitter">Twitter</a>
+				</div>
+				<div class="form-group">
+					<a href="#" class="btn btn-danger btn-signup login-btn btn-google">Google +</a>
+				</div>
+			</div>
+		</div>
+	  </div>
+	</div>
+	</div>
+{% endblock %}

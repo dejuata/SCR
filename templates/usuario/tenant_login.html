@@ -1,0 +1,63 @@
+{% extends 'base/base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+Login
+{% endblock %}
+
+{% block extrastatic %}
+<link rel="stylesheet" href="{% static 'css/navbar.css' %}"/>
+<link rel="stylesheet" href="{% static 'css/login.css' %}"/>
+{% endblock %}
+
+{% block navbar-btn %}
+<a href="{% url 'usuario:usuario_new' %}" style="padding: 0 10px;">
+	<button  class="btn btn-success">Registrate!</button>
+</a>
+{% endblock navbar-btn %}
+
+{% block content %}
+<div class="container">
+	<div class="login text-center">
+	<div class="panel panel-warning">
+	  <div class="panel-heading" style="text-align:center;font-size:22px">Iniciar Sesión</div>
+	  <div class="panel-body">
+			<div class="col-sm-6 login-left">
+				<h4>Con tu Usuario:</h4>
+				<br>
+			<form method="post">
+				{% csrf_token %}
+				{{ form.username.errors }}
+				<div class="form-group">
+					<input class="form-control" type="text" name="username" placeholder="Nombre de usuario">
+				</div>
+				<div class="form-group">
+					{{ form.password.errors }}
+					<input class="form-control" type="password" name="password" placeholder="Contraseña">
+				</div>
+				<div class="form-group">
+					<input class="btn btn-primary login-btn" type="submit" value="Ingresar">
+			  </div>
+			  <a href="">Olvidé mi contraseña</a>
+			</form>
+			</div>
+			<div class="col-sm-6 login-right">
+				<h4>Con tus Redes sociales:</h4>
+				<br>
+				<div class="form-group">
+					<a href="#" class="btn btn-info btn-signup login-btn btn-face">Facebook</a>
+				</div>
+				<div class="form-group">
+					<a href="#" class="btn btn-info btn-signup login-btn btn-twitter">Twitter</a>
+				</div>
+				<div class="form-group">
+					<a href="#" class="btn btn-danger btn-signup login-btn btn-google">Google +</a>
+				</div>
+			</div>
+		</div>
+	  </div>
+		<div>¿Aún no tienes cuenta? <a href="{% url 'usuario:usuario_new' %}">Regístrate aquí</a></div>
+	</div>
+
+	</div>
+{% endblock %}

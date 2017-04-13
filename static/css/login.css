@@ -1,0 +1,62 @@
+.login {
+    background: #fff;
+    width: 50em;
+    margin: 4em auto;    
+}
+.login-btn{
+  padding: 18px 15px !important;
+  width: 100% !important;
+}
+.login-left {
+    width: 50%;
+    float: left;
+    padding: 0 25px !important;
+    text-align: center;
+    box-sizing: border-box;
+}
+.login-right {
+    width: 50%;
+    float: right;
+    padding: 0 25px !important;
+    text-align: center;
+    box-sizing: border-box;
+}
+.btn-face{
+  background-color: #3a589a !important;
+  border: 1px solid #3a589a !important;
+}
+.btn-face:hover{
+  background-color: #26427F !important;
+  border: 1px solid #26427F !important;
+}
+.btn-twitter{
+  background-color: rgba(64, 153, 255, 0.8) !important;
+  border: 1px solid rgba(64, 153, 255, 0.8) !important;
+}
+.btn-twitter:hover{
+  background-color: rgba(64, 153, 255, 1.0) !important;
+  border: 1px solid rgba(64, 153, 255, 1.0) !important;
+}
+.btn-google{
+  background-color: #3a589a
+  border: 1px solid #3a589a
+}
+.btn-signup{
+  font-size: 18px;
+  text-align: center;
+  font-style: normal;
+  width: 100%;
+  box-shadow: 0 -1px 0 rgba(255,255,255,0.1) inset;
+  margin-bottom: 0;
+}
+
+/* Sign up */
+.sign-up{
+  width: 60em !important;
+}
+.form-input{
+  display: flex !important;
+}
+.margin-left{
+  margin-left: 20px;
+}

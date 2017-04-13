@@ -24,6 +24,8 @@ SHARED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'jet.dashboard',
+    'jet',
     'django.contrib.admin',
     'apps.usuarios'
 )

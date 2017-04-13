@@ -1,3 +1,4 @@
+from django.shortcuts import render
 from django.views.generic import CreateView
 # from django.contrib.auth.models import User
 
@@ -27,4 +28,11 @@ class TenantCreateView(CreateView):
                                 tenant=tenant_registrado
                                 )
         dominio_tenant.save()
+        print(tenant_registrado.schema_name)
         return super(TenantCreateView, self).form_valid(form)
+
+    def post(self, request, *args, **kwargs):
+        print("EMPIEZO AQUI")
+        print(self)
+        print("TERMINA AQUI")
+        return render(request, 'index.html')

@@ -1,0 +1,43 @@
+{% extends 'base/base.html' %}
+{% load staticfiles %}
+
+{% block extrastatic %}
+<link rel="stylesheet" href="{% static 'css/landing.css' %}"/>
+<link rel="stylesheet" href="{% static 'css/navbar.css' %}"/>
+{% endblock %}
+
+{% block title %}
+Home
+{% endblock %}
+
+
+{% block content %}
+  <header>
+    <div class="shadow">
+      <!-- section -->
+      <section class="header">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <h1 class="header-title">SCR</h1>
+              <h2 class="header-subtitle">Sistema de control de rutas</h2>
+              <div class="header-section">
+                <img class="col-md-6" src="{% static 'img/landing/macbook.png' %}" alt="">
+
+                <div class="col-md-6 header-description ">
+                  <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book</p>
+                  <div class="header-call-to-action">
+                    <a href="{% url 'usuario:usuario_new' %}" class="btn btn-success btn-lg header-call-to-action-btn">
+                      Regístrate!
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- end section -->
+    </div>
+  </header>
+{% endblock%}

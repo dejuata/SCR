@@ -6,6 +6,7 @@
   <form method="post">
       {% csrf_token %}
       {{ form.as_p }}
+      {{ form.errors }}
       <button type="submit" class="btn btn-info">Guardar</button>
   </form>
 </div>
