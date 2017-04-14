@@ -54,10 +54,7 @@ Perfil
       </div>
     </div>
     <div class="eliminar-btn">
-      <a href="" class="btn btn-danger">Eliminar cuenta</a>
-    </div>
-    <div class="eliminar-btn">
-      <a href="" class="btn btn-danger" data-toggle="modal" data-target="#modalEmergente">Modal</a>
+      <a href="" class="btn btn-danger" data-toggle="modal" data-target="#modalEmergente">Eliminar cuenta</a>
     </div>
   </div>
 </div>
@@ -72,27 +69,27 @@ Perfil
 
 {% block modal-body %}
 <div class="modal-body">
-      <h3>Está seguro que desea eliminar su cuenta?</h3>
+  <h3>Está seguro que desea eliminar su cuenta?</h3>
 </div>
 {% endblock %}
 
 {% block modal-footer %}
 <div class="modal-footer">
-  <button onclick="eliminarUsuario('{{ user.id }}')" class="btn btn-danger">Si, eliminar</button>
+  <button onclick="eliminarUsuario()" class="btn btn-danger">Si, eliminar</button>
   <a class="btn btn-default" href="{% url 'usuario:usuario_profile' %}">Cancelar</a>
 </div>
 {% endblock %}
 
 {% block filejs %}
 <script>
-function eliminarUsuario(pk) {
+function eliminarUsuario() {
     $('#modalEmergente').modal('hide')
     var request = $.ajax({
         type: "POST",
         url: "{% url 'usuario:usuario_delete' %}",
         data: {
             "csrfmiddlewaretoken": "{{ csrf_token }}",
-            "identificador_id": pk
+            "identificador_id": {{ user.id }}
         },
     });
     request.done(function(response) {

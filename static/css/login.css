@@ -60,3 +60,24 @@
 .margin-left{
   margin-left: 20px;
 }
+
+/* form empresa */
+.cuadrado {
+   width: 200px;
+   height: 200px;
+   background: #f2f2f2;
+   margin-top: 20px;
+}
+.form-empresa .login-left{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%
+}
+.form-input-empresa{
+  justify-content: space-between;
+}
+.form-input-empresa .form-group{
+  text-align: left;
+  width: 47%;
+}
