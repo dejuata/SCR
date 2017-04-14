@@ -6,8 +6,6 @@ from django import forms
 
 class RegistroForm(UserCreationForm):
 
-
-
     class Meta:
         model = User
 

@@ -21,40 +21,49 @@ Registrar Empresa
 
           <div class="logo cuadrado">
 
+
           </div>
       </div>
 			<div class="col-sm-8 login-right">
 				<br>
 				<div class="form-input form-input-empresa">
           <div class="form-group">
+
             {{ form.nit.label_tag }}
             {{ form.nit }}
+            {{ form.nit.errors }}
           </div>
           <div class="form-group">
-            <label for="">Nombre Comercial</label>
-            <input type="text" class="form-control" data-container="body" data-toggle="popover" data-placement="top" data-content="Tenga en cuenta que con el Nombre comercial, se genera la URL a la cual debera acceder. Ejemplo: https://nombreComercial.scr.com" data-original-title="" title="" aria-describedby="popover851554">
+            {{ form.nombre_comercial.label_tag }}
+            {{ form.nombre_comercial }}
+            {{ form.nombre_comercial.errors }}
           </div>
 				</div>
         <div class="form-group text-left" >
           {{ form.razon_social.label_tag }}
+          {{ form.razon_social.errors }}
           {{ form.razon_social }}
         </div>
         <div class="form-input form-input-empresa">
           <div class="form-group">
             {{ form.telefono.label_tag }}
+            {{ form.telefono.errors }}
             {{ form.telefono }}
           </div>
           <div class="form-group">
             {{ form.correo.label_tag }}
+            {{ form.correo.errors }}
             {{ form.correo }}
           </div>
 				</div><div class="form-input form-input-empresa">
           <div class="form-group">
             {{ form.ciudad.label_tag }}
+            {{ form.ciudad.errors }}
             {{ form.ciudad }}
           </div>
           <div class="form-group">
             {{ form.direccion.label_tag }}
+            {{ form.direccion.errors }}
             {{ form.direccion }}
           </div>
 				</div>
@@ -62,16 +71,12 @@ Registrar Empresa
 				<div class="form-group form-input">
 					<button class="btn btn-primary login-btn" type="submit">Guardar</button>
 				</div>
+
+        <input type="hidden" name="user" value="{{ user.id }}">
 			</form>
 			</div>
 		</div>
 	  </div>
   </div>
-  <form method="post">
-      {% csrf_token %}
-      {{ form.as_p }}
-      {{ form.errors }}
-      <button type="submit" class="btn btn-info">Guardar</button>
-  </form>
 </div>
 {% endblock %}

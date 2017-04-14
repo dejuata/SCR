@@ -1,16 +1,8 @@
-from django.shortcuts import render
 from django.views.generic import CreateView
-# from django.contrib.auth.models import User
-
 from .models import Tenant, Domain
-from .forms import TenantForm  # UserTenantForm
-
-
-# class RegistroUserTenant(CreateView):
-#     model = User
-#     form_class = UserTenantForm
-#     template_name = "tenant/registrar.html"
-#     success_url = '/'
+from .forms import TenantForm
+from django.core.urlresolvers import reverse_lazy, reverse
+from django.shortcuts import redirect
 
 
 class TenantCreateView(CreateView):
@@ -21,18 +13,17 @@ class TenantCreateView(CreateView):
 
     def form_valid(self, form):
         tenant_registrado = form.instance
-        tenant_registrado.schema_name = tenant_registrado.razon_social
+        tenant_registrado.schema_name = tenant_registrado.nombre_comercial
         self.object = form.save()
-        dominio_tenant = Domain(domain=self.object.razon_social + '.localhost',
+        dominio_tenant = Domain(domain=self.object.nombre_comercial + '.localhost',
                                 is_primary=True,
                                 tenant=tenant_registrado
                                 )
         dominio_tenant.save()
-        print(tenant_registrado.schema_name)
-        return super(TenantCreateView, self).form_valid(form)
+        url = 'http://' + tenant_registrado.nombre_comercial + '.localhost:8000/admin'
+        super(TenantCreateView, self).form_valid(form)
+        return redirect(url)
 
-    def post(self, request, *args, **kwargs):
-        print("EMPIEZO AQUI")
-        print(self)
-        print("TERMINA AQUI")
-        return render(request, 'index.html')
+    # def post(self, request, *args, **kwargs):
+    #     url = 'http://' + request.POST.get('nombre_comercial') + '.localhost:8000'
+    #     return redirect(url)

@@ -92,7 +92,7 @@ WSGI_APPLICATION = 'scr.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django_tenants.postgresql_backend',
-        'NAME': 'scr_saas',
+        'NAME': 'scr_dev',
         'USER': 'dejuata',
         'PASSWORD': 'America27',
         'HOST': 'localhost',

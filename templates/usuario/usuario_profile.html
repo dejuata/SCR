@@ -93,10 +93,14 @@ function eliminarUsuario() {
         },
     });
     request.done(function(response) {
-        $('#modalEmergente').modal(response.class)
-        location.href ="http://localhost:8000";
-        // alert("Cuenta Eliminada");
-        // Cierra el modal, oculta el identificador eliminado, etc.
+        if (response.delete){
+          $('#modalEmergente').modal(response.class)
+          location.href ="{% url 'index' %}";
+        }
+        else{
+          $('#modalEmergente').modal(response.class)
+          console.log(response.message)
+        }
     });
 }
 </script>
