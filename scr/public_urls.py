@@ -9,7 +9,8 @@ from apps.tenant.views import TenantCreateView
 
 urlpatterns = [
     url(r'^$', TemplateView.as_view(template_name="landing/index.html"), name='index'),
-    url(r'^demo/', TemplateView.as_view(template_name="dashboard/index.html")),
+    url(r'^jet/', include('jet.urls', 'jet')),
+    url(r'^jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),
     url(r'^admin/', admin.site.urls),
 
     url(r'^login/', login, {'template_name': 'usuario/tenant_login.html'}, name='tenant_login'),

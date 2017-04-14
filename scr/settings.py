@@ -31,8 +31,8 @@ SHARED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # 'jet.dashboard',
-    # 'jet',
+    'jet.dashboard',
+    'jet',
     'django.contrib.admin',
     'apps.usuarios'
 )
@@ -92,7 +92,7 @@ WSGI_APPLICATION = 'scr.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django_tenants.postgresql_backend',
-        'NAME': 'scr_dev',
+        'NAME': 'scr_test',
         'USER': 'dejuata',
         'PASSWORD': 'America27',
         'HOST': 'localhost',
