@@ -1,5 +1,6 @@
 from django.conf.urls import url, include
-from django.contrib import admin
+# from django.contrib import admin
+from apps.tenant.admin import admin_site
 from django.views.generic import TemplateView
 from django.contrib.auth.views import login, logout_then_login
 from django.contrib.auth.decorators import login_required
@@ -11,7 +12,8 @@ urlpatterns = [
     url(r'^$', TemplateView.as_view(template_name="landing/index.html"), name='index'),
     url(r'^jet/', include('jet.urls', 'jet')),
     url(r'^jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),
-    url(r'^admin/', admin.site.urls),
+    # url(r'^admin/', admin.site.urls),
+    url(r'^myadmin/', include(admin_site.urls)),
 
     url(r'^login/', login, {'template_name': 'usuario/tenant_login.html'}, name='tenant_login'),
     url(r'^logout/', logout_then_login, name='logout'),
