@@ -34,7 +34,7 @@ SHARED_APPS = (
     'jet.dashboard',
     'jet',
     'django.contrib.admin',
-    'apps.usuarios'
+    'apps.usuarios',
 )
 
 TENANT_APPS = (
@@ -92,7 +92,7 @@ WSGI_APPLICATION = 'scr.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django_tenants.postgresql_backend',
-        'NAME': 'scr_test',
+        'NAME': 'scr_dev',
         'USER': 'dejuata',
         'PASSWORD': 'America27',
         'HOST': 'localhost',
@@ -152,6 +152,48 @@ STATIC_ROOT = os.path.join(BASE_DIR, '..', 'static_collected')
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+# Django JET
+
+JET_DEFAULT_THEME = 'default'
+JET_THEMES = [
+    {
+        'theme': 'default',
+        'color': '#47bac1',
+        'title': 'Default'
+    },
+    {
+        'theme': 'green',
+        'color': '#44b78b',
+        'title': 'Green'
+    },
+    {
+        'theme': 'light-green',
+        'color': '#2faa60',
+        'title': 'Light Green'
+    },
+    {
+        'theme': 'light-violet',
+        'color': '#a464c4',
+        'title': 'Light Violet'
+    },
+    {
+        'theme': 'light-blue',
+        'color': '#5EADDE',
+        'title': 'Light Blue'
+    },
+    {
+        'theme': 'light-gray',
+        'color': '#222',
+        'title': 'Light Gray'
+    }
+]
+
+# JET_INDEX_DASHBOARD = 'dashboard.CustomIndexDashboard'
+# JET_APP_INDEX_DASHBOARD = 'dashboard.CustomAppIndexDashboard'
+
+JET_SIDE_MENU_COMPACT = True
+
 
 # django_tenants
 LOGGING = {

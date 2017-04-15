@@ -11,7 +11,7 @@ urlpatterns = [
     url(r'^jet/', include('jet.urls', 'jet')),
     url(r'^jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),
     url(r'^admin/', admin.site.urls),
-    
+
     url(r'^logout/', logout_then_login, name='usuario_logout'),
     url(r'^accounts/login/', login, {'template_name': 'usuario/usuario_login.html'}, name='usuario_login'),
 
