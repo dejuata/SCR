@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 from django.db import models
 from django.contrib.auth.models import User
 from django_tenants.models import TenantMixin, DomainMixin
+from django.utils.translation import ugettext_lazy as _
 
 
 class Tenant(TenantMixin):
@@ -17,9 +18,17 @@ class Tenant(TenantMixin):
 
     auto_create_schema = True
 
+    # class Meta:
+    #     verbose_name = _('tenant')
+    #     verbose_name_plural = _('tenants')
+
     def __str__(self):
         return self.schema_name
 
 
 class Domain(DomainMixin):
+
+    def __str__(self):
+        return self.domain
+
     pass
