@@ -9,6 +9,10 @@ from .managers import UserManager
 
 
 class User(AbstractBaseUser, PermissionsMixin):
+    """
+    Custom user model that receives as an additional parameter an avatar,
+    in addition to setting the USERNAME_FIELD variable with the email
+    """
 
     username = models.CharField(_('username'), unique=True, max_length=30)
     email = models.EmailField(_('email address'), unique=True)

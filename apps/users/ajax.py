@@ -1,17 +1,10 @@
 from django.http import JsonResponse
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 
 
-# def usuario_delete(request):
-#     pk = request.POST.get('identificador_id')
-#     identificador = User.objects.get(pk=pk)
-#     identificador.delete()
-#     response = {'class': 'hide'}
-#     return JsonResponse(response)
-
-def usuario_delete(request):
+def user_delete(request):
     pk = request.POST.get('identificador_id')
-    identificador = User.objects.get(pk=pk)
+    identificador = get_user_model().objects.get(pk=pk)
     response = {}
 
     if identificador.is_authenticated():

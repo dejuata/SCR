@@ -5,6 +5,9 @@ from django.contrib.auth.models import BaseUserManager
 
 
 class UserManager(BaseUserManager, models.Manager):
+    """
+    Class that allows the creation of a user and a superuser
+    """
 
     use_in_migrations = True
 
