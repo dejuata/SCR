@@ -48,6 +48,7 @@ INSTALLED_APPS = list(set(SHARED_APPS + TENANT_APPS))
 TENANT_MODEL = "tenant.Tenant"  # app.Model
 TENANT_DOMAIN_MODEL = "tenant.Domain"
 
+AUTH_USER_MODEL = 'usuarios.User'
 
 MIDDLEWARE = [
     'django_tenants.middleware.TenantMiddleware',
@@ -92,7 +93,7 @@ WSGI_APPLICATION = 'scr.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django_tenants.postgresql_backend',
-        'NAME': 'scr_dev',
+        'NAME': 'scr_test',
         'USER': 'dejuata',
         'PASSWORD': 'America27',
         'HOST': 'localhost',
@@ -152,6 +153,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, '..', 'static_collected')
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+
 
 # Django JET
 

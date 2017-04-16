@@ -9,7 +9,7 @@ class TenantCreateView(CreateView):
     model = Tenant
     form_class = TenantForm
     template_name = 'tenant/tenant_form.html'
-    success_url = '/'
+    # success_url = '/'
 
     def form_valid(self, form):
         tenant_registrado = form.instance
