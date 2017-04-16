@@ -9,14 +9,22 @@ from .forms import TenantForm
 
 
 def create_admin_tenant(tenant, user_id):
+    """
+    Function that creates a superuser in the tenant schema.
+    Receive the data of a registered user in the public schema
+    and that belongs to a registry of the tenant.
+    """
     user = get_user_model().objects.get(pk=user_id)
     tenant = Tenant(schema_name=tenant)
 
     with tenant_context(tenant):
-        get_user_model().objects.create_superuser(username=user.username, password='123', email=user.email, first_name=user.first_name, last_name=user.last_name)
+        get_user_model().objects.create_superuser(username=user.username, password='America27', email=user.email, first_name=user.first_name, last_name=user.last_name)
 
 
 class TenantCreateView(CreateView):
+    """
+    Class that creates a tenant and generates a new schema in BD.
+    """
     model = Tenant
     form_class = TenantForm
     template_name = 'tenant/tenant_form.html'
@@ -40,5 +48,5 @@ class TenantCreateView(CreateView):
         tenant = tenant_registrado.nombre_comercial
         create_admin_tenant(tenant, user_id)
 
-        super(TenantCreateView, self).form_valid(form)        
+        super(TenantCreateView, self).form_valid(form)
         return redirect(url)

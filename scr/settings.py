@@ -34,11 +34,8 @@ SHARED_APPS = (
     'jet.dashboard',
     'jet',
     'django.contrib.admin',
-<<<<<<< HEAD
-    'apps.usuarios',
-=======
     'apps.users',
->>>>>>> usuarios
+    'apps.custom_admin',
 )
 
 TENANT_APPS = (
@@ -98,7 +95,7 @@ WSGI_APPLICATION = 'scr.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django_tenants.postgresql_backend',
-        'NAME': 'scr_dev',
+        'NAME': 'scr_test',
         'USER': 'dejuata',
         'PASSWORD': 'America27',
         'HOST': 'localhost',
@@ -159,11 +156,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, '..', 'static_collected')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
-<<<<<<< HEAD
-=======
-
-
->>>>>>> usuarios
 # Django JET
 
 JET_DEFAULT_THEME = 'default'

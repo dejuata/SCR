@@ -1,21 +1,4 @@
-from django.contrib.admin import AdminSite
 from django.contrib.admin import ModelAdmin
-from django.contrib.auth.models import User
-
-from .models import Tenant, Domain
-
-
-class MyAdminSite(AdminSite):
-    site_header = 'Superuser'
-
-
-class TenantAdmin(ModelAdmin):
-    list_display = (
-        'nit',
-        'schema_name',
-        'user_id',
-    )
-    search_fields = ('nit',)
 
 
 class UserAdmin(ModelAdmin):
@@ -42,12 +25,6 @@ class UserAdmin(ModelAdmin):
         }),
         (('Sessions'), {
             # 'classes': ('',),
-            'fields': ('last_login', 'date_joined', )
+            'fields': ('last_login', )
         }),
     )
-
-
-admin_site = MyAdminSite(name='myadmin')
-admin_site.register(Tenant, TenantAdmin)
-admin_site.register(Domain)
-admin_site.register(User, UserAdmin)
