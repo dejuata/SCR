@@ -3,12 +3,12 @@ from __future__ import unicode_literals
 from django.db import models
 from django.core.mail import send_mail
 from django.utils.translation import ugettext_lazy as _
-from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, AbstractUser
 
 from .managers import UserManager
 
 
-class User(AbstractBaseUser, PermissionsMixin):
+class User(AbstractUser, PermissionsMixin):
     """
     Custom user model that receives as an additional parameter an avatar,
     in addition to setting the USERNAME_FIELD variable with the email
@@ -23,6 +23,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     is_active = models.BooleanField(_('active'), default=True)
     is_staff = models.BooleanField(default=False)
+    is_superuser = models.BooleanField(_('superuser'), default=False)
 
     objects = UserManager()
 
