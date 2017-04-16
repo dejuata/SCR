@@ -34,13 +34,18 @@ SHARED_APPS = (
     'jet.dashboard',
     'jet',
     'django.contrib.admin',
+<<<<<<< HEAD
     'apps.usuarios',
+=======
+    'apps.users',
+>>>>>>> usuarios
 )
 
 TENANT_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.auth',
     'django.contrib.messages',
+    'apps.users',
 )
 
 INSTALLED_APPS = list(set(SHARED_APPS + TENANT_APPS))
@@ -48,6 +53,7 @@ INSTALLED_APPS = list(set(SHARED_APPS + TENANT_APPS))
 TENANT_MODEL = "tenant.Tenant"  # app.Model
 TENANT_DOMAIN_MODEL = "tenant.Domain"
 
+AUTH_USER_MODEL = 'users.User'
 
 MIDDLEWARE = [
     'django_tenants.middleware.TenantMiddleware',
@@ -153,6 +159,11 @@ STATIC_ROOT = os.path.join(BASE_DIR, '..', 'static_collected')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> usuarios
 # Django JET
 
 JET_DEFAULT_THEME = 'default'

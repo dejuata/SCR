@@ -1,13 +1,18 @@
 # -*- encoding:utf-8 -*-
-from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import get_user_model
+# from django.utils.translation import ugettext_lazy as _
 from django import forms
 
 
-class RegistroForm(UserCreationForm):
+class UserForm(UserCreationForm):
+    """
+    Class for the creation of the form with the data of the user
+    and that is used for the creation and edition of the data of the user
+    """
 
     class Meta:
-        model = User
+        model = get_user_model()
 
         fields = [
             'username',
