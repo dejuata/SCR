@@ -19,6 +19,13 @@ Login
 {% block content %}
 <div class="container">
 	<div class="login text-center">
+		<!-- messages erros -->
+    {% for error in form.non_field_errors %}
+        <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+        </div>
+    {% endfor %}    
+    <!-- end messages erros -->
 	<div class="panel panel-warning">
 	  <div class="panel-heading" style="text-align:center;font-size:22px">Iniciar Sesión</div>
 	  <div class="panel-body">
@@ -27,7 +34,7 @@ Login
 				<br>
 			<form method="post">
 				{% csrf_token %}
-				{{ form.email.errors }}
+				{{ form.username.errors }}
 				<div class="form-group">
 					<input class="form-control" type="text" name="username" placeholder="Correo electrónico">
 				</div>

@@ -12,6 +12,24 @@ Registrar Empresa
 {% block content %}
 <div class="container">
   <div class="login sign-up">
+
+    <!-- messages erros -->
+    {% if form.errors %}
+        {% for field in form %}
+            {% for error in field.errors %}
+                <div class="alert alert-danger">
+                    <strong>{{ error|escape }}</strong>
+                </div>
+            {% endfor %}
+        {% endfor %}
+        {% for error in form.non_field_errors %}
+            <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+            </div>
+        {% endfor %}
+    {% endif %}
+    <!-- end messages erros -->
+
   <div class="panel panel-success">
 	  <div class="panel-heading" style="text-align:center;font-size:22px">Registrar Empresa</div>
 	  <div class="panel-body">
@@ -28,55 +46,93 @@ Registrar Empresa
 				<br>
 				<div class="form-input form-input-empresa">
           <div class="form-group">
-
             {{ form.nit.label_tag }}
             {{ form.nit }}
-            {{ form.nit.errors }}
           </div>
           <div class="form-group">
             {{ form.nombre_comercial.label_tag }}
             {{ form.nombre_comercial }}
-            {{ form.nombre_comercial.errors }}
           </div>
 				</div>
         <div class="form-group text-left" >
           {{ form.razon_social.label_tag }}
-          {{ form.razon_social.errors }}
           {{ form.razon_social }}
         </div>
         <div class="form-input form-input-empresa">
           <div class="form-group">
             {{ form.telefono.label_tag }}
-            {{ form.telefono.errors }}
             {{ form.telefono }}
           </div>
           <div class="form-group">
             {{ form.correo.label_tag }}
-            {{ form.correo.errors }}
             {{ form.correo }}
           </div>
 				</div><div class="form-input form-input-empresa">
           <div class="form-group">
             {{ form.ciudad.label_tag }}
-            {{ form.ciudad.errors }}
             {{ form.ciudad }}
           </div>
           <div class="form-group">
             {{ form.direccion.label_tag }}
-            {{ form.direccion.errors }}
             {{ form.direccion }}
           </div>
 				</div>
         <br>
 				<div class="form-group form-input">
-					<button class="btn btn-primary login-btn" type="submit">Guardar</button>
+					<a class="btn btn-primary login-btn" data-toggle="modal" data-target="#modalEmergente">Guardar</a>
 				</div>
 
         <input type="hidden" name="user" value="{{ user.id }}">
-			</form>
 			</div>
 		</div>
 	  </div>
+
+<!-- modal-->
+<div class="modal fade" id="modalEmergente">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      {% block modal-title %}
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Digite su contraseña para continuar</h4>
+      </div>
+      {% endblock %}
+
+      {% block modal-body %}
+      <div class="modal-body">
+        <div class="form-group">
+        <input type="hidden" name="first_name" value="{{user.first_name}}" placeholder="Nombre">
+        <input type="hidden" name="last_name" value="{{user.last_name}}" placeholder="Apellido">
+        <input type="hidden" name="username" value="{{user.username}}" placeholder="username">
+        <input type="hidden" name="email" value="{{user.email}}" placeholder="email">
+        <div class="form-group">
+          <label for="password1">Contraseña:</label>
+          {{ form2.password1.errors }}
+          <input type="password"  class="form-control" name="password1" value="" >
+        </div>
+        <div class="form-group">
+          <label for="password2">Confirmar contraseña:</label>
+          {{ form.password2.errors }}
+          <input type="password" class="form-control" name="password2" value="">
+        </div>
+        </div>
+
+      </div>
+      {% endblock %}
+
+      {% block modal-footer %}
+      <div class="modal-footer">
+        <button class="btn btn-primary" type="submit">Confirmar</button>
+        <a class="btn btn-default" href="{% url 'registrar-empresa' %}">Cancelar</a>
+      </div>
+      {% endblock %}
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
   </div>
 </div>
 {% endblock %}
