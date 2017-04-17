@@ -15,18 +15,18 @@ Registrar Empresa
 
     <!-- messages erros -->
     {% if form.errors %}
+        <div class="alert alert-danger">
         {% for field in form %}
             {% for error in field.errors %}
-                <div class="alert alert-danger">
-                    <strong>{{ error|escape }}</strong>
-                </div>
+              <strong>{{ error|escape }}</strong>
             {% endfor %}
         {% endfor %}
+        </div>
+        <div class="alert alert-danger">
         {% for error in form.non_field_errors %}
-            <div class="alert alert-danger">
-                <strong>{{ error|escape }}</strong>
-            </div>
+          <strong>{{ error|escape }}</strong>            
         {% endfor %}
+        </div>
     {% endif %}
     <!-- end messages erros -->
 
@@ -42,101 +42,100 @@ Registrar Empresa
 			<div class="col-sm-8 login-right">
 				<br>
 				<div class="form-input form-input-empresa">
-          <div class="form-group has-feedback">
+          <div class="form-group has-feedback disableModal">
             {{ form.nit.label_tag }}
             {{ form.nit }}
             <div class="help-block with-errors"></div>
           </div>
-          <div class="form-group has-feedback">
+          <div class="form-group has-feedback disableModal">
             {{ form.nombre_comercial.label_tag }}
             {{ form.nombre_comercial }}
             <div class="help-block with-errors"></div>
           </div>
 				</div>
-        <div class="form-group has-feedback text-left" >
+        <div class="form-group has-feedback text-left disableModal" >
           {{ form.razon_social.label_tag }}
           {{ form.razon_social }}
           <div class="help-block with-errors"></div>
         </div>
         <div class="form-input form-input-empresa">
-          <div class="form-group has-feedback">
+          <div class="form-group has-feedback disableModal">
             {{ form.telefono.label_tag }}
             {{ form.telefono }}
             <div class="help-block with-errors"></div>
           </div>
-          <div class="form-group has-feedback">
+          <div class="form-group has-feedback disableModal">
             {{ form.correo.label_tag }}
             {{ form.correo }}
             <div class="help-block with-errors"></div>
           </div>
-				</div><div class="form-input form-input-empresa">
-          <div class="form-group has-feedback">
+				</div>
+        <div class="form-input form-input-empresa">
+          <div class="form-group has-feedback disableModal">
             {{ form.ciudad.label_tag }}
             {{ form.ciudad }}
             <div class="help-block with-errors"></div>
           </div>
-          <div class="form-group has-feedback">
+          <div class="form-group has-feedback disableModal">
             {{ form.direccion.label_tag }}
             {{ form.direccion }}
             <div class="help-block with-errors"></div>
           </div>
-				</div>
+        </div>
         <br>
 				<div class="form-group form-input">
-					<a class="btn btn-primary login-btn" data-toggle="modal" data-target="#modalEmergente">Guardar</a>
+					<a class="btn btn-primary login-btn" type="submit" id="openModal" data-toggle="modal" data-target="#modalEmergente">Guardar</a>
 				</div>
-
         <input type="hidden" name="user" value="{{ user.id }}">
 			</div>
 		</div>
 	  </div>
-
-<!-- modal-->
-<div class="modal fade" id="modalEmergente">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      {% block modal-title %}
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title">Digite su contraseña para continuar</h4>
-      </div>
-      {% endblock %}
-
-      {% block modal-body %}
-      <div class="modal-body">
-        <div class="form-group">
-        <input type="hidden" name="first_name" value="{{user.first_name}}" placeholder="Nombre">
-        <input type="hidden" name="last_name" value="{{user.last_name}}" placeholder="Apellido">
-        <input type="hidden" name="username" value="{{user.username}}" placeholder="username">
-        <input type="hidden" name="email" value="{{user.email}}" placeholder="email">
-        <div class="form-group">
-          <label for="password1">Contraseña:</label>
-          {{ form2.password1.errors }}
-          <input type="password"  class="form-control" name="password1" value="" >
-        </div>
-        <div class="form-group">
-          <label for="password2">Confirmar contraseña:</label>
-          {{ form.password2.errors }}
-          <input type="password" class="form-control" name="password2" value="">
-        </div>
-        </div>
-
-      </div>
-      {% endblock %}
-
-      {% block modal-footer %}
-      <div class="modal-footer">
-        <button class="btn btn-primary" type="submit">Confirmar</button>
-        <a class="btn btn-default" href="{% url 'registrar-empresa' %}">Cancelar</a>
-      </div>
-      {% endblock %}
-      </form>
     </div>
   </div>
-</div>
+<!-- modal -->
+  <div class="modal fade" id="modalEmergente">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        {% block modal-title %}
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">Digite su contraseña para continuar:</h4>
+        </div>
+        {% endblock %}
+        {% block modal-body %}
+        <div class="modal-body">
+        <div class="form-group has-feedback">
+            <label for="password">Contraseña: </label>
+            <input type="password" class="form-control" name="password" placeholder="Contraseña" required>
+            <div class="help-block with-errors"></div>
+          </div>
+        </div>
+        {% endblock %}
+        {% block modal-footer %}
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Confirmar</button>
+            <button  class="btn btn-default" data-dismiss="modal">Cancelar</button>
+
+        </div>
+        {% endblock %}
+         </form>
+      </div>
+    </div>
+  </div>
+  <!-- end modal -->
 
 
 
   </div>
 </div>
 {% endblock %}
+
+<script>
+if ($(".disableModal").hasClass( "has-error" )){
+  $("#openModal").attr("disabled", "true");
+}
+
+
+
+
+</script>

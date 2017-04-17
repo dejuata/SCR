@@ -20,12 +20,21 @@ Login
 <div class="container">
 	<div class="login text-center">
 		<!-- messages erros -->
-    {% for error in form.non_field_errors %}
-        <div class="alert alert-danger">
-            <strong>{{ error|escape }}</strong>
-        </div>
-    {% endfor %}
-    <!-- end messages erros -->
+		{% if form.errors %}
+				{% for field in form %}
+						{% for error in field.errors %}
+							<div class="alert alert-danger">
+								<strong>{{ error|escape }}</strong>
+							</div>
+						{% endfor %}
+				{% endfor %}
+				<div class="alert alert-danger">
+				{% for error in form.non_field_errors %}
+					<strong>{{ error|escape }}</strong>
+				{% endfor %}
+				</div>
+		{% endif %}
+		<!-- end messages erros -->
 	<div class="panel panel-warning">
 	  <div class="panel-heading" style="text-align:center;font-size:22px">Iniciar Sesión</div>
 	  <div class="panel-body">
