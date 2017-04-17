@@ -33,48 +33,52 @@ Registrar Empresa
   <div class="panel panel-success">
 	  <div class="panel-heading" style="text-align:center;font-size:22px">Registrar Empresa</div>
 	  <div class="panel-body">
-      <form method="post" class="form-empresa">
+      <form method="post" class="form-empresa" data-toggle="validator">
 			{% csrf_token %}
       <div class="col-sm-4 login-left">
-
           <div class="logo cuadrado">
-
-
           </div>
       </div>
 			<div class="col-sm-8 login-right">
 				<br>
 				<div class="form-input form-input-empresa">
-          <div class="form-group">
+          <div class="form-group has-feedback">
             {{ form.nit.label_tag }}
             {{ form.nit }}
+            <div class="help-block with-errors"></div>
           </div>
-          <div class="form-group">
+          <div class="form-group has-feedback">
             {{ form.nombre_comercial.label_tag }}
             {{ form.nombre_comercial }}
+            <div class="help-block with-errors"></div>
           </div>
 				</div>
-        <div class="form-group text-left" >
+        <div class="form-group has-feedback text-left" >
           {{ form.razon_social.label_tag }}
           {{ form.razon_social }}
+          <div class="help-block with-errors"></div>
         </div>
         <div class="form-input form-input-empresa">
-          <div class="form-group">
+          <div class="form-group has-feedback">
             {{ form.telefono.label_tag }}
             {{ form.telefono }}
+            <div class="help-block with-errors"></div>
           </div>
-          <div class="form-group">
+          <div class="form-group has-feedback">
             {{ form.correo.label_tag }}
             {{ form.correo }}
+            <div class="help-block with-errors"></div>
           </div>
 				</div><div class="form-input form-input-empresa">
-          <div class="form-group">
+          <div class="form-group has-feedback">
             {{ form.ciudad.label_tag }}
             {{ form.ciudad }}
+            <div class="help-block with-errors"></div>
           </div>
-          <div class="form-group">
+          <div class="form-group has-feedback">
             {{ form.direccion.label_tag }}
             {{ form.direccion }}
+            <div class="help-block with-errors"></div>
           </div>
 				</div>
         <br>

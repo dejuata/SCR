@@ -24,7 +24,7 @@ Login
         <div class="alert alert-danger">
             <strong>{{ error|escape }}</strong>
         </div>
-    {% endfor %}    
+    {% endfor %}
     <!-- end messages erros -->
 	<div class="panel panel-warning">
 	  <div class="panel-heading" style="text-align:center;font-size:22px">Iniciar Sesión</div>
@@ -32,15 +32,15 @@ Login
 			<div class="col-sm-6 login-left">
 				<h4>Con tu Correo:</h4>
 				<br>
-			<form method="post">
+			<form method="post" data-toggle="validator">
 				{% csrf_token %}
-				{{ form.username.errors }}
-				<div class="form-group">
-					<input class="form-control" type="text" name="username" placeholder="Correo electrónico">
-				</div>
-				<div class="form-group">
-					{{ form.password.errors }}
-					<input class="form-control" type="password" name="password" placeholder="Contraseña">
+				<div class="form-group has-feedback text-left">
+			    <input type="email" id="email" pattern="^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$" name="username" class="form-control" id="inputTwitter" placeholder="Correo Electronico" required>
+			    <div class="help-block with-errors"></div>
+			  </div>
+				<div class="form-group has-feedback text-left">
+					<input class="form-control" type="password" name="password" placeholder="Contraseña" data-minlength="8" data-error="Minimo 8 caracteres" required>
+					<div class="help-block with-errors"></div>
 				</div>
 				<div class="form-group">
 					<input class="btn btn-primary login-btn" type="submit" value="Ingresar">
@@ -65,6 +65,5 @@ Login
 	  </div>
 		<div>¿Aún no tienes cuenta? <a href="{% url 'usuario:usuario_new' %}">Regístrate aquí</a></div>
 	</div>
-
 	</div>
 {% endblock %}

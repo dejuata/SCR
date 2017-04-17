@@ -26,8 +26,8 @@ class TenantForm(forms.ModelForm):
             # 'logo': 'Logo',
             'razon_social': 'Razón social',
             'nombre_comercial': 'Nombre Comercial',
-            'telefono': 'Teléfono',
-            'correo': 'Correo electrónico',
+            'telefono': 'Teléfono Corporativo',
+            'correo': 'Correo Corporativo',
             'ciudad': 'Ciudad',
             'direccion': 'Dirección',
         }
