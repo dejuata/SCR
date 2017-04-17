@@ -26,8 +26,8 @@ class TenantForm(forms.ModelForm):
             # 'logo': 'Logo',
             'razon_social': 'Razón social',
             'nombre_comercial': 'Nombre Comercial',
-            'telefono': 'Teléfono',
-            'correo': 'Correo electrónico',
+            'telefono': 'Teléfono corporativo',
+            'correo': 'Correo corporativo',
             'ciudad': 'Ciudad',
             'direccion': 'Dirección',
         }
@@ -47,3 +47,7 @@ class TenantForm(forms.ModelForm):
             'ciudad': forms.TextInput(attrs={'class': 'form-control'}),
             'direccion': forms.TextInput(attrs={'class': 'form-control'}),
         }
+
+
+
+        
