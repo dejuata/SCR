@@ -39,6 +39,6 @@ class TenantCreateView(CreateView):
         user_id = tenant_registrado.user_id
         tenant = tenant_registrado.nombre_comercial
         create_admin_tenant(tenant, user_id)
+        super(TenantCreateView, self).form_valid(form)
 
-        super(TenantCreateView, self).form_valid(form)        
         return redirect(url)
