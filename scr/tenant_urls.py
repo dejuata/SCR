@@ -3,6 +3,7 @@ from django.contrib.auth.views import login, logout_then_login
 from django.contrib.auth.decorators import login_required
 from django.views.generic import TemplateView
 from django.conf import settings
+from django.conf.urls.static import static #ARCHIVOS MEDIA JODA_BETA
 
 from apps.custom_admin.admin_tenant import admin_site
 
@@ -20,7 +21,7 @@ urlpatterns = [
     url(r'^', include('apps.users.urls_usuario', namespace='usuario_tenant')),
     url(r'^cliente/', include('apps.cliente.urls', namespace='cliente')),
 
-]
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)#ARCHIVOS MEDIA JODA_BETA
 
 if settings.DEBUG:
     import debug_toolbar
