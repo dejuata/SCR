@@ -35,6 +35,7 @@ SHARED_APPS = (
     'jet',
     'django.contrib.admin',
     'apps.users',
+    'apps.custom_admin',
 )
 
 TENANT_APPS = (
@@ -154,8 +155,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, '..', 'static_collected')
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
-
-
 
 # Django JET
 

@@ -5,13 +5,13 @@ from django.contrib.auth.decorators import login_required
 from django.conf import settings
 
 from apps.tenant.views import TenantCreateView
-from apps.tenant.admin import admin_site
+from apps.custom_admin.admin_public import admin_site
+
 
 urlpatterns = [
     url(r'^$', TemplateView.as_view(template_name="landing/index.html"), name='index'),
     url(r'^jet/', include('jet.urls', 'jet')),
     url(r'^jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),
-
     url(r'^admin/', include(admin_site.urls)),
 
     url(r'^login/', login, {'template_name': 'users/tenant_login.html'}, name='tenant_login'),

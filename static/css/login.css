@@ -1,7 +1,7 @@
 .login {
     background: #fff;
     width: 50em;
-    margin: 4em auto;
+    margin: 2.5em auto;
 }
 .login-btn{
   padding: 18px 15px !important;
@@ -56,6 +56,7 @@
 }
 .form-input{
   display: flex !important;
+  justify-content: space-between;
 }
 .margin-left{
   margin-left: 20px;
