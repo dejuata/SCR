@@ -25,7 +25,7 @@ Login
   <!-- end messages erros -->
 
   <h2 class="login__title">Iniciar Sesión</h2>
-  <form method="post" class="form" data-toggle="validator" action="{% url 'index' %}?next={% url 'dashboard' %}">
+  <form method="post" class="form" data-toggle="validator" action="{% url 'index' %}?next={% url 'cliente:index' %}">
 	{% csrf_token %}
   <div class="form-group has-feedback text-left">
     <input type="email" id="email" pattern="^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$" name="username" class="form-control" id="inputTwitter" placeholder="Correo Electronico" required>

@@ -1,10 +1,89 @@
-{% extends 'base/base.html' %}
+{% extends 'dashboard/base.html' %}
+
+{% block overview %}
+<li><i class="fa fa-laptop"></i>Clientes</li>
+<!-- messages erros -->
+{% if form.errors %}
+    {% for field in form %}
+        {% for error in field.errors %}
+            <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+            </div>
+        {% endfor %}
+    {% endfor %}
+    {% for error in form.non_field_errors %}
+        <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+        </div>
+    {% endfor %}
+{% endif %}
+<!-- end messages erros -->
+{% endblock%}
+
 
 {% block content %}
-<!--<form method="post" enctype="multipart/form-data">-->
-<form enctype="multipart/form-data" method="post"><!-- enctype para ARCHIVOS MEDIA JODA_BETA-->
-    {% csrf_token %}
-    {{ form.as_p }} <!--llamado formulario vista-->
-    <button type="submit">Guardar</button>
-</form>
+<!-- enctype para ARCHIVOS MEDIA JODA_BETA-->
+<section class="panel">
+  {% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+  <header class="panel-heading">
+    Nuevo Cliente
+  </header>
+  <div class="panel-body">
+    <form enctype="multipart/form-data" method="post" class="form-horizontal" data-toggle="validator">
+        {% csrf_token %}
+
+        <!-- <div class="form-group has-feedback text-left col-md-12">
+          {{ form.nit.label_tag }}
+          {{ form.nit.erros }}
+          <input type="text" class="form-control" name="nit" data-error="Ingrese el N° NIT de la empresa" required>
+          <div class="help-block with-errors"></div>
+        </div>
+        <div class="form-group has-feedback text-left col-md-12">
+          {{ form.razon_social.label_tag }}
+          {{ form.razon_social.erros }}
+          <input type="text" class="form-control" name="razon_social" data-error="Ingrese la Razón Social de la empresa" required>
+          <div class="help-block with-errors"></div>
+        </div>
+        <div class="form-group has-feedback text-left col-md-12">
+          {{ form.logo.label_tag }}
+          {{ form.logo.erros }}
+          <input type="file" class="form-control" name="logo">
+        </div>
+        <div class="form-group has-feedback text-left col-md-12">
+          {{ form.telefono.label_tag }}
+          {{ form.telefono.erros }}
+          <input class="form-control" id="id_telefono" maxlength="12" name="telefono" type="text" data-error="Ingrese el Telefono de la empresa" required="">
+          <div class="help-block with-errors"></div>
+        </div>
+        <div class="form-group has-feedback text-left col-md-12">
+          {{ form.correo.label_tag }}
+          {{ form.correo.erros }}
+          <input type="email" class="form-control" name="email" id="email" pattern="^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$" required>
+          <div class="help-block with-errors"></div>
+        </div>
+        <div class="form-group has-feedback text-left col-md-12">
+          {{ form.ciudad.label_tag }}
+          {{ form.ciudad.erros }}
+          <input type="text" class="form-control" name="ciudad" data-error="Ingrese la ciudad donde esta ubicada la empresa" required>
+          <div class="help-block with-errors"></div>
+        </div>
+        <div class="form-group has-feedback text-left col-md-12">
+          {{ form.direccion.label_tag }}
+          {{ form.direccion.erros }}
+          <input type="text" class="form-control" name="direccion" data-error="Ingrese la dirección de la empresa" required>
+          <div class="help-block with-errors"></div>
+        </div> -->
+        {{ form.as_p }}
+
+        <button class="btn btn-primary" type="submit">Guardar</button>
+    </form>
+  </div>
+</section>
+
 {% endblock %}

@@ -1,21 +1,26 @@
-{% extends 'base/base.html' %}
+{% extends 'dashboard/base.html' %}
+
+{% block overview %}
+<li><i class="fa fa-laptop"></i>Clientes</li>
+{% endblock%}
 
 {% block content %}
+<a class="btn btn-success" href="{% url 'cliente:cliente_new'%}">Crear Cliente</a>
 
-<table class="table table-striped table-hover ">
-    <thead>
-        <tr>
-            <td>NIT</td>
-            <td>Razon Social</td>
-            <td>telefono</td>
-            <td>correo</td>
-            <td>ciudad</td>
-            <td>direccion</td>
-            <td>Activo/Inactivo</td>
-            <td>Logo</td>
-        </tr>
-    </thead>
+<section class="panel">
+<br>
+<table class="table table-striped table-advance table-hover">
     <tbody>
+        <tr>
+            <th>NIT</th>
+            <th>Razon Social</th>
+            <th>Telefono</th>
+            <th>Correo</th>
+            <th>Activo/Inactivo</th>
+            <th>Acciones</th>
+        </tr>
+
+
         {% if object_list %}
 		    {% for cliente in object_list %}
                 <tr>
@@ -23,25 +28,22 @@
                     <td>{{ cliente.razon_social }}</td>
                     <td>{{ cliente.telefono }}</td>
                     <td>{{ cliente.correo }}</td>
-                    <td>{{ cliente.ciudad }}</td>
-                    <td>{{ cliente.direccion }}</td>
+
                     <td>{{ cliente.activo_inactivo }}</td>
-                    <td><!--img src para ARCHIVOS MEDIA JODA_BETA-->
-                        <div class="">
-                          <img src="{{ cliente.logo.url }}" width=100 heigth=100>
-                        </div>
-                    </td>
                     <td>
+                      <div class="btn-group">
                         <a class="btn btn-primary" href="{% url 'cliente:cliente_edit' cliente.nit %}">Editar</a>
                         <a class="btn btn-danger" href="{% url 'cliente:cliente_delete' cliente.nit %}">Eliminar</a>
+                      </div>
                     </td>
                 </tr>
             {% endfor %}
         {% else %}
-            <h1>No hay registros de clientes</h1>
+            <h3 class="page-header"><i class="fa fa-laptop"></i> No hay registros</h3>
         {% endif %}
     </tbody>
 </table>
+</section>
 <ul class="pager">
 	<li>
     	{% if page_obj.has_previous %}

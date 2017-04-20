@@ -36,7 +36,11 @@
               <a href="#" class="dropdown-toggle" style="text-transform:uppercase" data-toggle="dropdown" role="button" aria-expanded="false">
                 {{ user.username }} <span class="caret"></span>
               </a>
-
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="{% url 'usuario:usuario_profile' %}">Ver Perfil</a></li>
+                <li><a href="{% url 'registrar-empresa' %}">Pagar</a></li>
+                <li><a href="{% url 'logout' %}">Salir</a></li>
+              </ul>
             </li>
           {% else %}
             <li>
@@ -85,9 +89,14 @@
   <!-- end modal -->
 
   {% block extrajs %}
-  <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+  <script src="{% static 'jquery-3.2.1.min.js'%}"></script>
+  <script src="{% static 'js/bootstap.min.js'%}"></script>
+  <script src="{% static 'js/validator.js' %}"></script>
+
+
+  <!-- <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
   <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script> -->
   <script type="text/javascript" src="{% static 'js/mailcheck.min.js' %}"></script>
   <script>
   $(function () {
