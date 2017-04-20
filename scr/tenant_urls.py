@@ -18,7 +18,7 @@ urlpatterns = [
 
     url(r'^dashboard', login_required(TemplateView.as_view(template_name="dashboard/index.html")), name='dashboard'),
     url(r'^', include('apps.users.urls_usuario', namespace='usuario_tenant')),
-
+    url(r'^cliente/', include('apps.cliente.urls', namespace='cliente')),
 
 ]
 

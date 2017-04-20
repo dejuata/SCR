@@ -19,6 +19,7 @@ urlpatterns = [
     url(r'^accounts/login/', login, {'template_name': 'users/tenant_login.html'}, name='tenant_login'),
 
     url(r'^', include('apps.users.urls_tenant', namespace='usuario')),
+    #url(r'^cliente/', include('apps.cliente.urls', namespace='cliente')),
     url(r'^registrar-empresa/$', login_required(TenantCreateView.as_view()), name='registrar-empresa'),
 ]
 

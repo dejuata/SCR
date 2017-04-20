@@ -1,0 +1,57 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+
+<table class="table table-striped table-hover ">
+    <thead>
+        <tr>
+            <td>NIT</td>
+            <td>Razon Social</td>
+            <td>telefono</td>
+            <td>correo</td>
+            <td>ciudad</td>
+            <td>direccion</td>
+            <td>Activo/Inactivo</td>
+            <td>Logo</td>
+        </tr>
+    </thead>
+    <tbody>
+        {% if object_list %}
+		    {% for cliente in object_list %}
+                <tr>
+                    <td>{{ cliente.nit }}</td>
+                    <td>{{ cliente.razon_social }}</td>
+                    <td>{{ cliente.telefono }}</td>
+                    <td>{{ cliente.correo }}</td>
+                    <td>{{ cliente.ciudad }}</td>
+                    <td>{{ cliente.direccion }}</td>
+                    <td>{{ cliente.activo_inactivo }}</td>
+                    <td><!--img src para ARCHIVOS MEDIA JODA_BETA-->
+                        <div class="">
+                          <img src="{{ cliente.logo.url }}" width=100 heigth=100>
+                        </div>
+                    </td>
+                    <td>
+                        <a class="btn btn-primary" href="{% url 'cliente:cliente_edit' cliente.nit %}">Editar</a>
+                        <a class="btn btn-danger" href="{% url 'cliente:cliente_delete' cliente.nit %}">Eliminar</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        {% else %}
+            <h1>No hay registros de clientes</h1>
+        {% endif %}
+    </tbody>
+</table>
+<ul class="pager">
+	<li>
+    	{% if page_obj.has_previous %}
+       	 <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+    	{% endif %}
+    </li>
+	<li>
+    	{% if page_obj.has_next %}
+     	 <a href="?page={{ page_obj.next_page_number }}">Next</a>
+    	{% endif %}
+    </li>
+</ul>
+{% endblock %}
