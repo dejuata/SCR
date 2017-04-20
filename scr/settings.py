@@ -43,6 +43,7 @@ TENANT_APPS = (
     'django.contrib.auth',
     'django.contrib.messages',
     'apps.users',
+    'apps.cliente',
 )
 
 INSTALLED_APPS = list(set(SHARED_APPS + TENANT_APPS))
@@ -96,6 +97,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django_tenants.postgresql_backend',
         'NAME': 'scr_test',
+		#'USER': 'postgres',
+        #'PASSWORD': 'postgres',
         'USER': 'dejuata',
         'PASSWORD': 'America27',
         'HOST': 'localhost',
