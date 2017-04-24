@@ -14,7 +14,7 @@ class Dashboard(TemplateView):
 class ClienteList(ListView):
     model = Cliente
     template_name = 'cliente/cliente_list.html'
-    paginate_by = 5
+    paginate_by = 10
 
 
 class ClienteCreate(CreateView):

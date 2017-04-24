@@ -7,6 +7,7 @@ from django.conf.urls.static import static  # ARCHIVOS MEDIA JODA_BETA
 
 from apps.tenant.views import TenantCreateView
 from apps.custom_admin.admin_public import admin_site
+# from django.contrib import admin
 
 
 urlpatterns = [
@@ -14,6 +15,7 @@ urlpatterns = [
     url(r'^jet/', include('jet.urls', 'jet')),
     url(r'^jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),
     url(r'^admin/', include(admin_site.urls)),
+    # url(r'^admin/', admin.site.urls),
 
     url(r'^login/', login, {'template_name': 'users/tenant_login.html'}, name='tenant_login'),
     url(r'^logout/', logout_then_login, name='logout'),

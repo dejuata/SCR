@@ -9,4 +9,4 @@ class Cliente(models.Model):
     correo = models.EmailField()
     ciudad = models.CharField(max_length=50)
     direccion = models.TextField()
-    activo_inactivo = models.BooleanField()
+    activo_inactivo = models.BooleanField(blank=True, default=True)

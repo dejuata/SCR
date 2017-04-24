@@ -7,6 +7,7 @@ Registrar Empresa
 
 {% block extrastatic %}
 <link rel="stylesheet" href="{% static 'css/login.css' %}"/>
+<!-- <script src='https://www.google.com/recaptcha/api.js'></script> -->
 {% endblock %}
 
 {% block content %}
@@ -18,15 +19,17 @@ Registrar Empresa
         <div class="alert alert-danger">
         {% for field in form %}
             {% for error in field.errors %}
-              <strong>{{ error|escape }}</strong>
+              <strong><div>{{ error|escape }}</div></strong>
             {% endfor %}
         {% endfor %}
         </div>
-        <div class="alert alert-danger">
+
         {% for error in form.non_field_errors %}
-          <strong>{{ error|escape }}</strong>            
+          <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+          </div>
         {% endfor %}
-        </div>
+
     {% endif %}
     <!-- end messages erros -->
 
@@ -35,12 +38,23 @@ Registrar Empresa
 	  <div class="panel-body">
       <form method="post" class="form-empresa" data-toggle="validator">
 			{% csrf_token %}
-      <div class="col-sm-4 login-left">
-          <div class="logo cuadrado">
+
+      <div class="col-sm-4">
+        <div class="row">
+          <div class="">
+            <div class="logo cuadrado">
+            </div>
           </div>
+          <div class="">
+            <br>
+            {{ form.logo }}
+          </div>
+        </div>
       </div>
-			<div class="col-sm-8 login-right">
+
+			<div class="col-sm-8">
 				<br>
+
 				<div class="form-input form-input-empresa">
           <div class="form-group has-feedback disableModal">
             {{ form.nit.label_tag }}
@@ -53,11 +67,13 @@ Registrar Empresa
             <div class="help-block with-errors"></div>
           </div>
 				</div>
+
         <div class="form-group has-feedback text-left disableModal" >
           {{ form.razon_social.label_tag }}
           {{ form.razon_social }}
           <div class="help-block with-errors"></div>
         </div>
+
         <div class="form-input form-input-empresa">
           <div class="form-group has-feedback disableModal">
             {{ form.telefono.label_tag }}
@@ -70,6 +86,7 @@ Registrar Empresa
             <div class="help-block with-errors"></div>
           </div>
 				</div>
+
         <div class="form-input form-input-empresa">
           <div class="form-group has-feedback disableModal">
             {{ form.ciudad.label_tag }}
@@ -82,53 +99,38 @@ Registrar Empresa
             <div class="help-block with-errors"></div>
           </div>
         </div>
+
+        <div class="form-group has-feedback text-left">
+            <label for="password">Digite su contraseña para continuar:</label>
+            <input type="password" class="form-control" name="password" required>
+            <div class="help-block with-errors"></div>
+        </div>
+
+        <div class="form-input">
+          <!-- <div class="g-recaptcha" data-sitekey="6Lc_RB4UAAAAAIjVIJgONuqnMd3sVRZwLEVC_rvH"></div> -->
+        </div>
+
+
         <br>
+
 				<div class="form-group form-input">
-					<a class="btn btn-primary login-btn" type="submit" id="openModal" data-toggle="modal" data-target="#modalEmergente">Guardar</a>
+					<button type="submit" class="btn btn-primary login-btn">Guardar</button>
 				</div>
+
         <input type="hidden" name="user" value="{{ user.id }}">
+
 			</div>
+    </form>
 		</div>
 	  </div>
-    </div>
-  </div>
-<!-- modal -->
-  <div class="modal fade" id="modalEmergente">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        {% block modal-title %}
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-          <h4 class="modal-title">Digite su contraseña para continuar:</h4>
-        </div>
-        {% endblock %}
-        {% block modal-body %}
-        <div class="modal-body">
-        <div class="form-group has-feedback">
-            <label for="password">Contraseña: </label>
-            <input type="password" class="form-control" name="password" placeholder="Contraseña" required>
-            <div class="help-block with-errors"></div>
-          </div>
-        </div>
-        {% endblock %}
-        {% block modal-footer %}
-        <div class="modal-footer">
-            <button type="submit" class="btn btn-primary">Confirmar</button>
-            <button  class="btn btn-default" data-dismiss="modal">Cancelar</button>
-
-        </div>
-        {% endblock %}
-         </form>
-      </div>
-    </div>
-  </div>
-  <!-- end modal -->
-
-
-
   </div>
 </div>
 {% endblock %}
+
+
+
+
+
 
 <script>
 if ($(".disableModal").hasClass( "has-error" )){
