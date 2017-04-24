@@ -1,9 +1,9 @@
 from django.contrib.admin import AdminSite
-from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
 from django.contrib.auth.admin import GroupAdmin
 
-from .users import UserAdmin
+from .users import MyCustomEmailUserAdmin
+from ..users.models import MyCustomEmailUser
 
 
 class AdminSite(AdminSite):
@@ -14,5 +14,5 @@ class AdminSite(AdminSite):
 
 
 admin_site = AdminSite(name='admin')
-admin_site.register(get_user_model(), UserAdmin)
+admin_site.register(MyCustomEmailUser, MyCustomEmailUserAdmin)
 admin_site.register(Group, GroupAdmin)
