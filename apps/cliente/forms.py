@@ -1,5 +1,8 @@
+# -*- encoding:utf-8 -*-
 from django import forms
-from apps.cliente.models import Cliente
+
+from .models import Cliente
+
 
 class ClienteForm(forms.ModelForm):
 
@@ -14,27 +17,25 @@ class ClienteForm(forms.ModelForm):
             'correo',
             'ciudad',
             'direccion',
-            'activo_inactivo',
         ]
         labels = {
-            'nit' : 'NIT',
-            'razon_social' : 'Razon Social',
-            'logo' : 'Logo',
-            'telefono' : 'Telefono',
-            'correo' : 'Correo',
-            'ciudad' : 'Ciudad',
-            'direccion' : 'Direccion',
-            'activo_inactivo' : 'Activo/Inactivo',
+            'nit': 'NIT',
+            'razon_social': 'Razon Social',
+            'logo': 'Logo',
+            'telefono': 'Telefono',
+            'correo': 'Correo',
+            'ciudad': 'Ciudad',
+            'direccion': 'Direccion',
         }
         widgets = {
             'nit': forms.NumberInput(attrs={'class': 'form-control'}),
-            'razon_social' : forms.TextInput(attrs={'class':'form-control'}),
-            'logo' : forms.FileInput(attrs={'class':'form-control'}),
+            'razon_social': forms.TextInput(attrs={'class': 'form-control'}),
+            'logo': forms.FileInput(),
             'telefono': forms.NumberInput(attrs={'class': 'form-control'}),
-            'correo' : forms.TextInput(attrs={'class':'form-control'}),
-            'ciudad' : forms.TextInput(attrs={'class':'form-control'}),
-            'direccion' : forms.TextInput(attrs={'class':'form-control'}),
-            'activo_inactivo' : forms.RadioSelect(choices=( (1,'True'),
-                        (0,'False'),
-                      ))
+            'correo': forms.TextInput(attrs={'class': 'form-control',
+                                             'pattern': '^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$',
+                                             }),
+            'ciudad': forms.TextInput(attrs={'class': 'form-control'}),
+            'direccion': forms.TextInput(attrs={'class': 'form-control'}),
+
         }

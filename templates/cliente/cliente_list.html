@@ -1,46 +1,58 @@
-{% extends 'base/base.html' %}
+{% extends 'base/base_dashboard.html' %}
+{% load staticfiles %}
+
+{% block extrastatic %}
+<link rel="stylesheet" href="{% static 'tenant/css/bootstrap-table.css'%}">
+{% endblock %}
+
+{% block overview %}
+<li><i class="fa fa-laptop"></i>Clientes</li>
+{% endblock%}
 
 {% block content %}
-
-<table class="table table-striped table-hover ">
-    <thead>
-        <tr>
-            <td>NIT</td>
-            <td>Razon Social</td>
-            <td>telefono</td>
-            <td>correo</td>
-            <td>ciudad</td>
-            <td>direccion</td>
-            <td>Activo/Inactivo</td>
-            <td>Logo</td>
-        </tr>
-    </thead>
-    <tbody>
-        {% if object_list %}
-		    {% for cliente in object_list %}
-                <tr>
-                    <td>{{ cliente.nit }}</td>
-                    <td>{{ cliente.razon_social }}</td>
-                    <td>{{ cliente.telefono }}</td>
-                    <td>{{ cliente.correo }}</td>
-                    <td>{{ cliente.ciudad }}</td>
-                    <td>{{ cliente.direccion }}</td>
-                    <td>{{ cliente.activo_inactivo }}</td>
-                    <td><!--img src para ARCHIVOS MEDIA JODA_BETA-->
-                        <div class="">
-                          <img src="{{ cliente.logo.url }}" width=100 heigth=100>
-                        </div>
-                    </td>
-                    <td>
-                        <a class="btn btn-primary" href="{% url 'cliente:cliente_edit' cliente.nit %}">Editar</a>
-                        <a class="btn btn-danger" href="{% url 'cliente:cliente_delete' cliente.nit %}">Eliminar</a>
-                    </td>
-                </tr>
-            {% endfor %}
-        {% else %}
-            <h1>No hay registros de clientes</h1>
-        {% endif %}
-    </tbody>
+<section class="panel" style="padding:5px 10px">
+<table class="table table-striped table-advance table-hover text-center"
+data-toggle="table" data-search="true" data-show-refresh="true"
+data-show-columns="true" data-sort-name="stargazers_count" data-sort-order="desc">
+  <thead>
+    <tr>
+        <th  class="text-center" data-field="nit"  data-sortable="true" >NIT</th>
+        <th  class="text-center" data-field="razon_social" data-sortable="true">Razon Social</th>
+        <th  class="text-center" data-field="telefono" data-sortable="true">Telefono</th>
+        <th  class="text-center" data-field="correo" data-sortable="true">Correo</th>
+        <th  class="text-center" data-field="estado" data-sortable="true">Estado</th>
+        <th  class="text-center" data-field="acciones">Acciones</th>
+    </tr>
+  </thead>
+<tbody>
+  {% if object_list %}
+  {% for cliente in object_list %}
+    <tr>
+        <td>{{ cliente.nit }}</td>
+        <td>{{ cliente.razon_social }}</td>
+        <td>{{ cliente.telefono }}</td>
+        <td>{{ cliente.correo }}</td>
+        <td>
+          {% if cliente.activo_inactivo %}
+            Activo
+          {% else %}
+            Inactivo
+          {% endif %}
+        </td>
+        <td>
+          <div class="btn-group">
+            <a class="btn btn-primary" href="{% url 'cliente:cliente_edit' cliente.nit %}">Editar</a>
+          </div>
+          <div class="btn-group">
+            <a class="btn btn-danger" href="{% url 'cliente:cliente_delete' cliente.nit %}">Cambiar estado</a>
+          </div>
+        </td>
+    </tr>
+  {% endfor %}
+  {% else %}
+    <h3 class="page-header"><i class="fa fa-laptop"></i> No hay registros</h3>
+  {% endif %}
+</tbody>
 </table>
 <ul class="pager">
 	<li>
@@ -54,4 +66,16 @@
     	{% endif %}
     </li>
 </ul>
+</section>
+
+
+{% endblock %}
+
+{% block extrajs %}
+<script src="{% static 'tenant/js/bootstrap-table.js'%}"></script>
+<script>
+  $( document ).ready(function() {
+    $(".fixed-table-toolbar").append( '<div class="columns columns-left btn-group pull-left"><a class="btn btn-success" href="{% url 'cliente:cliente_new' %}">Crear Usuario</a></div>' );
+  });
+</script>
 {% endblock %}

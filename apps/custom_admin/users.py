@@ -1,30 +1,30 @@
-from django.contrib.admin import ModelAdmin
+from custom_user.admin import EmailUserAdmin
 
 
-class UserAdmin(ModelAdmin):
+class MyCustomEmailUserAdmin(EmailUserAdmin):
+    """
+    You can customize the interface of your model here.
+    """
     list_display = (
         'last_name',
         'first_name',
-        'username',
         'email',
     )
     list_editable = ('email',)
     ordering = ('last_name', 'first_name')
-    search_fields = ('username', 'last_name', 'first_name',)
+    search_fields = ('last_name', 'first_name',)
     list_filter = (
-        'username',
         'last_name',
     )
     fieldsets = (
         (None, {
-            'fields': ('username', 'first_name', 'last_name', 'email', 'password')
+            'fields': ('first_name', 'last_name', 'email', 'password')
         }),
         (('Permissions'), {
             # 'classes': ('',),
             'fields': ('is_superuser', 'is_active', 'is_staff')
         }),
         (('Sessions'), {
-            # 'classes': ('',),
             'fields': ('last_login', )
         }),
     )
