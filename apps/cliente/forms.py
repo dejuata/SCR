@@ -28,11 +28,11 @@ class ClienteForm(forms.ModelForm):
             'direccion': 'Direccion',
         }
         widgets = {
-            'nit': forms.TextInput(attrs={'class': 'form-control'}),
+            'nit': forms.NumberInput(attrs={'class': 'form-control'}),
             'razon_social': forms.TextInput(attrs={'class': 'form-control'}),
             'logo': forms.FileInput(),
-            'telefono': forms.TextInput(attrs={'class': 'form-control'}),
-            'correo': forms.TextInput(attrs={'class': 'form-control',                                             
+            'telefono': forms.NumberInput(attrs={'class': 'form-control'}),
+            'correo': forms.TextInput(attrs={'class': 'form-control',
                                              'pattern': '^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$',
                                              }),
             'ciudad': forms.TextInput(attrs={'class': 'form-control'}),

@@ -98,10 +98,12 @@ WSGI_APPLICATION = 'scr.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django_tenants.postgresql_backend',
-        'NAME': 'scr_test',
-        'USER': 'dejuata',
-        'PASSWORD': 'America27',
+        'NAME': 'scr_dev',
+        #'USER': 'dejuata',
+        #'PASSWORD': 'America27',
         'HOST': 'localhost',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
         'PORT': '5432',
     }
 }
