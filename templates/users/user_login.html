@@ -13,32 +13,43 @@ Login
 {% endblock %}
 
 {% block content %}
-<div class="login login-form">
+<div class="login-container">
+
   <!-- messages erros -->
   {% if form.errors %}
-      <div class="alert alert-danger">
+      <div class="alert alert-danger" style="max-width:400px">
       {% for error in form.non_field_errors %}
         <p>{{ error|escape }}</p>
       {% endfor %}
       </div>
   {% endif %}
   <!-- end messages erros -->
+  <div class="login login-form">
 
-  <h2 class="login__title">Iniciar Sesión</h2>
-  <form method="post" class="form" data-toggle="validator" action="{% url 'index' %}?next={% url 'dashboard' %}">
-	{% csrf_token %}
-  <div class="form-group has-feedback text-left">
-    <input type="email" id="email" pattern="^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$" name="username" class="form-control" id="inputTwitter" placeholder="Correo Electronico" required>
-    <div class="help-block with-errors"></div>
+    <div>
+      <img class="login-img" src="{% static 'img/scr.png' %}" alt="scr">
+    </div>
+
+    <form method="post" class="form" data-toggle="validator" action="{% url 'index' %}?next={% url 'cliente:index' %}">
+    	{% csrf_token %}
+
+      <div class="form-group has-feedback text-left">
+        <input type="email" id="email" pattern="^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$" name="username" class="form-control" id="inputTwitter" placeholder="Correo Electronico" required>
+        <div class="help-block with-errors"></div>
+      </div>
+
+      <div class="form-group has-feedback text-left">
+        <input class="form-control" type="password" name="password" placeholder="Contraseña" data-minlength="8" data-error="Minimo 8 caracteres" required>
+        <div class="help-block with-errors"></div>
+      </div>
+
+      <div class="form-group">
+        <input class="btn btn-primary login__btn" type="submit" value="Ingresar">
+      </div>
+
+      <a href="">Olvidé mi contraseña</a>
+    </form>
   </div>
-  <div class="form-group has-feedback text-left">
-    <input class="form-control" type="password" name="password" placeholder="Contraseña" data-minlength="8" data-error="Minimo 8 caracteres" required>
-    <div class="help-block with-errors"></div>
-  </div>
-  <div class="form-group">
-    <input class="btn btn-primary login__btn" type="submit" value="Ingresar">
-  </div>
-    <a href="">Olvidé mi contraseña</a>
-  </form>
+
 </div>
 {% endblock %}

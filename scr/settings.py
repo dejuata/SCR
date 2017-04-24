@@ -34,8 +34,10 @@ SHARED_APPS = (
     'jet.dashboard',
     'jet',
     'django.contrib.admin',
+    'custom_user',
     'apps.users',
     'apps.custom_admin',
+    'captcha'
 )
 
 TENANT_APPS = (
@@ -43,6 +45,7 @@ TENANT_APPS = (
     'django.contrib.auth',
     'django.contrib.messages',
     'apps.users',
+    'apps.cliente',
 )
 
 INSTALLED_APPS = list(set(SHARED_APPS + TENANT_APPS))
@@ -50,7 +53,7 @@ INSTALLED_APPS = list(set(SHARED_APPS + TENANT_APPS))
 TENANT_MODEL = "tenant.Tenant"  # app.Model
 TENANT_DOMAIN_MODEL = "tenant.Domain"
 
-AUTH_USER_MODEL = 'users.User'
+AUTH_USER_MODEL = 'users.MyCustomEmailUser'
 
 MIDDLEWARE = [
     'django_tenants.middleware.TenantMiddleware',
@@ -96,8 +99,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django_tenants.postgresql_backend',
         'NAME': 'scr_test',
-        'USER': 'dejuata',
-        'PASSWORD': 'America27',
+        'USER': 'postgrest',
+        'PASSWORD': 'postgres',
         'HOST': 'localhost',
         'PORT': '5432',
     }
@@ -196,6 +199,12 @@ JET_THEMES = [
 # JET_APP_INDEX_DASHBOARD = 'dashboard.CustomAppIndexDashboard'
 
 JET_SIDE_MENU_COMPACT = True
+
+# django-capchat
+RECAPTCHA_PUBLIC_KEY = '6Lc_RB4UAAAAAIjVIJgONuqnMd3sVRZwLEVC_rvH'
+RECAPTCHA_PRIVATE_KEY = '6Lc_RB4UAAAAALGWluRsX4qP3TKNy-sw3eUFCYpd'
+
+RECAPTCHA_PROXY = 'http://127.0.0.1:8000'
 
 
 # django_tenants

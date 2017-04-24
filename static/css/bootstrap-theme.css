@@ -19,6 +19,7 @@ html {
 }
 body {
   margin: 0;
+  background-color: #f2f2f2;
 }
 article,
 aside,
@@ -5093,8 +5094,8 @@ a.thumbnail.active {
   color: #e6e6e6;
 }
 .alert-danger {
-  background-color: #e74c3c;
-  border-color: #e74c3c;
+  background-color: #eb685b;
+  border-color: #eb685b;
   color: #ffffff;
 }
 .alert-danger hr {
