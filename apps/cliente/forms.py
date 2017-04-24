@@ -27,10 +27,10 @@ class ClienteForm(forms.ModelForm):
             'activo_inactivo' : 'Activo/Inactivo',
         }
         widgets = {
-            'nit' : forms.TextInput(attrs={'class':'form-control'}),
+            'nit': forms.NumberInput(attrs={'class': 'form-control'}),
             'razon_social' : forms.TextInput(attrs={'class':'form-control'}),
             'logo' : forms.FileInput(attrs={'class':'form-control'}),
-            'telefono' : forms.TextInput(attrs={'class':'form-control'}),
+            'telefono': forms.NumberInput(attrs={'class': 'form-control'}),
             'correo' : forms.TextInput(attrs={'class':'form-control'}),
             'ciudad' : forms.TextInput(attrs={'class':'form-control'}),
             'direccion' : forms.TextInput(attrs={'class':'form-control'}),
