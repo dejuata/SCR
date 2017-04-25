@@ -28,13 +28,13 @@ class ClienteForm(forms.ModelForm):
             'direccion': 'Direccion',
         }
         widgets = {
-            'nit': forms.TextInput(attrs={'class': 'form-control'}),
-            'razon_social': forms.TextInput(attrs={'class': 'form-control'}),
+            'nit': forms.TextInput(attrs={'class': 'form-control', 'data-error': 'Ingrese el N° NIT de la empresa'}),
+            'razon_social': forms.TextInput(attrs={'class': 'form-control', 'data-error': 'Ingrese la Razón Social de la empresa'}),
             'logo': forms.FileInput(),
-            'telefono': forms.TextInput(attrs={'class': 'form-control'}),
-            'correo': forms.TextInput(attrs={'class': 'form-control',                                             
+            'telefono': forms.TextInput(attrs={'class': 'form-control', 'maxlength': '12', 'data-error': 'Ingrese el Telefono de la empresa'}),
+            'correo': forms.TextInput(attrs={'class': 'form-control',
                                              'pattern': '^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$',
                                              }),
-            'ciudad': forms.TextInput(attrs={'class': 'form-control'}),
-            'direccion': forms.TextInput(attrs={'class': 'form-control'}),
+            'ciudad': forms.TextInput(attrs={'class': 'form-control', 'data-error': 'Ingrese la ciudad donde esta ubicada la empresa'}),
+            'direccion': forms.TextInput(attrs={'class': 'form-control', 'data-error': 'Ingrese la dirección de la empresa'}),
         }

@@ -15,12 +15,25 @@
 
 {% block content %}
 
+<!-- messages success -->
+{% if messages %}
+<div class="alert alert-dismissible alert-info">
+  <button type="button" class="close text-center" data-dismiss="alert">&times;</button>
+  {% for message in messages %}
+  <strong>
+    <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+  </strong>
+  {% endfor %}
+</div>
+{% endif %}
+<!-- end messages success -->
+
 <!-- messages erros -->
 {% if form.errors %}
     <div class="alert alert-danger">
     {% for field in form %}
         {% for error in field.errors %}
-          <strong><div>{{field}}{{ error|escape }}</div></strong>
+          <strong><div>{{ error|escape }}</div></strong>
         {% endfor %}
     {% endfor %}
     </div>
@@ -35,13 +48,6 @@
 <!-- end messages erros -->
 
 <section class="panel">
-  {% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-    {% endfor %}
-</ul>
-{% endif %}
   <header class="panel-heading">
     Nuevo Cliente
   </header>
@@ -65,21 +71,21 @@
             <div class="form-group has-feedback text-left col-md-12">
               <strong>NIT</strong>
               {{ form.nit.erros }}
-              <input type="text" class="form-control" name="nit" data-error="Ingrese el N° NIT de la empresa" required>
+              {{ form.nit }}
               <div class="help-block with-errors"></div>
             </div>
 
             <div class="form-group has-feedback text-left col-md-12">
               <strong>Razón social</strong>
               {{ form.razon_social.erros }}
-              <input type="text" class="form-control" name="razon_social" data-error="Ingrese la Razón Social de la empresa" required>
+              {{ form.razon_social }}
               <div class="help-block with-errors"></div>
             </div>
 
             <div class="form-group has-feedback  col-md-12">
               <strong>Telefono:</strong>
               {{ form.telefono.erros }}
-              <input class="form-control" id="id_telefono" maxlength="12" name="telefono" type="text" data-error="Ingrese el Telefono de la empresa" required="">
+              {{ form.telefono }}
               <div class="help-block with-errors"></div>
             </div>
 
@@ -94,14 +100,14 @@
             <div class="form-group has-feedback text-left col-md-12">
               <strong>Ciudad</strong>
               {{ form.ciudad.erros }}
-              <input type="text" class="form-control" name="ciudad" data-error="Ingrese la ciudad donde esta ubicada la empresa" required>
+              {{ form.ciudad }}
               <div class="help-block with-errors"></div>
             </div>
 
             <div class="form-group has-feedback text-left col-md-12">
               <strong>Dirección</strong>
               {{ form.direccion.erros }}
-              <input type="text" class="form-control" name="direccion" data-error="Ingrese la dirección de la empresa" required>
+              {{ form.direccion }}
               <div class="help-block with-errors"></div>
             </div>
 

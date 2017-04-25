@@ -17,6 +17,18 @@ Login
 {% endblock navbar-btn %}
 
 {% block content %}
+
+<!-- messages success -->
+{% if messages %}
+<div class="alert alert-dismissible alert-info" style="width:50em;margin: 0.3em auto 0;">
+  <button type="button" class="close text-center" data-dismiss="alert">&times;</button>
+  {% for message in messages %}
+    <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>  
+  {% endfor %}
+</div>
+{% endif %}
+<!-- end messages success -->
+
 <div class="container">
 	<div class="login text-center">
 		<!-- messages erros -->

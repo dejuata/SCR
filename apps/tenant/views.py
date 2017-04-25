@@ -1,6 +1,8 @@
-from django.views.generic import CreateView
+from django.views.generic import CreateView, UpdateView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import redirect
+from django.core.urlresolvers import reverse_lazy
+from django.shortcuts import get_object_or_404
 
 from .models import Tenant, Domain
 from .forms import TenantForm
@@ -50,3 +52,19 @@ class TenantCreateView(SuccessMessageMixin, CreateView):
 
         else:
             return self.render_to_response(self.get_context_data(form=form))
+
+
+class TenantUpdateView(SuccessMessageMixin, UpdateView):
+    model = Tenant
+    form_class = TenantForm
+    template_name = 'tenant/tenant_form.html'
+    success_url = reverse_lazy('login')
+    success_message = "El cliente fue editado exitosamente"
+
+    def get_object(self, *args, **kwargs):
+        user = get_object_or_404(Tenant, pk=self.kwargs['pk'])
+
+        # We can also get user object using self.request.user  but that doesnt work
+        # for other models.
+
+        return user.telefono

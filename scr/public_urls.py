@@ -5,7 +5,6 @@ from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.conf.urls.static import static  # ARCHIVOS MEDIA JODA_BETA
 
-from apps.tenant.views import TenantCreateView
 from apps.custom_admin.admin_public import admin_site
 # from django.contrib import admin
 
@@ -22,8 +21,8 @@ urlpatterns = [
     url(r'^accounts/login/', login, {'template_name': 'users/tenant_login.html'}, name='tenant_login'),
 
     url(r'^', include('apps.users.urls_tenant', namespace='usuario')),
+    url(r'^company/', include('apps.tenant.urls', namespace='tenant')),
 
-    url(r'^registrar-empresa/$', login_required(TenantCreateView.as_view()), name='registrar-empresa'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)  # ARCHIVOS MEDIA JODA_BETA
 
 if settings.DEBUG:
