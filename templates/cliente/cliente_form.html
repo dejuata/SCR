@@ -8,7 +8,8 @@
 {% endblock %}
 
 {% block overview %}
-<li><i class="fa fa-laptop"></i>Clientes</li>
+<li><i class="fa fa-laptop"></i><a href="{% url 'cliente:cliente_list'%}">Clientes</a></li>
+<li><i class="fa fa-laptop"></i>Nuevo</li>
 {% endblock %}
 
 
@@ -56,13 +57,18 @@
         {% csrf_token %}
         <div class="row">
           <div class="col-md-4">
-
-            <div class="cuadrado"></div>
+            <strong>Logo</strong>
+            <div class="cuadrado">
+              {% if cliente.logo.url != ''%}
+                <img src="{{ cliente.logo.url }}" alt="perfil" style="width:100%">
+              {% endif %}
+            </div>
 
             <div class="form-group has-feedback text-left col-md-12">
-              {{ form.logo.label_tag }}
+
               {{ form.logo.erros }}
-              <input type="file" class="form-control" name="logo">
+              {{ form.logo }}
+
             </div>
           </div>
 
@@ -70,8 +76,8 @@
 
             <div class="form-group has-feedback text-left col-md-12">
               <strong>NIT</strong>
-              {{ form.nit.erros }}
-              {{ form.nit }}
+                {{ form.nit.erros }}
+                {{ form.nit }}
               <div class="help-block with-errors"></div>
             </div>
 
@@ -83,7 +89,7 @@
             </div>
 
             <div class="form-group has-feedback  col-md-12">
-              <strong>Telefono:</strong>
+              <strong>Teléfono:</strong>
               {{ form.telefono.erros }}
               {{ form.telefono }}
               <div class="help-block with-errors"></div>

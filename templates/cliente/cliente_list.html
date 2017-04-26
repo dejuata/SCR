@@ -42,7 +42,7 @@ data-show-columns="true" data-sort-name="stargazers_count" data-sort-order="desc
   {% if object_list %}
   {% for cliente in object_list %}
     <tr>
-        <td>{{ cliente.nit }}</td>
+        <td><a href="{% url 'cliente:cliente_edit' cliente.nit %}">{{ cliente.nit }}</a></td>
         <td>{{ cliente.razon_social }}</td>
         <td>{{ cliente.telefono }}</td>
         <td>{{ cliente.correo }}</td>
@@ -127,15 +127,9 @@ function get_nit(nit){
     request.done(function(response) {
         if (response.delete){
           $('#modalEmergente').modal(response.class)
-          // location.href ="{% url 'cliente:cliente_list' %}";
-          location.reload();
-        }
-        else{
-          $('#modalEmergente').modal(response.class)
-          console.log(response.message)
+          location.href ="{% url 'cliente:cliente_list' %}";
         }
     });
-    location.reload();
   });
 
 }

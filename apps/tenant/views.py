@@ -1,8 +1,10 @@
+# -*- encoding:utf-8 -*-
 from django.views.generic import CreateView, UpdateView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import redirect
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import get_object_or_404
+from django.core.exceptions import ValidationError
 
 from .models import Tenant, Domain
 from .forms import TenantForm
@@ -19,6 +21,11 @@ class TenantCreateView(SuccessMessageMixin, CreateView):
     success_url = '/'
     success_message = "el tenant was created successfully"
 
+    def get_context_data(self, **kwargs):
+        context = super(TenantCreateView, self).get_context_data(**kwargs)
+        context['password'] = 'Contraseña invalida'
+        return context
+
     def post(self, request, *args, **kwargs):
         self.object = self.get_object
         form = self.form_class(request.POST)
@@ -26,30 +33,33 @@ class TenantCreateView(SuccessMessageMixin, CreateView):
         user_id = request.POST.get('user')
         password = request.POST.get('password')
 
-        if validate_user(user_id=user_id, password=password) and form.is_valid():
+        if validate_user(user_id=user_id, password=password):
+            if form.is_valid():
 
-            tenant_registrado = form.instance
-            tenant_registrado.schema_name = tenant_registrado.nombre_comercial
-            # Guardo el formulario con respecto al tenant
-            tenant = form.save()
-            # Creo una instancia de la clase Domain para relacionarlo
-            # con el tenant que se creo
-            dominio_tenant = Domain(domain=tenant.nombre_comercial + '.localhost',
-                                    is_primary=True,
-                                    tenant=tenant_registrado
-                                    )
-            # Guardo el dominio
-            dominio_tenant.save()
-            # Genero la url de redireccion
-            url = 'http://' + tenant_registrado.nombre_comercial + '.localhost:8000/admin'
-            # url = 'http://localhost:8000/registrar-empresa/'
+                tenant_registrado = form.instance
+                tenant_registrado.schema_name = tenant_registrado.nombre_comercial
+                # Guardo el formulario con respecto al tenant
+                tenant = form.save()
+                # Creo una instancia de la clase Domain para relacionarlo
+                # con el tenant que se creo
+                dominio_tenant = Domain(domain=tenant.nombre_comercial + '.localhost',
+                                        is_primary=True,
+                                        tenant=tenant_registrado
+                                        )
+                # Guardo el dominio
+                dominio_tenant.save()
+                # Genero la url de redireccion
+                url = 'http://' + tenant_registrado.nombre_comercial + '.localhost:8000/admin'
+                # url = 'http://localhost:8000/registrar-empresa/'
 
-            user_id = tenant_registrado.user_id
-            tenant = tenant_registrado.nombre_comercial
-            create_admin_tenant(tenant, user_id, password)
+                user_id = tenant_registrado.user_id
+                tenant = tenant_registrado.nombre_comercial
+                create_admin_tenant(tenant, user_id, password)
 
-            return redirect(url)
+                return redirect(url)
 
+            else:
+                return self.render_to_response(self.get_context_data(form=form))
         else:
             return self.render_to_response(self.get_context_data(form=form))
 
