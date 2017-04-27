@@ -46,6 +46,7 @@ TENANT_APPS = (
     'django.contrib.messages',
     'apps.users',
     'apps.cliente',
+    'apps.ruta',
 )
 
 INSTALLED_APPS = list(set(SHARED_APPS + TENANT_APPS))

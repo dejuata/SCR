@@ -51,9 +51,12 @@
         <div class="row">
           <div class="col-md-4">
 
-            <div class="cuadrado"></div>
+            <!--<div class="cuadrado"></div>-->
+            <div class="cuadrado">
+              <img src="{{ cliente.logo.url }}" width="200" height="200">
+            </div>
 
-            <div class="form-group has-feedback text-left col-md-12">
+            <div class="form-group has-feedback text-left col-md-12">-
               {{ form.logo.label_tag }}
               {{ form.logo.erros }}
               <input type="file" class="form-control" name="logo">
@@ -64,6 +67,7 @@
 
             <div class="form-group has-feedback text-left col-md-12">
               <strong>NIT</strong>
+            </br>
               {{ form.nit.erros }}
               <input type="text" class="form-control" name="nit" data-error="Ingrese el N° NIT de la empresa" required>
               <div class="help-block with-errors"></div>
@@ -86,7 +90,6 @@
             <div class="form-group has-feedback  col-md-12">
               <strong>Correo</strong>
               {{ form.correo.erros }}
-              {{ form.correo }}
               <div class="help-block with-errors"></div>
             </div>
 

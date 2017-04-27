@@ -1,0 +1,152 @@
+{% extends 'base/base_dashboard.html' %}
+{% load staticfiles %}
+
+
+{% block extrastatic %}
+<link rel="stylesheet" href="{% static 'css/login.css' %}"/>
+<!-- <script src='https://www.google.com/recaptcha/api.js'></script> -->
+{% endblock %}
+
+{% block overview %}
+<li><i class="fa fa-laptop"></i>Rutas</li>
+{% endblock %}
+
+
+
+{% block content %}
+
+<!-- messages erros -->
+{% if form.errors %}
+    <div class="alert alert-danger">
+    {% for field in form %}
+        {% for error in field.errors %}
+          <strong><div>{{field}}{{ error|escape }}</div></strong>
+        {% endfor %}
+    {% endfor %}
+    </div>
+
+    {% for error in form.non_field_errors %}
+      <div class="alert alert-danger">
+        <strong>{{ error|escape }}</strong>
+      </div>
+    {% endfor %}
+
+{% endif %}
+<!-- end messages erros -->
+
+<section class="panel">
+  {% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+  <header class="panel-heading">
+    Nueva Ruta
+  </header>
+  <div class="panel-body">
+    <form enctype="multipart/form-data" method="post" class="form-horizontal" data-toggle="validator">
+        {% csrf_token %}
+        <div class="row">
+          <!--<div class="col-md-4">
+
+            <div class="cuadrado"></div>
+
+            <div class="form-group has-feedback text-left col-md-12">
+              {{ form.logo.label_tag }}
+              {{ form.logo.erros }}
+              <input type="file" class="form-control" name="logo">
+            </div>
+          </div>-->
+
+          <div class="col-md-8">
+
+            <div class="form-group has-feedback text-left col-md-12">
+              <strong>NIT:</strong>
+              {{ form.nit.erros }}
+              <input type="text" class="form-control" name="nit" data-error="Seleccione el N° NIT del Cliente de la Ruta" required>
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-md-12">
+              <strong>Codigo de ruta:</strong>
+              {{ form.codRuta.erros }}
+              <input type="text" class="form-control" name="codRuta" data-error="Ingrese el codigo de la Ruta" required>
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback  col-md-12">
+              <strong>Tipo de ruta:</strong>
+              {{ form.tipo_Ruta.erros }}
+              <input class="form-control" id="tipo_Ruta" maxlength="12" name="tipo_Ruta" type="text" data-error="Ingrese el tipo de ruta" required="">
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-md-12">
+              <strong>Tipo de vehiculo:</strong>
+              {{ form.tipo_Vehiculo_Requerido.erros }}
+              <input type="text" class="form-control" name="tipo_Vehiculo_Requerido" data-error="Ingrese el tipo de vehiculo requerido para la ruta" required>
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-md-12">
+              <strong>Hora Inicio</strong>
+              {{ form.hora_Inicio.erros }}
+              <input type="Time" class="form-control" name="hora_Inicio" data-error="Ingrese la hora de inicio de la ruta" required>
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-md-12">
+              <strong>Hora Fin</strong>
+              {{ form.hora_Fin.erros }}
+              <input type="Time" class="form-control" name="hora_Fin" data-error="Ingrese la hora de finalizacion de la ruta" required>
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-md-12">
+              <strong>Valor Adicional/Hora:</strong>
+              {{ form.valor_Hora_Add.erros }}
+              <input type="number" class="form-control" name="valor_Hora_Add" data-error="Ingrese el valor adicional/hora para la ruta" required>
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-md-12">
+              <strong>Valor Ruta:</strong>
+              {{ form.valor_Ruta.erros }}
+              <input type="number" class="form-control" name="valor_Ruta" data-error="Ingrese el valor que tiene la ruta" required>
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-md-12">
+              <strong>Valor Tercero:</strong>
+              {{ form.valor_Tercero.erros }}
+              <input type="number" class="form-control" name="valor_Tercero" data-error="Ingrese el valor para el Tercero que realiza la ruta" required>
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-md-12">
+              <strong>Comision Conductor:</strong>
+              {{ form.comision_Conductor.erros }}
+              <input type="number" class="form-control" name="comision_Conductor" data-error="Ingrese la comision para el conductor de la ruta" required>
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-md-12">
+              <strong>Kilometros:</strong>
+              {{ form.kilometros.erros }}
+              <input type="number" class="form-control" name="kilometros" data-error="Ingrese los kilometros de la ruta" required>
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group text-right col-md-12">
+              <button class="btn btn-primary " type="submit">Guardar</button>
+            </div>
+          </div>
+        </div>
+
+    </form>
+  </div>
+</section>
+
+{% endblock %}
