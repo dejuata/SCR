@@ -1,81 +1,69 @@
-{% extends 'base/base.html' %}
+{% extends 'base/base_users.html' %}
 {% load staticfiles %}
 
 {% block title %}
-Editar Perfil
+Registrar
 {% endblock %}
 
-{% block extrastatic %}
-<link rel="stylesheet" href="{% static 'css/perfil.css' %}"/>
-<link rel="stylesheet" href="{% static 'css/login.css' %}"/>
+{% block colum_one %}
+  <form action="" method="post" style="width:100%">
+  {% csrf_token %}
+
+    {{ form.logo.label_tag }}
+    <div class="cuadrado" id="image-preview">
+      {% if user.logo.url != ''%}
+        <img src="{{ user.logo }}" style="width:100%">
+      {% endif %}
+    </div>
+    <div class="form-group text-left col-md-12">
+      <label for="image-upload" id="image-label">Elige una imagen</label>
+      {{ form.logo }}
+    </div>
 {% endblock %}
 
-{% block content %}
-<div class="container">
-  <div class="login sign-up">
-    <div class="panel panel-info">
-      <div class="panel-heading" style="text-align:center;font-size:22px">Tus Datos:</div>
-      <div class="panel-body">
-        <div class="row">
-          <div class="">
+{% block colum_two %}
+  <div class="form-group">
+    {{ form.first_name.label_tag }}
+    {{ form.first_name.errors }}
+    {{ form.first_name }}
+  </div>
+  <div class="form-group">
+    {{ form.last_name.label_tag }}
+    {{ form.last_name.errors }}
+    {{ form.last_name }}
+  </div>
+  <div class="form-group has-feedback text-left">
+    {{ form.email.label_tag}}
+    {{ form.email }}
+    <div class="help-block with-errors">
+      {% if form.email.errors %}
+      <ul class="list-unstyled">
+        <li>{{ form.email.errors }}</li>
+      </ul>
+      {% endif %}
+    </div>
+  </div>
+  <div class="form-group">
+    {{ form.password1.label_tag }}
+    {{ form.password1.errors }}
+    <input class="form-control" id="password1" name="password1" type="password" value="" >
+  </div>
+  <div class="form-group">
+    {{ form.password2.label_tag }}
+    {{ form.password2.errors }}
+    <input class="form-control" id="password2" name="password2" type="password" value="" >
+  </div>
 
-          </div>
-          <div class="col-md-5 perfil-left">
-            <div class="circulo">
-            </div>
-          </div>
-          <div class="col-md-7 perfil-right">
-            <form action="" method="post" style="width:100%">
-            {% csrf_token %}
-            <div class="perfil-nombre">
-              <div class="form-group">
-                {{ form.first_name.label_tag }}
-                {{ form.first_name.errors }}
-                {{ form.first_name }}
-              </div>
-              <div class="form-group">
-                {{ form.last_name.label_tag }}
-                {{ form.last_name.errors }}
-                {{ form.last_name }}
-              </div>
-            </div>
-            <div class="perfil-nombre">
-              <div class="form-group">
-                {{ form.username.label_tag }}
-                {{ form.username.errors }}
-                {{ form.username }}
-              </div>
-              <div class="form-group">
-                {{ form.email.label_tag }}
-                {{ form.email.errors }}
-                {{ form.email }}
-              </div>
-            </div>
-            <div class="perfil-nombre">
-              <div class="form-group">
-                {{ form.password1.label_tag }}
-                {{ form.password1.errors }}
-                <input class="form-control" id="password1" name="password1" type="password" value="" >
-              </div>
-              <div class="form-group margin-left">
-                {{ form.password2.label_tag }}
-                {{ form.password2.errors }}
-                <input class="form-control" id="password2" name="password2" type="password" value="" >
-              </div>
-            </div>
-            <div class="perfil-btn">
-              <input class="btn btn-success perfil-btn-editar" type="submit" value="Actualizar">
-            </div>
-          </form>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="eliminar-btn">
-      <a href="" class="btn btn-danger" data-toggle="modal" data-target="#modalEmergente">Eliminar cuenta</a>
-    </div>
+  <div class="form-group">
+    <input class="btn btn-primary" type="submit" value="Actualizar">
   </div>
-  </div>
+  </form>
+{% endblock %}
+
+{% block row %}
+<div class="eliminar-btn">
+  <a href="" class="btn btn-danger" data-toggle="modal" data-target="#modalEmergente">Eliminar cuenta</a>
+</div>
 {% endblock %}
 
 {% block modal-title %}
@@ -94,32 +82,34 @@ Editar Perfil
 {% block modal-footer %}
 <div class="modal-footer">
   <button onclick="eliminarUsuario()" class="btn btn-danger">Si, eliminar</button>
-  <a class="btn btn-default" href="{% url 'usuario:usuario_profile' %}">Cancelar</a>
+  <a class="btn btn-default" class="close" data-dismiss="modal" aria-hidden="true">Cancelar</a>
 </div>
 {% endblock %}
 
-{% block filejs %}
-<script>
-function eliminarUsuario() {
-    $('#modalEmergente').modal('hide')
-    var request = $.ajax({
-        type: "POST",
-        url: "{% url 'usuario:usuario_delete' %}",
-        data: {
-            "csrfmiddlewaretoken": "{{ csrf_token }}",
-            "identificador_id": {{ user.id }}
-        },
-    });
-    request.done(function(response) {
-        if (response.delete){
-          $('#modalEmergente').modal(response.class)
-          location.href ="{% url 'index' %}";
-        }
-        else{
-          $('#modalEmergente').modal(response.class)
-          console.log(response.message)
-        }
-    });
-}
-</script>
+{% block extrajs %}
+  <script type="text/javascript" src="{% static 'js/uploadPreview.min.js'%}"></script>
+  <script type="text/javascript" src="{% static 'js/main.js'%}"></script>
+  <script>
+  function eliminarUsuario() {
+      $('#modalEmergente').modal('hide')
+      var request = $.ajax({
+          type: "POST",
+          url: "{% url 'usuario:usuario_delete' %}",
+          data: {
+              "csrfmiddlewaretoken": "{{ csrf_token }}",
+              "identificador_id": {{ user.id }}
+          },
+      });
+      request.done(function(response) {
+          if (response.delete){
+            $('#modalEmergente').modal(response.class)
+            location.href ="{% url 'index' %}";
+          }
+          else{
+            $('#modalEmergente').modal(response.class)
+            console.log(response.message)
+          }
+      });
+  }
+  </script>
 {% endblock %}
