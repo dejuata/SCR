@@ -9,12 +9,6 @@ body{
   flex-direction: column;
 }
 .login{
-<<<<<<< HEAD
-    margin: 10vh auto;
-    position: relative;
-    z-index: 1;
-=======
->>>>>>> usuarios
     background: #FFFFFF;
     max-width: 400px;
     padding: 30px;
