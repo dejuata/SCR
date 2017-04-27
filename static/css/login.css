@@ -67,7 +67,7 @@
    width: 200px;
    height: 200px;
    background: #f2f2f2;
-   margin-top: 20px;
+   margin: 20px auto;
 }
 .form-empresa .login-left{
   display: flex;

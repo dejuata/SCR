@@ -10,7 +10,7 @@ from django.conf import settings
 class Tenant(TenantMixin):
     nit = models.IntegerField(unique=True)
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    logo = models.ImageField(null=True, blank=True)
+    logo = models.ImageField(null=True, blank=True, default='')
     razon_social = models.CharField(max_length=200)
     nombre_comercial = models.CharField(max_length=100, unique=True)
     telefono = models.IntegerField()

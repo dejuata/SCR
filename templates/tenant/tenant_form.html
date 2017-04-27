@@ -17,9 +17,11 @@ Registrar Empresa
     <!-- messages erros -->
     {% if form.errors %}
         <div class="alert alert-danger">
+          {{ password }}
         {% for field in form %}
             {% for error in field.errors %}
               <strong><div>{{ error|escape }}</div></strong>
+
             {% endfor %}
         {% endfor %}
         </div>
@@ -47,6 +49,8 @@ Registrar Empresa
           <div class="">
             <br>
             {{ form.logo }}
+            <br>
+
           </div>
         </div>
       </div>

@@ -12,7 +12,7 @@ Registrar
 
 {% block content %}
 <div class="container">
-	<div class="login sign-up text-center">
+	<div class="login text-center">
 		<!-- messages erros -->
 		{% if form.errors %}
 				{% for field in form %}
@@ -34,7 +34,7 @@ Registrar
 	  <div class="panel-body">
 			<div class="col-sm-7 login-left">
 				<h4>Con un Correo y contraseña:</h4>
-
+				<br>
 				<!-- form user_new -->
 				<form method="post" data-toggle="validator">
 					{% csrf_token %}
@@ -50,21 +50,21 @@ Registrar
 				    </div>
 				  </div>
 
-					<div class="row">
-						<div class="form-group has-feedback text-left col-md-6">
-							<input class="form-control" data-minlength="8" type="password" name="password1" placeholder="Contraseña" required>
-							<div class="help-block">Minimo de 8 caracteres</div>
-						</div>
-
-						<div class="form-group has-feedback text-left col-md-6">
-							<input class="form-control" type="password" name="password2" placeholder="Confirmar contraseña" data-match-error="Complete este campo" required>
-							<div class="help-block with-errors">{{ form.password2.help_text|safe }}</div>
-						</div>
+					<div class="form-group has-feedback text-left">
+						<input class="form-control" data-minlength="8" data-minlength-error="Minimo 8 caracteres" type="password" name="password1" placeholder="Contraseña" data-match-error="Complete este campo" required>
+						<div class="help-block with-errors"></div>
 					</div>
 
+					<div class="form-group has-feedback text-left">
+						<input class="form-control" type="password" name="password2" placeholder="Confirmar contraseña" data-match-error="Complete este campo" required>
+						<div class="help-block with-errors">{{ form.password2.help_text|safe }}</div>
+					</div>
+
+					<div class="g-recaptcha" data-sitekey="6Lc_RB4UAAAAAIjVIJgONuqnMd3sVRZwLEVC_rvH"></div>
+					<br>
 
 					<div class="form-group form-input">
-						<button class="btn btn-primary login-btn" type="submit">Guardar</button>
+						<button class="btn btn-primary login-btn" type="submit">Registrar</button>
 					</div>
 				</form>
 				<!-- end form user_new -->
