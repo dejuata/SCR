@@ -11,7 +11,7 @@ class MyCustomEmailUserAdmin(EmailUserAdmin):
         'email',
     )
     list_editable = ('email',)
-    ordering = ('last_name', 'first_name')
+    #  ordering = ('last_name', 'first_name')
     search_fields = ('last_name', 'first_name',)
     list_filter = (
         'last_name',
@@ -21,7 +21,7 @@ class MyCustomEmailUserAdmin(EmailUserAdmin):
             'fields': ('first_name', 'last_name', 'email', 'password')
         }),
         (('Permissions'), {
-            # 'classes': ('',),
+            #  'classes': ('',),
             'fields': ('is_superuser', 'is_active', 'is_staff')
         }),
         (('Sessions'), {

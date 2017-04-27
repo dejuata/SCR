@@ -7,4 +7,4 @@ class TenantAdmin(ModelAdmin):
         'schema_name',
         'user_id',
     )
-    search_fields = ('nit',)
+    search_fields = ('nit')

@@ -8,5 +8,5 @@ urlpatterns = [
     url(r'^signup', CreateUser.as_view(), name="usuario_new"),
     url(r'^profile', login_required(ProfileUser.as_view()), name='usuario_profile'),
     url(r'^edit/(?P<pk>\d+)/$', login_required(EditUser.as_view()), name='usuario_edit'),
-    url(r'delete/$', user_delete, name='usuario_delete')
+    url(r'delete/$', user_delete, name='usuario_delete'),
 ]

@@ -1,5 +1,5 @@
 from django.contrib.admin import AdminSite
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import Group, Permission
 from django.contrib.auth.admin import GroupAdmin
 
 from .tenant import TenantAdmin
@@ -20,3 +20,4 @@ admin_site.register(Tenant, TenantAdmin)
 admin_site.register(Domain)
 admin_site.register(MyCustomEmailUser, MyCustomEmailUserAdmin)
 admin_site.register(Group, GroupAdmin)
+admin_site.register(Permission)

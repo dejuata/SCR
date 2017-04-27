@@ -15,6 +15,7 @@ urlpatterns = [
     url(r'^jet/', include('jet.urls', 'jet')),
     url(r'^jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),
     url(r'^admin/', include(admin_site.urls)),
+    url(r'^captcha/', include('captcha.urls')),
     # url(r'^admin/', admin.site.urls),
 
     url(r'^login/', login, {'template_name': 'users/tenant_login.html'}, name='tenant_login'),
