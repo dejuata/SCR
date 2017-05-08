@@ -19,7 +19,6 @@ class MyCustomEmailUser(AbstractEmailUser):
     last_name = models.CharField(_('last name'), max_length=30, null=True, blank=True, default='')
     logo = models.ImageField(upload_to='avatars/', null=True, blank=True, default='')
 
-    # aqui limpiar el email
-    # def get_short_name(self):
-    #     # The user is identified by their email address
-    #     return self.email
+    def get_short_name(self):
+        username = self.email.split('@')
+        return username[0]
