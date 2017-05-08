@@ -37,7 +37,7 @@ Registrar Empresa
   <div class="panel panel-success">
 	  <div class="panel-heading" style="text-align:center;font-size:22px">Registrar Empresa</div>
 	  <div class="panel-body">
-      <form method="post" class="form-empresa" data-toggle="validator">
+      <form method="post" enctype="multipart/form-data" class="form-empresa" data-toggle="validator">
 			{% csrf_token %}
 
       <div class="col-sm-4">

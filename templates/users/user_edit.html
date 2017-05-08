@@ -14,13 +14,13 @@ panel-info
 {% endblock %}
 
 {% block colum_one %}
-  <form action="" method="post" style="width:100%" class="text-left">
+  <form action="" method="post" style="width:100%" class="text-left" enctype="multipart/form-data">
   {% csrf_token %}
 
     {{ form.logo.label_tag }}
     <div class="cuadrado" id="image-preview">
       {% if user.logo.url != ''%}
-        <img src="{{ user.logo }}" style="width:100%">
+        <img src="{{ user.logo.url }}" style="width:100%">
       {% endif %}
     </div>
     <div class="form-group text-left col-md-12">
