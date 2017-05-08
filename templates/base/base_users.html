@@ -9,7 +9,9 @@
 
 {% block content %}
 <div class="container">
-  <div class="login">
+  <div class="login text-center">
+    {% block message %}
+    {% endblock %}
     <!-- messages erros -->
 		{% if form.errors %}
 				{% for field in form %}
@@ -26,8 +28,11 @@
 				{% endfor %}
 		{% endif %}
 		<!-- end messages erros -->
-    <div class="panel panel-info">
-      <div class="panel-heading" style="text-align:center;font-size:22px">Tus Datos:</div>
+    <div class="panel {% block color_panel %}{% endblock %}">
+      <div class="panel-heading" style="text-align:center;font-size:22px">
+        {% block title_panel %}
+        {% endblock %}
+      </div>
       <div class="panel-body">
         <div class="col-md-6">
           {% block colum_one %}

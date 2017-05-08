@@ -1,23 +1,30 @@
-{% extends 'base/base.html' %}
+{% extends 'base/base_users.html' %}
 {% load staticfiles %}
 
 {% block title %}
 Login
 {% endblock %}
 
+{% block title_panel %}
+Iniciar Sesión
+{% endblock %}
+
+{% block color_panel %}
+panel-warning
+{% endblock %}
+
 {% block extrastatic %}
-<link rel="stylesheet" href="{% static 'css/navbar.css' %}"/>
+<!-- <link rel="stylesheet" href="{% static 'css/navbar.css' %}"/> -->
 <link rel="stylesheet" href="{% static 'css/login.css' %}"/>
 {% endblock %}
 
 {% block navbar-btn %}
-<a href="{% url 'usuario:usuario_new' %}" style="padding: 0 10px;">
+<a href="{% url 'usuario:usuario_new' %}">
 	<button  class="btn btn-success">Registrate!</button>
 </a>
 {% endblock navbar-btn %}
 
-{% block content %}
-
+{% block message %}
 <!-- messages success -->
 {% if messages %}
 <div class="alert alert-dismissible alert-info" style="width:50em;margin: 0.3em auto 0;">
@@ -28,63 +35,42 @@ Login
 </div>
 {% endif %}
 <!-- end messages success -->
+{% endblock %}
 
-<div class="container">
-	<div class="login text-center">
-		<!-- messages erros -->
-		{% if form.errors %}
-				{% for field in form %}
-						{% for error in field.errors %}
-							<div class="alert alert-danger">
-								<strong>{{ error|escape }}</strong>
-							</div>
-						{% endfor %}
-				{% endfor %}
-				<div class="alert alert-danger">
-				{% for error in form.non_field_errors %}
-					<strong>{{ error|escape }}</strong>
-				{% endfor %}
-				</div>
-		{% endif %}
-		<!-- end messages erros -->
-	<div class="panel panel-warning">
-	  <div class="panel-heading" style="text-align:center;font-size:22px">Iniciar Sesión</div>
-	  <div class="panel-body">
-			<div class="col-sm-6 login-left">
-				<h4>Con tu Correo:</h4>
-				<br>
-			<form method="post" data-toggle="validator">
-				{% csrf_token %}
-				<div class="form-group has-feedback text-left">
-			    <input type="email" id="email" pattern="^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$" name="username" class="form-control" id="inputTwitter" placeholder="Correo Electronico" required>
-			    <div class="help-block with-errors"></div>
-			  </div>
-				<div class="form-group has-feedback text-left">
-					<input class="form-control" type="password" name="password" placeholder="Contraseña" data-minlength="8" data-error="Minimo 8 caracteres" required>
-					<div class="help-block with-errors"></div>
-				</div>
-				<div class="form-group">
-					<input class="btn btn-primary login-btn" type="submit" value="Ingresar">
-			  </div>
-			  <a href="">Olvidé mi contraseña</a>
-			</form>
-			</div>
-			<div class="col-sm-6 login-right">
-				<h4>Con tus Redes sociales:</h4>
-				<br>
-				<div class="form-group">
-					<a href="#" class="btn btn-info btn-signup login-btn btn-face">Facebook</a>
-				</div>
-				<div class="form-group">
-					<a href="#" class="btn btn-info btn-signup login-btn btn-twitter">Twitter</a>
-				</div>
-				<div class="form-group">
-					<a href="#" class="btn btn-danger btn-signup login-btn btn-google">Google +</a>
-				</div>
-			</div>
-		</div>
-	  </div>
-		<div>¿Aún no tienes cuenta? <a href="{% url 'usuario:usuario_new' %}">Regístrate aquí</a></div>
+{% block colum_one %}
+<h4>Con tu Correo:</h4>
+<br>
+<form method="post" data-toggle="validator">
+	{% csrf_token %}
+	<div class="form-group has-feedback text-left">
+		<input type="email" id="email" pattern="^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$" name="username" class="form-control" id="inputTwitter" placeholder="Correo Electronico" required>
+		<div class="help-block with-errors"></div>
 	</div>
+	<div class="form-group has-feedback text-left">
+		<input class="form-control" type="password" name="password" placeholder="Contraseña" data-minlength="8" data-error="Minimo 8 caracteres" required>
+		<div class="help-block with-errors"></div>
 	</div>
+	<div class="form-group">
+		<input class="btn btn-primary login-btn" type="submit" value="Ingresar">
+	</div>
+	<a href="">Olvidé mi contraseña</a>
+</form>
+{% endblock %}
+
+{% block colum_two %}
+<h4>Con tus Redes sociales:</h4>
+<br>
+<div class="form-group">
+	<a href="#" class="btn btn-info btn-signup login-btn btn-face">Facebook</a>
+</div>
+<div class="form-group">
+	<a href="#" class="btn btn-info btn-signup login-btn btn-twitter">Twitter</a>
+</div>
+<div class="form-group">
+	<a href="#" class="btn btn-danger btn-signup login-btn btn-google">Google +</a>
+</div>
+{% endblock %}
+
+{% block row %}
+<div>¿Aún no tienes cuenta? <a href="{% url 'usuario:usuario_new' %}">Regístrate aquí</a></div>
 {% endblock %}

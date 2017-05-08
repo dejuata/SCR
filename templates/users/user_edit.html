@@ -2,11 +2,19 @@
 {% load staticfiles %}
 
 {% block title %}
-Registrar
+Editar información
+{% endblock %}
+
+{% block title_panel %}
+Tus Datos:
+{% endblock %}
+
+{% block color_panel %}
+panel-info
 {% endblock %}
 
 {% block colum_one %}
-  <form action="" method="post" style="width:100%">
+  <form action="" method="post" style="width:100%" class="text-left">
   {% csrf_token %}
 
     {{ form.logo.label_tag }}
@@ -22,12 +30,12 @@ Registrar
 {% endblock %}
 
 {% block colum_two %}
-  <div class="form-group">
+  <div class="form-group text-left">
     {{ form.first_name.label_tag }}
     {{ form.first_name.errors }}
     {{ form.first_name }}
   </div>
-  <div class="form-group">
+  <div class="form-group text-left">
     {{ form.last_name.label_tag }}
     {{ form.last_name.errors }}
     {{ form.last_name }}
@@ -43,25 +51,25 @@ Registrar
       {% endif %}
     </div>
   </div>
-  <div class="form-group">
+  <div class="form-group text-left">
     {{ form.password1.label_tag }}
     {{ form.password1.errors }}
     <input class="form-control" id="password1" name="password1" type="password" value="" >
   </div>
-  <div class="form-group">
+  <div class="form-group text-left">
     {{ form.password2.label_tag }}
     {{ form.password2.errors }}
     <input class="form-control" id="password2" name="password2" type="password" value="" >
   </div>
 
   <div class="form-group">
-    <input class="btn btn-primary" type="submit" value="Actualizar">
+    <input class="btn btn-primary" style="width:100%" type="submit" value="Actualizar">
   </div>
   </form>
 {% endblock %}
 
 {% block row %}
-<div class="eliminar-btn">
+<div class="eliminar-btn text-right">
   <a href="" class="btn btn-danger" data-toggle="modal" data-target="#modalEmergente">Eliminar cuenta</a>
 </div>
 {% endblock %}

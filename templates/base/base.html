@@ -7,6 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
   <link rel="stylesheet" href="{% static 'css/bootstrap-theme.css' %}"/>
+  <link rel="stylesheet" href="{% static 'css/navbar.css' %}"/>
   {% block extrastatic %}
   {% endblock %}
 
@@ -50,7 +51,7 @@
           {% else %}
             <li>
               {% block navbar-btn %}
-              <a href="{% url 'tenant_login' %}" style="padding: 0 10px !important;">
+              <a href="{% url 'tenant_login' %}" style="">
                 <button  class="btn btn-warning">Iniciar sesión</button>
               </a>
               {% endblock navbar-btn %}
@@ -98,11 +99,6 @@
   <script src="{% static 'js/jquery-3.2.1.min.js'%}"></script>
   <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/validator.js' %}"></script>
-
-
-  <!-- <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script> -->
-  <!-- <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
-  <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script> -->
   <script type="text/javascript" src="{% static 'js/mailcheck.min.js' %}"></script>
 
   <!--  recapchat-->
@@ -112,6 +108,7 @@
   {% endblock %}
 
   <script>
+  // Cierra los mensajes de alerta
   $(function () {
     $('[data-toggle="popover"]').popover()
   })
