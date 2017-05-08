@@ -9,4 +9,13 @@ class Cliente(models.Model):
     correo = models.EmailField()
     ciudad = models.CharField(max_length=50,  default='')
     direccion = models.TextField()
-    activo_inactivo = models.BooleanField( default=True)
+    activo_inactivo = models.BooleanField(blank=True, default=True)
+
+    def state(self):
+        return self.activo_inactivo
+
+    state.boolean = True
+    state.short_description = 'Estado'
+
+    def __str__(self):
+        return self.razon_social

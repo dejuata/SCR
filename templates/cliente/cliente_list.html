@@ -32,8 +32,8 @@ data-show-columns="true" data-sort-name="stargazers_count" data-sort-order="desc
     <tr>
         <th  class="text-center" data-field="nit"  data-sortable="true" >NIT</th>
         <th  class="text-center" data-field="razon_social" data-sortable="true">Razon Social</th>
-        <th  class="text-center" data-field="telefono" data-sortable="true">Teléfono</th>
-        <th  class="text-center" data-field="correo" data-sortable="true">Correo</th>
+        <th  class="text-center" data-field="telefono">Teléfono</th>
+        <th  class="text-center" data-field="correo">Correo</th>
         <th  class="text-center" data-field="estado" data-sortable="true">Estado</th>
         <th  class="text-center" data-field="acciones">Acciones</th>
     </tr>
@@ -109,7 +109,7 @@ data-show-columns="true" data-sort-name="stargazers_count" data-sort-order="desc
 <script src="{% static 'tenant/js/bootstrap-table.js'%}"></script>
 <script>
   $( document ).ready(function() {
-    $(".fixed-table-toolbar").append( '<div class="columns columns-left btn-group pull-left"><a class="btn btn-success" href="{% url 'cliente:cliente_new' %}">Crear Usuario</a></div>' );
+    $(".fixed-table-toolbar").append( '<div class="columns columns-left btn-group pull-left"><a class="btn btn-success" href="{% url 'cliente:cliente_new' %}">Añadir Cliente</a></div>' );
   });
 </script>
 <script>
