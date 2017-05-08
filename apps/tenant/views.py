@@ -4,11 +4,22 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import redirect
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import get_object_or_404
-from django.core.exceptions import ValidationError
+# from django.core.mail import EmailMessage
 
 from .models import Tenant, Domain
 from .forms import TenantForm
 from .utils import create_admin_tenant, validate_user
+
+
+# def send_email(request):
+#     msg = EmailMessage(subject='Bienvenido a SCR',
+#                        from_email='Juan Pino <dejuata@hotmail.com>',
+#                        to=['juan.david.pino@correounivalle.edu.co'])
+#     msg.template_name = 'Welcome SCR'
+#     msg.template_content = {
+#         '': 'Contenido dinamico'
+#     }
+#     msg.send()
 
 
 class TenantCreateView(SuccessMessageMixin, CreateView):
@@ -55,6 +66,9 @@ class TenantCreateView(SuccessMessageMixin, CreateView):
                 user_id = tenant_registrado.user_id
                 tenant = tenant_registrado.nombre_comercial
                 create_admin_tenant(tenant, user_id, password)
+
+                # Enviar correo
+                # send_email(request)
 
                 return redirect(url)
 

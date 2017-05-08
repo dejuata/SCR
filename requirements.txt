@@ -28,3 +28,5 @@ sqlparse==0.2.3
 tablib==0.11.4
 Unipath==1.1
 virtualenv==15.1.0
+djrill==2.1.0
+

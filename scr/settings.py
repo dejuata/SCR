@@ -37,7 +37,8 @@ SHARED_APPS = (
     'custom_user',
     'apps.users',
     'apps.custom_admin',
-    'captcha'
+    'captcha',
+    # 'djrill',
 )
 
 TENANT_APPS = (
@@ -231,3 +232,7 @@ LOGGING = {
         },
     }
 }
+
+# email transactional mandrill
+# EMAIL_BACKEND = 'djrill.mail.backends.djrill.DjrillBackend'
+# MANDRILL_API_KEY = '1rzq_Q3TxLY7metluxZbSg'
