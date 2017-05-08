@@ -41,17 +41,10 @@ class ClienteForm(forms.ModelForm):
             'direccion': 'Direccion',
         }
         widgets = {
-<<<<<<< HEAD
-            'nit': forms.NumberInput(attrs={'class': 'form-control'}),
-            'razon_social': forms.TextInput(attrs={'class': 'form-control'}),
-            'logo': forms.FileInput(),
-            'telefono': forms.NumberInput(attrs={'class': 'form-control'}),
-=======
             'nit': forms.TextInput(attrs={'class': 'form-control', 'data-error': 'Ingrese el N° NIT de la empresa'}),
             'razon_social': forms.TextInput(attrs={'class': 'form-control', 'data-error': 'Ingrese la Razón Social de la empresa'}),
             'logo': forms.FileInput(),
             'telefono': forms.TextInput(attrs={'class': 'form-control', 'maxlength': '12', 'data-error': 'Ingrese el Teléfono de la empresa'}),
->>>>>>> 6501f57f826d26656714ad49b4703693fad72248
             'correo': forms.TextInput(attrs={'class': 'form-control',
                                              'pattern': '^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$',
                                              'data-error': 'Ingrese el Correo de la empresa'
