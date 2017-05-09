@@ -1,0 +1,382 @@
+{% extends 'base/base_dashboard.html' %}
+{% load staticfiles %}
+
+
+{% block extrastatic %}
+<link rel="stylesheet" href="{% static 'css/login.css' %}"/>
+<!-- <script src='https://www.google.com/recaptcha/api.js'></script> -->
+{% endblock %}
+
+{% block overview %}
+<li><i class="fa fa-laptop"></i><a href="{% url 'vehiculo:vehiculo_list'%}">Vehiculos</a></li>
+<li><i class="fa fa-laptop"></i>Nuevo</li>
+{% endblock %}
+
+
+
+{% block content %}
+
+<!-- messages success -->
+{% if messages %}
+<div class="alert alert-dismissible alert-info">
+  <button type="button" class="close text-center" data-dismiss="alert">&times;</button>
+  {% for message in messages %}
+  <strong>
+    <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+  </strong>
+  {% endfor %}
+</div>
+{% endif %}
+<!-- end messages success -->
+
+<!-- messages erros -->
+{% if form.errors %}
+    <div class="alert alert-danger">
+    {% for field in form %}
+        {% for error in field.errors %}
+          <strong><div>{{ error|escape }}</div></strong>
+        {% endfor %}
+    {% endfor %}
+    </div>
+
+    {% for error in form.non_field_errors %}
+      <div class="alert alert-danger">
+        <strong>{{ error|escape }}</strong>
+      </div>
+    {% endfor %}
+
+{% endif %}
+<!-- end messages erros -->
+
+<section class="panel">
+  <header class="panel-heading">
+    Nuevo vehiculo
+  </header>
+  <div class="panel-body">
+    <form enctype="multipart/form-data" method="post" class="form-horizontal" data-toggle="validator">
+        {% csrf_token %}
+        <div class="row">
+          <div class="col-md-4">
+            <strong>Foto</strong>
+            <div class="cuadrado">
+              {% if vehiculo.foto.url != ''%}
+                <img src="{{ vehiculo.foto.url }}" alt="perfil" style="width:100%">
+              {% endif %}
+            </div>
+
+            <div class="form-group has-feedback text-left col-md-12">
+
+              {{ form.foto.erros }}
+              {{ form.foto }}
+
+            </div>
+          </div>
+
+          <div class="col-md-8">
+
+            <div class="form-group has-feedback text-left col-md-12">
+              <strong>Placa</strong>
+                {{ form.placa.erros }}
+                {{ form.placa }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-md-12">
+              <strong>Conductor por defecto</strong>
+              {{ form.conductorDefault.erros }}
+              {{ form.conductorDefault }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback  col-md-12">
+              <strong>numeroInterno:</strong>
+              {{ form.numeroInterno.erros }}
+              {{ form.numeroInterno }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback  col-md-12">
+              <strong>combustible</strong>
+              {{ form.combustible.erros }}
+              {{ form.combustible }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+
+            <div class="form-group has-feedback text-left col-md-12">
+              <strong>numLicenciaTransito</strong>
+              {{ form.numLicenciaTransito.erros }}
+              {{ form.numLicenciaTransito }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-md-12">
+              <strong>docLicenciaTransito</strong>
+              {{ form.docLicenciaTransito.erros }}
+              {{ form.docLicenciaTransito }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-md-12">
+              <strong>organismoTransito</strong>
+              {{ form.organismoTransito.erros }}
+              {{ form.organismoTransito }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-md-12">
+              <strong>fechaExpedicion</strong>
+              {{ form.fechaExpedicion.erros }}
+              {{ form.fechaExpedicion }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-md-12">
+              <strong>marca</strong>
+              {{ form.marca.erros }}
+              {{ form.marca }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-md-12">
+              <strong>linea</strong>
+              {{ form.linea.erros }}
+              {{ form.linea }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-md-12">
+              <strong>cilindraje</strong>
+              {{ form.cilindraje.erros }}
+              {{ form.cilindraje }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-md-12">
+              <strong>modelo</strong>
+              {{ form.modelo.erros }}
+              {{ form.modelo }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-md-12">
+              <strong>claseVehiculo</strong>
+              {{ form.claseVehiculo.erros }}
+              {{ form.claseVehiculo }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-md-12">
+              <strong>color</strong>
+              {{ form.color.erros }}
+              {{ form.color }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-md-12">
+              <strong>tipoServicio</strong>
+              {{ form.tipoServicio.erros }}
+              {{ form.tipoServicio }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-md-12">
+              <strong>carroceria</strong>
+              {{ form.carroceria.erros }}
+              {{ form.carroceria }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-md-12">
+              <strong>capacidad</strong>
+              {{ form.capacidad.erros }}
+              {{ form.capacidad }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-md-12">
+              <strong>numMotor</strong>
+              {{ form.numMotor.erros }}
+              {{ form.numMotor }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-md-12">
+              <strong>numChasis</strong>
+              {{ form.numChasis.erros }}
+              {{ form.numChasis }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-md-12">
+              <strong>propietario</strong>
+              {{ form.propietario.erros }}
+              {{ form.propietario }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-md-12">
+              <strong>idPropietario</strong>
+              {{ form.idPropietario.erros }}
+              {{ form.idPropietario }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-md-12">
+              <strong>numTarjetaOperacion</strong>
+              {{ form.numTarjetaOperacion.erros }}
+              {{ form.numTarjetaOperacion }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-md-12">
+              <strong>docTO</strong>
+              {{ form.docTO.erros }}
+              {{ form.docTO }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-md-12">
+              <strong>fechaInicioTo</strong>
+              {{ form.fechaInicioTo.erros }}
+              {{ form.fechaInicioTo }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-md-12">
+              <strong>fechaVencimientoTo</strong>
+              {{ form.fechaVencimientoTo.erros }}
+              {{ form.fechaVencimientoTo }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-md-12">
+              <strong>empresaAfiliado</strong>
+              {{ form.empresaAfiliado.erros }}
+              {{ form.empresaAfiliado }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-md-12">
+              <strong>idEmpresaAfiliado</strong>
+              {{ form.idEmpresaAfiliado.erros }}
+              {{ form.idEmpresaAfiliado }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-md-12">
+              <strong>numSoat</strong>
+              {{ form.numSoat.erros }}
+              {{ form.numSoat }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-md-12">
+              <strong>docSoat</strong>
+              {{ form.docSoat.erros }}
+              {{ form.docSoat }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-md-12">
+              <strong>fechaInicioSoat</strong>
+              {{ form.fechaInicioSoat.erros }}
+              {{ form.fechaInicioSoat }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-md-12">
+              <strong>fechaVencimientoSoat</strong>
+              {{ form.fechaVencimientoSoat.erros }}
+              {{ form.fechaVencimientoSoat }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-md-12">
+              <strong>aseguradoraSoat</strong>
+              {{ form.aseguradoraSoat.erros }}
+              {{ form.aseguradoraSoat }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-md-12">
+              <strong>numCertificadoRtm</strong>
+              {{ form.numCertificadoRtm.erros }}
+              {{ form.numCertificadoRtm }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-md-12">
+              <strong>docRtm</strong>
+              {{ form.docRtm.erros }}
+              {{ form.docRtm }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-md-12">
+              <strong>fechaInicioRtm</strong>
+              {{ form.fechaInicioRtm.erros }}
+              {{ form.fechaInicioRtm }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-md-12">
+              <strong>fechaVencimientoRtm</strong>
+              {{ form.fechaVencimientoRtm.erros }}
+              {{ form.fechaVencimientoRtm }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-md-12">
+              <strong>cda</strong>
+              {{ form.cda.erros }}
+              {{ form.cda }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-md-12">
+              <strong>numeroPolizasRce_Rcc</strong>
+              {{ form.numeroPolizasRce_Rcc.erros }}
+              {{ form.numeroPolizasRce_Rcc }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-md-12">
+              <strong>docPolizasRce_Rcc</strong>
+              {{ form.docPolizasRce_Rcc.erros }}
+              {{ form.docPolizasRce_Rcc }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-md-12">
+              <strong>fechaInicioRce_Rcc</strong>
+              {{ form.fechaInicioRce_Rcc.erros }}
+              {{ form.fechaInicioRce_Rcc }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-md-12">
+              <strong>fechaVencimientoRce_Rcc</strong>
+              {{ form.fechaVencimientoRce_Rcc.erros }}
+              {{ form.fechaVencimientoRce_Rcc }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-md-12">
+              <strong>aseguradoraRce_Rcc</strong>
+              {{ form.aseguradoraRce_Rcc.erros }}
+              {{ form.aseguradoraRce_Rcc }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group text-right col-md-12">
+              <button class="btn btn-primary " type="submit">Guardar</button>
+            </div>
+          </div>
+        </div>
+
+    </form>
+  </div>
+</section>
+
+{% endblock %}

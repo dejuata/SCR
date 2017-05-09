@@ -1,0 +1,219 @@
+{% extends 'base/base_dashboard.html' %}
+{% load staticfiles %}
+
+
+{% block extrastatic %}
+<link rel="stylesheet" href="{% static 'css/login.css' %}"/>
+{% endblock %}
+
+{% block overview %}
+<li><i class="fa fa-laptop"></i><a href="{% url 'conductor:conductor_list'%}">Conductor</a></li>
+<li><i class="fa fa-laptop"></i>Nuevo</li>
+{% endblock %}
+
+
+
+{% block content %}
+
+<!-- messages success -->
+{% if messages %}
+<div class="alert alert-dismissible alert-info">
+  <button type="button" class="close text-center" data-dismiss="alert">&times;</button>
+  {% for message in messages %}
+  <strong>
+    <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+  </strong>
+  {% endfor %}
+</div>
+{% endif %}
+<!-- end messages success -->
+
+<!-- messages erros -->
+{% if form.errors %}
+    <div class="alert alert-danger">
+    {% for field in form %}
+        {% for error in field.errors %}
+          <strong><div>{{ error|escape }}</div></strong>
+        {% endfor %}
+    {% endfor %}
+    </div>
+
+    {% for error in form.non_field_errors %}
+      <div class="alert alert-danger">
+        <strong>{{ error|escape }}</strong>
+      </div>
+    {% endfor %}
+
+{% endif %}
+<!-- end messages erros -->
+
+<section class="panel">
+  <header class="panel-heading">
+    Nuevo Conductor
+  </header>
+  <div class="panel-body">
+    <form enctype="multipart/form-data" method="post" class="form-horizontal" data-toggle="validator">
+        {% csrf_token %}
+        <div class="row">
+          <div class="col-md-4">
+            <strong>Foto</strong>
+            <div class="cuadrado">
+              {% if conductor.foto.url != ''%}
+                <img src="{{ conductor.foto.url }}" alt="perfil" style="width:100%">
+              {% endif %}
+            </div>
+
+            <div class="form-group has-feedback text-left col-md-12">
+
+              {{ form.foto.erros }}
+              {{ form.foto }}
+
+            </div>
+          </div>
+
+          <div class="col-md-8">
+
+            <div class="form-group has-feedback text-left col-md-12">
+              <strong>Cedula</strong>
+                {{ form.cedula.erros }}
+                {{ form.cedula }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-md-12">
+              <strong>Nombres</strong>
+              {{ form.nombres.erros }}
+              {{ form.nombres }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-md-12">
+              <strong>Apellidos</strong>
+              {{ form.apellidos.erros }}
+              {{ form.apellidos }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-md-12">
+              <strong>Dirección</strong>
+              {{ form.direccion.erros }}
+              {{ form.direccion }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-md-12">
+              <strong>Tipo de sangre (RH)</strong>
+              {{ form.rh.erros }}
+              {{ form.rh }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback  col-md-12">
+              <strong>Teléfono:</strong>
+              {{ form.telefono.erros }}
+              {{ form.telefono }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback  col-md-12">
+              <strong>Celular:</strong>
+              {{ form.celular.erros }}
+              {{ form.celular }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback  col-md-12">
+              <strong>Correo</strong>
+              {{ form.correo.erros }}
+              {{ form.correo }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-md-12">
+              <strong>Fecha de Nacimiento</strong>
+              {{ form.fechaNacimiento.erros }}
+              {{ form.fechaNacimiento }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-md-12">
+              <strong>Nivel de Escolaridad</strong>
+              {{ form.nivelEstudio.erros }}
+              {{ form.nivelEstudio }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-md-12">
+              <strong>Numero Licencia</strong>
+                {{ form.numLicenciaConduccion.erros }}
+                {{ form.numLicenciaConduccion }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-md-12">
+              <strong>Documento Licencia</strong>
+                {{ form.docLicenciaConduccion.erros }}
+                {{ form.docLicenciaConduccion }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-md-12">
+              <strong>Categoria Licencia</strong>
+                {{ form.categoriaLicencia.erros }}
+                {{ form.categoriaLicencia }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-md-12">
+              <strong>Estado Licencia</strong>
+                {{ form.estadoLicencia.erros }}
+                {{ form.estadoLicencia }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-md-12">
+              <strong>Organismo de trasito</strong>
+                {{ form.organismoTransito.erros }}
+                {{ form.organismoTransito }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-md-12">
+              <strong>Fecha de expedicion licencia</strong>
+              {{ form.fechaExpedicion.erros }}
+              {{ form.fechaExpedicion }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-md-12">
+              <strong>Fecha de vencimiento licencia</strong>
+              {{ form.fechaVencimiento.erros }}
+              {{ form.fechaVencimiento }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-md-12">
+              <strong>Restriciones de conduccion</strong>
+              {{ form.restricciones.erros }}
+              {{ form.restricciones }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-md-12">
+              <strong>Experiencia</strong>
+              {{ form.experiencia.erros }}
+              {{ form.experiencia }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group text-right col-md-12">
+              <button class="btn btn-primary " type="submit">Guardar</button>
+            </div>
+          </div>
+        </div>
+
+    </form>
+  </div>
+</section>
+
+{% endblock %}

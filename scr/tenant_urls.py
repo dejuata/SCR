@@ -18,6 +18,8 @@ urlpatterns = [
     url(r'^accounts/login/', login, {'template_name': 'users/user_login.html'}, name='usuario_login'),
 
     url(r'^dashboard/', include('apps.cliente.urls', namespace='cliente')),
+    url(r'^dashboard/', include('apps.conductor.urls', namespace='conductor')),
+    url(r'^dashboard/', include('apps.vehiculo.urls', namespace='vehiculo')),
     url(r'^', include('apps.users.urls_usuario', namespace='usuario_tenant')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)  # ARCHIVOS MEDIA JODA_BETA

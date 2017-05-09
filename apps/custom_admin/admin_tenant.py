@@ -4,6 +4,7 @@ from django.contrib.auth.admin import GroupAdmin
 
 from .users import MyCustomEmailUserAdmin
 from ..users.models import MyCustomEmailUser
+from ..conductor.models import Conductor
 
 
 class AdminSite(AdminSite):
@@ -16,3 +17,4 @@ class AdminSite(AdminSite):
 admin_site = AdminSite(name='admin')
 admin_site.register(MyCustomEmailUser, MyCustomEmailUserAdmin)
 admin_site.register(Group, GroupAdmin)
+admin_site.register(Conductor)

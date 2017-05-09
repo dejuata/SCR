@@ -47,7 +47,7 @@ class TenantForm(forms.ModelForm):
                                                        'data-toggle': 'popover',
                                                        'data-placement': 'top',
                                                        'data-content': 'Tenga en cuenta que con el Nombre comercial, se genera la URL a la cual debera acceder. Ejemplo: https://nombreComercial.scr.com'
-                                                }),
+                                                       }),
             'telefono': forms.NumberInput(attrs={'class': 'form-control'}),
             'correo': forms.EmailInput(attrs={'class': 'form-control'}),
             'ciudad': forms.TextInput(attrs={'class': 'form-control'}),
@@ -57,7 +57,7 @@ class TenantForm(forms.ModelForm):
 
     def clean_nombre_comercial(self):
         nombre_comercial = self.cleaned_data['nombre_comercial']
-        if nombre_comercial != nombre_comercial.lower():
-            self.add_error('nombre_comercial', 'El nombre comercial debe ir en minusculas')
+        if nombre_comercial.isupper() or (nombre_comercial.find(" ") > 0) or not(nombre_comercial.islower()):
+            self.add_error('nombre_comercial', 'El nombre comercial debe ir en minusculas y sin espacios')
         else:
             return self.cleaned_data['nombre_comercial']
