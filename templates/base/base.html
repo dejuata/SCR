@@ -39,7 +39,7 @@
           {% if user.is_authenticated %}
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" style="text-transform:uppercase" data-toggle="dropdown" role="button" aria-expanded="false">
-                {{ user.email }} <span class="caret"></span>
+                {{ user.get_short_name }} <span class="caret"></span>
               </a>
               <ul class="dropdown-menu" role="menu">
                 <li><a href="{% url 'usuario:usuario_edit' user.id %}">Ver Perfil</a></li>
