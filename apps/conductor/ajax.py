@@ -4,9 +4,8 @@ from .models import Conductor
 
 
 def conductor_delete(request):
-    print('llegue aca')
-    pk = request.POST.get('identificador_id')
-    identificador = Conductor.objects.get(cedula=pk)
+    pkc = request.POST.get('identificadorC_id')
+    identificador = Conductor.objects.get(cedula=pkc)
     response = {'delete': True, 'class': 'hide'}
 
     if identificador.activo_inactivo:

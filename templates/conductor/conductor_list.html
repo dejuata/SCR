@@ -117,14 +117,13 @@ data-show-columns="true" data-sort-name="stargazers_count" data-sort-order="desc
 <script>
 
   function get_cedula(cedula){
-    console.log('estoy aqui')
     $('#confirmarDelete').click(function(){
       var request = $.ajax({
           type: "POST",
           url: "{% url 'conductor:conductor_delete' %}",
           data: {
               "csrfmiddlewaretoken": "{{ csrf_token }}",
-              "identificador_id": cedula
+              "identificadorC_id": cedula
           },
       });
       request.done(function(response) {
