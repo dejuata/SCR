@@ -111,7 +111,7 @@ Directions service
             <div class="form-group has-feedback text-left col-md-4">
               <strong>Origen:</strong>
               {{ form.origen.erros }}
-              <input type="text" class="form-control" size="43" id="origen" name="origen" value="" data-error="Seleccione el origen de la Ruta" required/>
+              {{ form.origen }}
               <div class="help-block with-errors"></div>
             </div>
 
@@ -120,7 +120,7 @@ Directions service
             <div class="form-group has-feedback text-left col-md-4">
               <strong>Destino:</strong>
               {{ form.destino.erros }}
-              <input type="text" class="form-control" size="43" id="destino" name="destino" value="" data-error="Seleccione el destino de la Ruta" required/>
+              {{ form.destino }}
               <div class="help-block with-errors"></div>
             </div>
 
@@ -144,14 +144,14 @@ Directions service
             <div class="form-group has-feedback text-left col-md-6">
               <strong>Cliente:</strong>
               {{ form.nit.erros }}
-              <input type="text" class="form-control" name="nit" data-error="Seleccione el N° NIT del Cliente de la Ruta" required>
+              {{ form.nit }}
               <div class="help-block with-errors"></div>
             </div>
 
             <div class="form-group has-feedback text-left left-input col-md-6">
               <strong>Codigo de ruta:</strong>
               {{ form.codRuta.erros }}
-              <input type="text" class="form-control" name="codRuta" data-error="Ingrese el codigo de la Ruta" required>
+              {{ form.codRuta }}
               <div class="help-block with-errors"></div>
             </div>
           </div>
@@ -160,14 +160,14 @@ Directions service
             <div class="form-group has-feedback  col-md-6">
               <strong>Tipo de ruta:</strong>
               {{ form.tipo_Ruta.erros }}
-              <input class="form-control" id="tipo_Ruta" maxlength="12" name="tipo_Ruta" type="text" data-error="Ingrese el tipo de ruta" required="">
+              {{ form.tipo_Ruta }}
               <div class="help-block with-errors"></div>
             </div>
 
             <div class="form-group has-feedback text-left left-input col-md-6">
               <strong>Tipo de vehiculo:</strong>
               {{ form.tipo_Vehiculo_Requerido.erros }}
-              <input type="text" class="form-control" name="tipo_Vehiculo_Requerido" data-error="Ingrese el tipo de vehiculo requerido para la ruta" required>
+              {{ form.tipo_Vehiculo_Requerido }}
               <div class="help-block with-errors"></div>
             </div>
           </div>
@@ -192,14 +192,14 @@ Directions service
             <div class="form-group has-feedback text-left col-md-6">
               <strong>Valor Adicional/Hora:</strong>
               {{ form.valor_Hora_Add.erros }}
-              <input type="number" class="form-control" name="valor_Hora_Add" data-error="Ingrese el valor adicional/hora para la ruta" required>
+              {{ form.valor_Hora_Add }}
               <div class="help-block with-errors"></div>
             </div>
 
             <div class="form-group has-feedback text-left left-input col-md-6">
               <strong>Valor Ruta:</strong>
               {{ form.valor_Ruta.erros }}
-              <input type="number" class="form-control" name="valor_Ruta" data-error="Ingrese el valor que tiene la ruta" required>
+              {{ form.valor_Ruta }}
               <div class="help-block with-errors"></div>
             </div>
           </div>
@@ -208,27 +208,26 @@ Directions service
             <div class="form-group has-feedback text-left col-md-6">
               <strong>Valor Tercero:</strong>
               {{ form.valor_Tercero.erros }}
-              <input type="number" class="form-control" name="valor_Tercero" data-error="Ingrese el valor para el Tercero que realiza la ruta" required>
+              {{ form.valor_Tercero }}
               <div class="help-block with-errors"></div>
             </div>
 
             <div class="form-group has-feedback text-left left-input col-md-6">
               <strong>Comision Conductor:</strong>
               {{ form.comision_Conductor.erros }}
-              <input type="number" class="form-control" name="comision_Conductor" data-error="Ingrese la comision para el conductor de la ruta" required>
+              {{ form.comision_Conductor }}
               <div class="help-block with-errors"></div>
             </div>
           </div>
 
-          <div class="col-md-12">
+          <!-- <div class="col-md-12">
             <div class="form-group has-feedback text-left col-md-6">
               <strong>Kilometros(Km):</strong>
               {{ form.kilometros.erros }}
-              <!-- <input type="number" class="form-control" name="kilometros" data-error="Ingrese los kilometros de la ruta" required>-->
-              <input type="number" enable="False" class="form-control" id="Kilometros"  name="kilometros"  data-error="Ingrese los kilometros de la ruta" required>
+              {{ form.kilometros }}
               <div class="help-block with-errors"></div>
             </div>
-          </div>
+          </div> -->
 
           <div class="form-group text-right col-md-12">
             <button class="btn btn-primary " type="submit">Guardar</button>

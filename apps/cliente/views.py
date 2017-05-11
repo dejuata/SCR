@@ -1,10 +1,33 @@
 from django.views.generic import ListView, CreateView, UpdateView
 from django.core.urlresolvers import reverse_lazy
 from django.contrib.messages.views import SuccessMessageMixin
+from django.shortcuts import render_to_response, render
 
-from .forms import ClienteForm
+from .forms import ClienteForm, UploadFileForm
 from .models import Cliente
 from .sorting import SortMixin
+
+import django_excel as excel
+
+
+def upload(request):
+    if request.method == "POST":
+        form = UploadFileForm(request.POST, request.FILES)
+        if form.is_valid():
+            filehandle = request.FILES['file']
+            return excel.make_response(filehandle.get_sheet(), "csv",
+                                       file_name="download")
+    else:
+        form = UploadFileForm()
+    return render(
+        request,
+        'excel.html',
+        {
+            'form': form,
+            'title': 'Excel file upload and download example',
+            'header': ('Please choose any excel file ' +
+                       'from your cloned repository:')
+        })
 
 
 class ClienteList(SortMixin, ListView):

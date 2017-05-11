@@ -5,7 +5,7 @@ from .models import Ruta
 
 def ruta_delete(request):
     pk = request.POST.get('identificador_id')
-    identificador = Ruta.objects.get(codRuta=pk)
+    identificador = Ruta.objects.get(pk=pk)
     response = {'delete': True, 'class': 'hide'}
 
     if identificador.activo_inactivo:
