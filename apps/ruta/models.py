@@ -7,6 +7,8 @@ class Ruta(models.Model):
     nit = models.ForeignKey(Cliente, null=True, blank=True, on_delete=models.CASCADE)
     tipo_Ruta = models.CharField(max_length=100)
     tipo_Vehiculo_Requerido = models.CharField(max_length=100)
+    origen = models.CharField(max_length=100)
+    destino = models.CharField(max_length=100)
     hora_Inicio = models.TimeField()
     hora_Fin = models.TimeField()
     valor_Hora_Add = models.IntegerField(null=True)

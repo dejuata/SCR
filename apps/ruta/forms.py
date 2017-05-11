@@ -10,9 +10,12 @@ class RutaForm(forms.ModelForm):
         model = Ruta
 
         fields = [
+            'codRuta',
             'nit',
             'tipo_Ruta',
             'tipo_Vehiculo_Requerido',
+            'origen',
+            'destino',
             'hora_Inicio',
             'hora_Fin',
             'valor_Hora_Add',
@@ -21,12 +24,14 @@ class RutaForm(forms.ModelForm):
             'comision_Conductor',
             'kilometros',
             #'linkRuta',
-            'activo_inactivo',
         ]
         labels = {
+            'codRuta': 'Codigo Ruta',
             'nit': 'NIT',
             'tipo_Ruta': 'Tipo Ruta',
             'tipo_Vehiculo_Requerido': 'Tipo Vehiculo Requerido',
+            'origen': 'Origen',
+            'destino': 'destino',
             'hora_Inicio': 'Hora inicio',
             'hora_Fin': 'Hora Fin',
             'valor_Hora_Add': 'Valor Hora Adicional',
@@ -35,11 +40,13 @@ class RutaForm(forms.ModelForm):
             'comision_Conductor': 'Comision Conductor',
             'kilometros': 'Kilometros',
             #'linkRuta': 'link Ruta',
-            'activo_inactivo': 'Activo/Inactivo',
         }
         widgets = {
+            'codRuta': forms.NumberInput(attrs={'class': 'form-control'}),
             'tipo_Ruta': forms.TextInput(attrs={'class': 'form-control'}),
             'tipo_Vehiculo_Requerido': forms.TextInput(attrs={'class': 'form-control'}),
+            'origen': forms.TextInput(attrs={'class': 'form-control'}),
+            'destino': forms.TextInput(attrs={'class': 'form-control'}),
             'hora_Inicio': forms.NumberInput(attrs={'class': 'form-control'}),
             'hora_Fin': forms.NumberInput(attrs={'class': 'form-control'}),
             'valor_Hora_Add': forms.NumberInput(attrs={'class': 'form-control'}),
@@ -47,5 +54,4 @@ class RutaForm(forms.ModelForm):
             'valor_Tercero': forms.NumberInput(attrs={'class': 'form-control'}),
             'comision_Conductor': forms.NumberInput(attrs={'class': 'form-control'}),
             #'linkRuta': forms.TextInput(attrs={'class': 'form-control'}),
-            'activo_inactivo': forms.TextInput(attrs={'class': 'form-control'}),
         }

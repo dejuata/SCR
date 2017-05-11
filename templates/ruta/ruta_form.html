@@ -1,10 +1,46 @@
 {% extends 'base/base_dashboard.html' %}
 {% load staticfiles %}
 
-
+{% block title %}
+Directions service
+{% endblock %}
 {% block extrastatic %}
 <link rel="stylesheet" href="{% static 'css/login.css' %}"/>
 <!-- <script src='https://www.google.com/recaptcha/api.js'></script> -->
+<style>
+  /* Always set the map height explicitly to define the size of the div
+   * element that contains the map. */
+  #map {
+    height: 100%;
+  }
+  /* Optional: Makes the sample page fill the window. */
+  html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  #floating-panel {
+    position: absolute;
+    top: 10px;
+    left: 25%;
+    z-index: 5;
+    background-color: #fff;
+    padding: 5px;
+    border: 1px solid #999;
+    text-align: center;
+    font-family: 'Roboto','sans-serif';
+    line-height: 30px;
+    padding-left: 10px;
+  }
+</style>
+
+<style>
+   #map {
+    height: 400px;
+    width: 95%;
+    bottom: 10px;
+   }
+</style>
 {% endblock %}
 
 {% block overview %}
@@ -59,8 +95,21 @@
               <input type="file" class="form-control" name="logo">
             </div>
           </div>-->
-
           <div class="col-md-8">
+
+            <div class="form-group has-feedback text-left col-md-12">
+              <strong>Origen:</strong>
+              {{ form.origen.erros }}
+              <input type="text" class="form-control" size="43" id="origen" name="origen" value="" data-error="Seleccione el origen de la Ruta" required/>
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-md-12">
+              <strong>Destino:</strong>
+              {{ form.destino.erros }}
+              <input type="text" class="form-control" size="43" id="destino" name="destino" value="" data-error="Seleccione el destino de la Ruta" required/>
+              <div class="help-block with-errors"></div>
+            </div>
 
             <div class="form-group has-feedback text-left col-md-12">
               <strong>NIT:</strong>
@@ -133,20 +182,80 @@
             </div>
 
             <div class="form-group has-feedback text-left col-md-12">
-              <strong>Kilometros:</strong>
+              <strong>Kilometros(Km):</strong>
               {{ form.kilometros.erros }}
-              <input type="number" class="form-control" name="kilometros" data-error="Ingrese los kilometros de la ruta" required>
+              <!-- <input type="number" class="form-control" name="kilometros" data-error="Ingrese los kilometros de la ruta" required>-->
+              <input type="number" enable="False" class="form-control" id="Kilometros"  name="kilometros"  data-error="Ingrese los kilometros de la ruta" required>
               <div class="help-block with-errors"></div>
             </div>
 
+            <div id="map"></div>
+
             <div class="form-group text-right col-md-12">
+              <button class="btn btn-primary " type="submit" onclick="initMap(); return false">Calcula la ruta</button>
               <button class="btn btn-primary " type="submit">Guardar</button>
             </div>
           </div>
         </div>
-
     </form>
   </div>
 </section>
+
+<script>
+  function initMap() {
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 6,
+      center: {lat: 4.159746996685188, lng: -72.93036419999999}//Colombia
+    });
+
+    var directionsService = new google.maps.DirectionsService;
+    var directionsDisplay = new google.maps.DirectionsRenderer({
+      draggable: true,
+      map: map,
+      panel: document.getElementById('right-panel')
+    });
+
+    directionsDisplay.addListener('directions_changed', function() {
+      computeTotalDistance(directionsDisplay.getDirections());
+    });
+if(document.getElementById('origen').value !="" && document.getElementById('destino').value !="")
+{
+	var origen = document.getElementById('origen').value;
+	var destino = document.getElementById('destino').value;
+	console.log(origen);
+	displayRoute(origen, destino, directionsService,
+		directionsDisplay);
+}
+  }
+
+  function displayRoute(origin, destination, service, display) {
+    service.route({
+      origin: origin,
+      destination: destination,
+      //waypoints: [{location: origin},{location: origin}],
+      travelMode: 'DRIVING',
+      avoidTolls: true
+    }, function(response, status) {
+      if (status === 'OK') {
+        display.setDirections(response);
+      } else {
+        alert('Could not display directions due to: ' + status);
+      }
+    });
+  }
+
+  function computeTotalDistance(result) {
+    var total = 0;
+    var myroute = result.routes[0];
+    for (var i = 0; i < myroute.legs.length; i++) {
+      total += myroute.legs[i].distance.value;
+    }
+    total = total / 1000;
+    document.getElementById('Kilometros').value = total;
+  }
+</script>
+<script async defer
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBaIKmsLcBbdoH2hvM_Xc2tJ9UpTmXRZe0&callback=initMap">
+</script>
 
 {% endblock %}
