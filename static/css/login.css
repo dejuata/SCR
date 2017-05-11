@@ -78,11 +78,22 @@
 }
 
 /* form empresa */
+.cuadrado,  .rectangulo{
+  background: #f2f2f2;
+  margin: 20px auto;
+}
 .cuadrado {
    width: 200px;
    height: 200px;
-   background: #f2f2f2;
-   margin: 20px auto;
+}
+.rectangulo{
+  width: 100%;
+  height: 350px;
+}
+.rectangulo img{
+  width: 100%
+  background-size: cover;
+  overflow: hidden;
 }
 .form-empresa .login-left{
   display: flex;

@@ -1,9 +1,12 @@
 from django.db import models
+from django.core.validators import RegexValidator
 
 
 class Cliente(models.Model):
+    only_letters = RegexValidator(r'^[a-z A-Z]*$', 'Only letters are allowed.')
+
     nit = models.IntegerField(primary_key=True)
-    razon_social = models.CharField(max_length=50)
+    razon_social = models.CharField(max_length=50, validators=[only_letters])
     logo = models.ImageField(blank=True, null=True, upload_to="logo_media")
     telefono = models.IntegerField()
     correo = models.EmailField()

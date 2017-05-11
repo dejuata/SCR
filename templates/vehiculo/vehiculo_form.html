@@ -1,0 +1,518 @@
+{% extends 'base/base_dashboard.html' %}
+{% load staticfiles %}
+
+{% block extrastatic %}
+<style>
+  .display-flex{
+    display: flex;
+    justify-content: space-between;
+  }
+</style>
+{% endblock %}
+
+{% block overview %}
+<li><i class="fa fa-laptop"></i><a href="{% url 'dashboard:vehiculo:vehiculo_list'%}">Vehiculos</a></li>
+<li><i class="fa fa-laptop"></i>Nuevo</li>
+{% endblock %}
+
+
+
+{% block content %}
+<!-- messages success -->
+{% if messages %}
+<div class="alert alert-dismissible alert-info">
+  <button type="button" class="close text-center" data-dismiss="alert">&times;</button>
+  {% for message in messages %}
+  <strong>
+    <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+  </strong>
+  {% endfor %}
+</div>
+{% endif %}
+<!-- end messages success -->
+
+<!-- messages erros -->
+{% if form.errors %}
+    <div class="alert alert-danger">
+    {% for field in form %}
+        {% for error in field.errors %}
+          <strong>{{field}}<div>{{ error|escape }}</div></strong>
+        {% endfor %}
+    {% endfor %}
+    </div>
+
+    {% for error in form.non_field_errors %}
+      <div class="alert alert-danger">
+        <strong>{{ error|escape }}</strong>
+      </div>
+    {% endfor %}
+{% endif %}
+<!-- end messages erros -->
+
+<section class="panel">
+  <header class="panel-heading">
+    Nuevo vehiculo
+  </header>
+  <div class="panel-body">
+    <!-- menu tabs -->
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#info" data-toggle="tab" aria-expanded="true">Datos Vehiculo</a></li>
+      <li class="" id="licenciaTransito"><a href="#licencia_transito" data-toggle="tab" aria-expanded="false">Licencia de transito</a></li>
+      <li class="" id="tarjetaOperacion"><a href="#tarjeta_operacion" data-toggle="tab" aria-expanded="false">Tarjeta de operación</a></li>
+      <li class="" id="SOAT"><a href="#soat" data-toggle="tab" aria-expanded="false">SOAT</a></li>
+      <li class="" id="RTM"><a href="#rtm" data-toggle="tab" aria-expanded="false">Técnico Mecanica</a></li>
+      <li class="" id="Polizas"><a href="#polizas" data-toggle="tab" aria-expanded="false">Pólizas</a></li>
+    </ul>
+    <!-- end menu tabs -->
+
+    <form enctype="multipart/form-data" method="post" class="form-horizontal" data-toggle="validator">
+    {% csrf_token %}
+      <!-- tabs -->
+      <div id="myTabContent" class="tab-content">
+        <!-- info -->
+        <div class="tab-pane fade active in" id="info">
+          <br>
+          <div class="col-md-6">
+            <strong>Foto Vehiculo</strong>
+
+            <div class="rectangulo col-md-12" id="image-preview">
+              {% if vehiculo.logo.url != ''%}
+                <img src="{{ vehiculo.logo.url }}" alt="" style="width:100%">
+              {% endif %}
+            </div>
+
+            <div class="form-group has-feedback text-left col-md-12">
+              {{ form.logo.erros }}
+              <label for="image-upload" id="image-label">Elige una imagen</label>
+              {{ form.logo }}
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group has-feedback col-md-12">
+              <strong>Placa</strong>
+                {{ form.placa.erros }}
+                {{ form.placa }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback col-md-12">
+              <strong>N° Interno:</strong>
+              {{ form.numeroInterno.erros }}
+              {{ form.numeroInterno }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback col-md-12">
+              <strong>Tipo de combustible</strong>
+              {{ form.combustible.erros }}
+              {{ form.combustible }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback col-md-12">
+              <strong>Conductor por defecto</strong>
+              {{ form.conductorDefault.erros }}
+              {{ form.conductorDefault }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group text-right col-md-12">
+              <a class="btn btn-primary " href="#licencia_transito" data-toggle="tab" aria-expanded="false" onclick="tabActive('#licenciaTransito')">Siguiente</a>
+            </div>
+          </div>
+        </div>
+        <!-- end info -->
+
+        <!-- licensia transito -->
+        <div class="tab-pane fade" id="licencia_transito">
+          <br>
+          <div class="col-md-12">
+            <div class="form-group has-feedback text-left col-md-5">
+              <strong>Numero de licencia transito</strong>
+              {{ form.numLicenciaTransito.erros }}
+              {{ form.numLicenciaTransito }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="col-md-1"></div>
+
+            <div class="form-group has-feedback text-left col-md-5">
+              <strong>Archivo PDF LT</strong>
+              {{ form.docLicenciaTransito.erros }}
+              {{ form.docLicenciaTransito }}
+              <div class="help-block with-errors"></div>
+            </div>
+          </div>
+
+          <div class="col-md-12">
+            <div class="form-group has-feedback text-left col-md-5">
+              <strong>Organismo de transito</strong>
+              {{ form.organismoTransito.erros }}
+              {{ form.organismoTransito }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="col-md-1"></div>
+
+            <div class="form-group has-feedback text-left col-md-5">
+              <strong>Fecha de expedición</strong>
+              {{ form.fechaExpedicion.erros }}
+              {{ form.fechaExpedicion }}
+              <div class="help-block with-errors"></div>
+            </div>
+          </div>
+
+          <div class="col-md-12">
+            <div class="form-group has-feedback text-left col-md-5">
+              <strong>Marca</strong>
+              {{ form.marca.erros }}
+              {{ form.marca }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="col-md-1"></div>
+
+            <div class="form-group has-feedback text-left col-md-5">
+              <strong>Linea</strong>
+              {{ form.linea.erros }}
+              {{ form.linea }}
+              <div class="help-block with-errors"></div>
+            </div>
+          </div>
+
+          <div class="col-md-12">
+            <div class="form-group has-feedback text-left col-md-5">
+              <strong>Cilindraje</strong>
+              {{ form.cilindraje.erros }}
+              {{ form.cilindraje }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="col-md-1"></div>
+
+            <div class="form-group has-feedback text-left col-md-5">
+              <strong>Modelo</strong>
+              {{ form.modelo.erros }}
+              {{ form.modelo }}
+              <div class="help-block with-errors"></div>
+            </div>
+          </div>
+
+          <div class="col-md-12">
+            <div class="form-group has-feedback text-left col-md-5">
+              <strong>Clase de vehiculo</strong>
+              {{ form.claseVehiculo.erros }}
+              {{ form.claseVehiculo }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="col-md-1"></div>
+
+            <div class="form-group has-feedback text-left col-md-5">
+              <strong>Color</strong>
+              {{ form.color.erros }}
+              {{ form.color }}
+              <div class="help-block with-errors"></div>
+            </div>
+          </div>
+
+          <div class="col-md-12">
+            <div class="form-group has-feedback text-left col-md-5">
+              <strong>Tipo de servicio</strong>
+              {{ form.tipoServicio.erros }}
+              {{ form.tipoServicio }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="col-md-1"></div>
+
+            <div class="form-group has-feedback text-left col-md-5">
+              <strong>Tipo Carroceria</strong>
+              {{ form.carroceria.erros }}
+              {{ form.carroceria }}
+              <div class="help-block with-errors"></div>
+            </div>
+          </div>
+
+          <div class="col-md-12">
+            <div class="form-group has-feedback text-left col-md-5">
+              <strong>Capacidad</strong>
+              {{ form.capacidad.erros }}
+              {{ form.capacidad }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="col-md-1"></div>
+
+            <div class="form-group has-feedback text-left col-md-5">
+              <strong>Numero de motor</strong>
+              {{ form.numMotor.erros }}
+              {{ form.numMotor }}
+              <div class="help-block with-errors"></div>
+            </div>
+          </div>
+
+          <div class="col-md-12">
+            <div class="form-group has-feedback text-left col-md-5">
+              <strong>Numero de chasis</strong>
+              {{ form.numChasis.erros }}
+              {{ form.numChasis }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="col-md-1"></div>
+
+            <div class="form-group has-feedback text-left col-md-5">
+              <strong>Nombre propietario</strong>
+              {{ form.propietario.erros }}
+              {{ form.propietario }}
+              <div class="help-block with-errors"></div>
+            </div>
+          </div>
+
+          <div class="col-md-12">
+            <div class="form-group has-feedback text-left col-md-5">
+              <strong>Identificacion propietario</strong>
+              {{ form.idPropietario.erros }}
+              {{ form.idPropietario }}
+              <div class="help-block with-errors"></div>
+            </div>
+          </div>
+
+          <div class="form-group text-right col-md-12">
+            <a class="btn btn-primary " href="#tarjeta_operacion" data-toggle="tab" aria-expanded="false" onclick="tabActive('#tarjetaOperacion')">Siguiente</a>
+          </div>
+        </div>
+        <!-- end licensia transito -->
+
+        <!-- tarjeta operacion -->
+        <div class="tab-pane fade" id="tarjeta_operacion">
+          <br>
+          <div class="col-md-12">
+            <div class="form-group has-feedback text-left col-md-5">
+              <strong>Numero tarjeta de operacion</strong>
+              {{ form.numTarjetaOperacion.erros }}
+              {{ form.numTarjetaOperacion }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="col-md-1"></div>
+
+            <div class="form-group has-feedback text-left col-md-5">
+              <strong>Archivo PDF TO</strong>
+              {{ form.docTO.erros }}
+              {{ form.docTO }}
+              <div class="help-block with-errors"></div>
+            </div>
+          </div>
+
+          <div class="col-md-12">
+            <div class="form-group has-feedback text-left col-md-5">
+              <strong>Fecha de expedicion</strong>
+              {{ form.fechaInicioTo.erros }}
+              {{ form.fechaInicioTo }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="col-md-1"></div>
+
+            <div class="form-group has-feedback text-left col-md-5">
+              <strong>Fecha de vencimiento</strong>
+              {{ form.fechaVencimientoTo.erros }}
+              {{ form.fechaVencimientoTo }}
+              <div class="help-block with-errors"></div>
+            </div>
+          </div>
+
+          <div class="col-md-12">
+            <div class="form-group has-feedback text-left col-md-5">
+              <strong>Empresa afiliado</strong>
+              {{ form.empresaAfiliado.erros }}
+              {{ form.empresaAfiliado }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="col-md-1"></div>
+
+            <div class="form-group has-feedback text-left col-md-5">
+              <strong>Nit empresa afiliado</strong>
+              {{ form.idEmpresaAfiliado.erros }}
+              {{ form.idEmpresaAfiliado }}
+              <div class="help-block with-errors"></div>
+            </div>
+          </div>
+
+          <div class="form-group text-right col-md-12">
+            <a class="btn btn-primary " href="#soat" data-toggle="tab" aria-expanded="false" onclick="tabActive('#SOAT')">Siguiente</a>
+          </div>
+        </div>
+        <!-- end tarjeta operacion -->
+
+        <!-- soat -->
+        <div class="tab-pane fade" id="soat">
+          <br>
+          <div class="col-md-12">
+            <div class="form-group has-feedback text-left col-md-5">
+              <strong>Numero de SOAT</strong>
+              {{ form.numSoat.erros }}
+              {{ form.numSoat }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="col-md-1"></div>
+
+            <div class="form-group has-feedback text-left col-md-5">
+              <strong>Archivo PDF Soat</strong>
+              {{ form.docSoat.erros }}
+              {{ form.docSoat }}
+              <div class="help-block with-errors"></div>
+            </div>
+          </div>
+
+          <div class="col-md-12">
+            <div class="form-group has-feedback text-left col-md-5">
+              <strong>Fecha de expedicion</strong>
+              {{ form.fechaInicioSoat.erros }}
+              {{ form.fechaInicioSoat }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="col-md-1"></div>
+
+            <div class="form-group has-feedback text-left col-md-5">
+              <strong>Fecha de vencimiento</strong>
+              {{ form.fechaVencimientoSoat.erros }}
+              {{ form.fechaVencimientoSoat }}
+              <div class="help-block with-errors"></div>
+            </div>
+          </div>
+
+          <div class="col-md-12">
+            <div class="form-group has-feedback text-left col-md-5">
+              <strong>Aseguradora</strong>
+              {{ form.aseguradoraSoat.erros }}
+              {{ form.aseguradoraSoat }}
+              <div class="help-block with-errors"></div>
+            </div>
+          </div>
+
+          <div class="form-group text-right col-md-12">
+            <a class="btn btn-primary " href="#rtm" data-toggle="tab" aria-expanded="false" onclick="tabActive('#RTM')">Siguiente</a>
+          </div>
+        </div>
+        <!-- end soat -->
+
+        <!-- rtm -->
+        <div class="tab-pane fade" id="rtm">
+          <br>
+          <div class="col-md-12">
+            <div class="form-group has-feedback text-left col-md-5">
+              <strong>Numero de revision tecnico mecanica</strong>
+              {{ form.numCertificadoRtm.erros }}
+              {{ form.numCertificadoRtm }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="col-md-1"></div>
+
+            <div class="form-group has-feedback text-left col-md-5">
+              <strong>Archivo PDF Rtm</strong>
+              {{ form.docRtm.erros }}
+              {{ form.docRtm }}
+              <div class="help-block with-errors"></div>
+            </div>
+          </div>
+
+          <div class="col-md-12">
+            <div class="form-group has-feedback text-left col-md-5">
+              <strong>Fecha de expedicion</strong>
+              {{ form.fechaInicioRtm.erros }}
+              {{ form.fechaInicioRtm }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="col-md-1"></div>
+
+            <div class="form-group has-feedback text-left col-md-5">
+              <strong>Fecha de expedicion</strong>
+              {{ form.fechaVencimientoRtm.erros }}
+              {{ form.fechaVencimientoRtm }}
+              <div class="help-block with-errors"></div>
+            </div>
+          </div>
+
+          <div class="col-md-12">
+            <div class="form-group has-feedback text-left col-md-5">
+              <strong>Centro de diagnostico Automotriz</strong>
+              {{ form.cda.erros }}
+              {{ form.cda }}
+              <div class="help-block with-errors"></div>
+            </div>
+          </div>
+
+          <div class="form-group text-right col-md-12">
+            <a class="btn btn-primary " href="#polizas" data-toggle="tab" aria-expanded="false" onclick="tabActive('#Polizas')">Siguiente</a>
+          </div>
+        </div>
+        <!-- end rtm -->
+
+        <!-- polizas -->
+        <div class="tab-pane fade" id="polizas">
+          <br>
+          <div class="col-md-12">
+            <div class="form-group has-feedback text-left col-md-5">
+              <strong>Numero de Polizas Rcc y Rce</strong>
+              {{ form.numeroPolizasRce_Rcc.erros }}
+              {{ form.numeroPolizasRce_Rcc }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="col-md-1"></div>
+
+            <div class="form-group has-feedback text-left col-md-5">
+              <strong>Archivo PDF PolizasRce_Rcc</strong>
+              {{ form.docPolizasRce_Rcc.erros }}
+              {{ form.docPolizasRce_Rcc }}
+              <div class="help-block with-errors"></div>
+            </div>
+          </div>
+
+          <div class="col-md-12">
+            <div class="form-group has-feedback text-left col-md-5">
+              <strong>Fecha de expedicion</strong>
+              {{ form.fechaInicioRce_Rcc.erros }}
+              {{ form.fechaInicioRce_Rcc }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="col-md-1"></div>
+
+            <div class="form-group has-feedback text-left col-md-5">
+              <strong>Fecha de vencimiento</strong>
+              {{ form.fechaVencimientoRce_Rcc.erros }}
+              {{ form.fechaVencimientoRce_Rcc }}
+              <div class="help-block with-errors"></div>
+            </div>
+          </div>
+
+          <div class="col-md-12">
+            <div class="form-group has-feedback text-left col-md-5">
+              <strong>Aseguradora</strong>
+              {{ form.aseguradoraRce_Rcc.erros }}
+              {{ form.aseguradoraRce_Rcc }}
+              <div class="help-block with-errors"></div>
+            </div>
+          </div>
+
+          <div class="form-group text-right col-md-12">
+            <button class="btn btn-primary " type="submit">Guardar</button>
+          </div>
+        </div>
+        <!-- end polizas -->
+      </div>
+    </form>
+  </div>
+</section>
+
+{% endblock %}

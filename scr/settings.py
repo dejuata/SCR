@@ -49,6 +49,8 @@ TENANT_APPS = (
     'django.contrib.messages',
     'apps.users',
     'apps.cliente',
+    'apps.conductor',
+    'apps.vehiculo',
 )
 
 INSTALLED_APPS = list(set(SHARED_APPS + TENANT_APPS))
@@ -135,7 +137,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
 
-LANGUAGE_CODE = 'es'
+LANGUAGE_CODE = 'es-co'
 
 TIME_ZONE = 'America/Bogota'
 

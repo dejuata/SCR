@@ -42,7 +42,7 @@ data-show-columns="true" data-sort-name="stargazers_count" data-sort-order="desc
   {% if object_list %}
   {% for cliente in object_list %}
     <tr>
-        <td><a href="{% url 'cliente:cliente_edit' cliente.nit %}">{{ cliente.nit }}</a></td>
+        <td><a href="{% url 'dashboard:cliente:cliente_edit' cliente.nit %}">{{ cliente.nit }}</a></td>
         <td>{{ cliente.razon_social }}</td>
         <td>{{ cliente.telefono }}</td>
         <td>{{ cliente.correo }}</td>
@@ -55,7 +55,7 @@ data-show-columns="true" data-sort-name="stargazers_count" data-sort-order="desc
         </td>
         <td>
           <div class="btn-group">
-            <a class="btn btn-primary" href="{% url 'cliente:cliente_edit' cliente.nit %}">Editar</a>
+            <a class="btn btn-primary" href="{% url 'dashboard:cliente:cliente_edit' cliente.nit %}">Editar</a>
           </div>
           <div class="btn-group">
             <!-- <a class="btn btn-danger" href="">Cambiar estado</a> -->
@@ -106,10 +106,10 @@ data-show-columns="true" data-sort-name="stargazers_count" data-sort-order="desc
 
 
 {% block extrajs %}
-<script src="{% static 'tenant/js/bootstrap-table.js'%}"></script>
+
 <script>
   $( document ).ready(function() {
-    $(".fixed-table-toolbar").append( '<div class="columns columns-left btn-group pull-left"><a class="btn btn-success" href="{% url 'cliente:cliente_new' %}">Añadir Cliente</a></div>' );
+    $(".fixed-table-toolbar").append( '<div class="columns columns-left btn-group pull-left"><a class="btn btn-success" href="{% url 'dashboard:cliente:cliente_new' %}">Añadir Cliente</a></div>' );
   });
 </script>
 <script>
@@ -118,7 +118,7 @@ function get_nit(nit){
   $('#confirmarDelete').click(function(){
     var request = $.ajax({
         type: "POST",
-        url: "{% url 'cliente:cliente_delete' %}",
+        url: "{% url 'dashboard:cliente:cliente_delete' %}",
         data: {
             "csrfmiddlewaretoken": "{{ csrf_token }}",
             "identificador_id": nit
@@ -127,11 +127,10 @@ function get_nit(nit){
     request.done(function(response) {
         if (response.delete){
           $('#modalEmergente').modal(response.class)
-          location.href ="{% url 'cliente:cliente_list' %}";
+          location.href ="{% url 'dashboard:cliente:cliente_list' %}";
         }
     });
   });
-
 }
 </script>
 {% endblock %}

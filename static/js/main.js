@@ -1,4 +1,5 @@
 $(document).ready(function() {
+
   $.uploadPreview({
     input_field: "#id_logo",
     preview_box: "#image-preview",

@@ -25,6 +25,15 @@
     <link href="{% static 'tenant/css/style-responsive.css' %}" rel="stylesheet" />
 	  <link href="{% static 'tenant/css/jquery-ui-1.10.4.min.css' %}" rel="stylesheet">
 
+    <!-- login -->
+    <link rel="stylesheet" href="{% static 'css/login.css' %}"/>
+
+    <!-- Boostrap table -->
+    <link rel="stylesheet" href="{% static 'tenant/css/bootstrap-table.css'%}">
+
+    <!-- pikaday -->
+    <link rel="stylesheet" href="{% static 'css/pikaday.min.css' %}">
+
     <style>
     footer{
       position: absolute;
@@ -60,7 +69,7 @@
             </div>
 
             <!--logo start-->
-            <a href="{% url 'cliente:index' %}" class="logo"><span class="lite">SCR</span></a>
+            <a href="{% url 'dashboard:index' %}" class="logo"><span class="lite">SCR</span></a>
             <!--logo end-->
 
             <div class="top-nav notification-row">
@@ -102,34 +111,24 @@
               <!-- sidebar menu start-->
               <ul class="sidebar-menu">
                   <li class="active">
-                      <a class="" href="{% url 'cliente:cliente_list' %}">
+                      <a class="" href="{% url 'dashboard:cliente:cliente_list' %}">
                           <i class="icon_house_alt"></i>
                           <span>Clientes</span>
                       </a>
                   </li>
-				          <li class="sub-menu">
-                      <a href="javascript:;" class="">
-                          <i class="icon_document_alt"></i>
+                  <li class="active">
+                      <a class="" href="{% url 'dashboard:conductor:conductor_list' %}">
+                          <i class="icon_genius"></i>
                           <span>Conductores</span>
-                          <span class="menu-arrow arrow_carrot-right"></span>
                       </a>
-                      <ul class="sub">
-                          <li><a class="" href="form_component.html">Form Elements</a></li>
-                          <li><a class="" href="form_validation.html">Form Validation</a></li>
-                      </ul>
                   </li>
-                  <li class="sub-menu">
-                      <a href="javascript:;" class="">
+                  <li class="active">
+                      <a class="" href="{% url 'dashboard:vehiculo:vehiculo_list' %}">
                           <i class="icon_desktop"></i>
                           <span>Vehiculos</span>
-                          <span class="menu-arrow arrow_carrot-right"></span>
                       </a>
-                      <ul class="sub">
-                          <li><a class="" href="general.html">Elements</a></li>
-                          <li><a class="" href="buttons.html">Buttons</a></li>
-                          <li><a class="" href="grids.html">Grids</a></li>
-                      </ul>
                   </li>
+
                   <li>
                       <a class="" href="widgets.html">
                           <i class="icon_genius"></i>
@@ -150,7 +149,7 @@
           <div class="row">
   				<div class="col-lg-12">
   					<ol class="breadcrumb">
-  						<li><i class="fa fa-home"></i><a href="{% url 'cliente:index' %}">Home</a></li>
+  						<li><i class="fa fa-home"></i><a href="{% url 'dashboard:index' %}">Home</a></li>
               {% block overview %}
               {% endblock%}
   					</ol>
@@ -219,14 +218,32 @@
     <!-- bootstrap validator -->
     <script src="{% static 'js/validator.js' %}"></script>
 
+    <!--  Upload Preview -->
+    <script type="text/javascript" src="{% static 'js/uploadPreview.min.js'%}"></script>
+    <script type="text/javascript" src="{% static 'js/main.js'%}"></script>
+
+    <!-- Bootstrap table -->
+    <script src="{% static 'tenant/js/bootstrap-table.js'%}"></script>
+
+    <!-- Pikaday -->
+    <script src="{% static 'js/moment.js' %}"></script>
+    <script src="{% static 'js/pikaday.min.js' %}"></script>
+    <script src="{% static 'js/pikaday.jquery.js' %}"></script>
+
     <script>
       $( document ).ready(function(){
         $(".alert").fadeIn("slow").delay(2000).fadeOut("slow");
+        $('.datepicker').pikaday({ firstDay: 1 });
       });
+      function tabActive(id){
+        $('.active').removeClass('active');
+        $(id).addClass('active')
+      }
     </script>
 
     {% block extrajs %}
     {% endblock %}
+
 
   </body>
 </html>

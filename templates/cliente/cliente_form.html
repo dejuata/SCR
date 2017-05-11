@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block overview %}
-<li><i class="fa fa-laptop"></i><a href="{% url 'cliente:cliente_list'%}">Clientes</a></li>
+<li><i class="fa fa-laptop"></i><a href="{% url 'dashboard:cliente:cliente_list'%}">Clientes</a></li>
 <li><i class="fa fa-laptop"></i>Nuevo</li>
 {% endblock %}
 
@@ -64,7 +64,6 @@
                 <img src="{{ cliente.logo.url }}" style="width:100%">
               {% endif %}
             </div>
-
 
             <div class="form-group has-feedback text-left col-md-12">
               {{ form.logo.erros }}
