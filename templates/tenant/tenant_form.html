@@ -41,8 +41,6 @@ Registrar Empresa
 			{% csrf_token %}
 
       <div class="col-sm-4">
-
-
         <div class="cuadrado" id="image-preview">
           {% if user.logo.url != ''%}
             <img src="{{ user.logo }}" style="width:100%">
@@ -52,7 +50,6 @@ Registrar Empresa
           <label for="image-upload" id="image-label">Elige una imagen</label>
           {{ form.logo }}
         </div>
-
       </div>
 
 			<div class="col-sm-8">

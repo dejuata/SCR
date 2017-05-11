@@ -9,4 +9,5 @@ urlpatterns = [
     url(r'^cliente/', include('apps.cliente.urls', namespace='cliente')),
     url(r'^conductor/', include('apps.conductor.urls', namespace='conductor')),
     url(r'^vehiculo/', include('apps.vehiculo.urls', namespace='vehiculo')),
+    url(r'^ruta/', include('apps.ruta.urls', namespace='ruta')),
 ]

@@ -108,3 +108,7 @@
   text-align: left;
   width: 47%;
 }
+
+.left-input{
+  margin-left: 16px !important;
+}

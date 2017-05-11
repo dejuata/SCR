@@ -1,0 +1,301 @@
+{% extends 'base/base_dashboard.html' %}
+{% load staticfiles %}
+
+{% block title %}
+Directions service
+{% endblock %}
+{% block extrastatic %}
+<link rel="stylesheet" href="{% static 'css/login.css' %}"/>
+<!-- <script src='https://www.google.com/recaptcha/api.js'></script> -->
+<style>
+  /* Always set the map height explicitly to define the size of the div
+   * element that contains the map. */
+  #map {
+    height: 100%;
+  }
+  /* Optional: Makes the sample page fill the window. */
+  html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  #floating-panel {
+    position: absolute;
+    top: 10px;
+    left: 25%;
+    z-index: 5;
+    background-color: #fff;
+    padding: 5px;
+    border: 1px solid #999;
+    text-align: center;
+    font-family: 'Roboto','sans-serif';
+    line-height: 30px;
+    padding-left: 10px;
+  }
+</style>
+
+<style>
+   #map {
+    height: 400px;
+    width: 95%;
+    bottom: 10px;
+   }
+</style>
+<style>
+  .display-flex{
+    display: flex;
+    justify-content: space-between;
+  }
+</style>
+{% endblock %}
+
+{% block overview %}
+<li><i class="fa fa-laptop"></i>Rutas</li>
+{% endblock %}
+
+
+
+{% block content %}
+
+<!-- messages erros -->
+{% if form.errors %}
+    <div class="alert alert-danger">
+    {% for field in form %}
+        {% for error in field.errors %}
+          <strong><div>{{field}}{{ error|escape }}</div></strong>
+        {% endfor %}
+    {% endfor %}
+    </div>
+
+    {% for error in form.non_field_errors %}
+      <div class="alert alert-danger">
+        <strong>{{ error|escape }}</strong>
+      </div>
+    {% endfor %}
+
+{% endif %}
+<!-- end messages erros -->
+
+<section class="panel">
+  {% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+  <header class="panel-heading">
+    Nueva Ruta
+  </header>
+  <div class="panel-body">
+
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#ruta" data-toggle="tab">Ruta</a></li>
+      <li><a href="#info" data-toggle="tab">Info Ruta</a></li>
+    </ul>
+
+    <form enctype="multipart/form-data" method="post" class="form-horizontal" data-toggle="validator">
+    {% csrf_token %}
+
+      <div id="myTabContent" class="tab-content">
+
+        <!-- ruta -->
+        <div class="tab-pane fade active in" id="ruta">
+          <br>
+
+          <div class="col-md-12">
+            <div id="map"></div>
+          </div>
+
+          <div class="col-md-12">
+            <div class="form-group has-feedback text-left col-md-4">
+              <strong>Origen:</strong>
+              {{ form.origen.erros }}
+              <input type="text" class="form-control" size="43" id="origen" name="origen" value="" data-error="Seleccione el origen de la Ruta" required/>
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="col-md-1"></div>
+
+            <div class="form-group has-feedback text-left col-md-4">
+              <strong>Destino:</strong>
+              {{ form.destino.erros }}
+              <input type="text" class="form-control" size="43" id="destino" name="destino" value="" data-error="Seleccione el destino de la Ruta" required/>
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="col-md-1"></div>
+
+            <div class="form-group col-md-2">
+              <br>
+              <button class="btn btn-primary" onclick="initMap(); return false">Calcular ruta</button>
+            </div>
+
+          </div>
+
+
+        </div>
+        <!-- end ruta -->
+
+        <!-- info ruta -->
+        <div class="tab-pane fade" id="info">
+          <br>
+          <div class="col-md-12">
+            <div class="form-group has-feedback text-left col-md-6">
+              <strong>Cliente:</strong>
+              {{ form.nit.erros }}
+              <input type="text" class="form-control" name="nit" data-error="Seleccione el N° NIT del Cliente de la Ruta" required>
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left left-input col-md-6">
+              <strong>Codigo de ruta:</strong>
+              {{ form.codRuta.erros }}
+              <input type="text" class="form-control" name="codRuta" data-error="Ingrese el codigo de la Ruta" required>
+              <div class="help-block with-errors"></div>
+            </div>
+          </div>
+
+          <div class="col-md-12">
+            <div class="form-group has-feedback  col-md-6">
+              <strong>Tipo de ruta:</strong>
+              {{ form.tipo_Ruta.erros }}
+              <input class="form-control" id="tipo_Ruta" maxlength="12" name="tipo_Ruta" type="text" data-error="Ingrese el tipo de ruta" required="">
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left left-input col-md-6">
+              <strong>Tipo de vehiculo:</strong>
+              {{ form.tipo_Vehiculo_Requerido.erros }}
+              <input type="text" class="form-control" name="tipo_Vehiculo_Requerido" data-error="Ingrese el tipo de vehiculo requerido para la ruta" required>
+              <div class="help-block with-errors"></div>
+            </div>
+          </div>
+
+          <div class="col-md-12">
+            <div class="form-group has-feedback text-left col-md-6">
+              <strong>Hora Inicio</strong>
+              {{ form.hora_Inicio.erros }}
+              <input type="Time" class="form-control" name="hora_Inicio" data-error="Ingrese la hora de inicio de la ruta" required>
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left left-input col-md-6">
+              <strong>Hora Fin</strong>
+              {{ form.hora_Fin.erros }}
+              <input type="Time" class="form-control" name="hora_Fin" data-error="Ingrese la hora de finalizacion de la ruta" required>
+              <div class="help-block with-errors"></div>
+            </div>
+          </div>
+
+          <div class="col-md-12">
+            <div class="form-group has-feedback text-left col-md-6">
+              <strong>Valor Adicional/Hora:</strong>
+              {{ form.valor_Hora_Add.erros }}
+              <input type="number" class="form-control" name="valor_Hora_Add" data-error="Ingrese el valor adicional/hora para la ruta" required>
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left left-input col-md-6">
+              <strong>Valor Ruta:</strong>
+              {{ form.valor_Ruta.erros }}
+              <input type="number" class="form-control" name="valor_Ruta" data-error="Ingrese el valor que tiene la ruta" required>
+              <div class="help-block with-errors"></div>
+            </div>
+          </div>
+
+          <div class="col-md-12">
+            <div class="form-group has-feedback text-left col-md-6">
+              <strong>Valor Tercero:</strong>
+              {{ form.valor_Tercero.erros }}
+              <input type="number" class="form-control" name="valor_Tercero" data-error="Ingrese el valor para el Tercero que realiza la ruta" required>
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left left-input col-md-6">
+              <strong>Comision Conductor:</strong>
+              {{ form.comision_Conductor.erros }}
+              <input type="number" class="form-control" name="comision_Conductor" data-error="Ingrese la comision para el conductor de la ruta" required>
+              <div class="help-block with-errors"></div>
+            </div>
+          </div>
+
+          <div class="col-md-12">
+            <div class="form-group has-feedback text-left col-md-6">
+              <strong>Kilometros(Km):</strong>
+              {{ form.kilometros.erros }}
+              <!-- <input type="number" class="form-control" name="kilometros" data-error="Ingrese los kilometros de la ruta" required>-->
+              <input type="number" enable="False" class="form-control" id="Kilometros"  name="kilometros"  data-error="Ingrese los kilometros de la ruta" required>
+              <div class="help-block with-errors"></div>
+            </div>
+          </div>
+
+          <div class="form-group text-right col-md-12">
+            <button class="btn btn-primary " type="submit">Guardar</button>
+          </div>
+
+        </div>
+        <!-- end info ruta -->
+      </div>
+    </form>
+  </div>
+</section>
+
+<script>
+  function initMap() {
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 6,
+      center: {lat: 4.159746996685188, lng: -72.93036419999999}//Colombia
+    });
+
+    var directionsService = new google.maps.DirectionsService;
+    var directionsDisplay = new google.maps.DirectionsRenderer({
+      draggable: true,
+      map: map,
+      panel: document.getElementById('right-panel')
+    });
+
+    directionsDisplay.addListener('directions_changed', function() {
+      computeTotalDistance(directionsDisplay.getDirections());
+    });
+if(document.getElementById('origen').value !="" && document.getElementById('destino').value !="")
+{
+	var origen = document.getElementById('origen').value;
+	var destino = document.getElementById('destino').value;
+	console.log(origen);
+	displayRoute(origen, destino, directionsService,
+		directionsDisplay);
+}
+  }
+
+  function displayRoute(origin, destination, service, display) {
+    service.route({
+      origin: origin,
+      destination: destination,
+      //waypoints: [{location: origin},{location: origin}],
+      travelMode: 'DRIVING',
+      avoidTolls: true
+    }, function(response, status) {
+      if (status === 'OK') {
+        display.setDirections(response);
+      } else {
+        alert('Could not display directions due to: ' + status);
+      }
+    });
+  }
+
+  function computeTotalDistance(result) {
+    var total = 0;
+    var myroute = result.routes[0];
+    for (var i = 0; i < myroute.legs.length; i++) {
+      total += myroute.legs[i].distance.value;
+    }
+    total = total / 1000;
+    document.getElementById('Kilometros').value = total;
+  }
+</script>
+<script async defer
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBaIKmsLcBbdoH2hvM_Xc2tJ9UpTmXRZe0&callback=initMap">
+</script>
+
+{% endblock %}

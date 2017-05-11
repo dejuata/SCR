@@ -2,7 +2,7 @@
 {% load staticfiles %}
 
 {% block overview %}
-<li><i class="fa fa-laptop"></i>Clientes</li>
+<li><i class="fa fa-laptop"></i>Rutas</li>
 {% endblock%}
 
 {% block content %}
@@ -26,22 +26,26 @@ data-toggle="table" data-search="true" data-show-refresh="true"
 data-show-columns="true" data-sort-name="stargazers_count" data-sort-order="desc">
   <thead>
     <tr>
-        <th  class="text-center" data-field="nit"  data-sortable="true" >NIT</th>
-        <th  class="text-center" data-field="razon_social" data-sortable="true">Razon Social</th>
-        <th  class="text-center" data-field="telefono">Teléfono</th>
-        <th  class="text-center" data-field="correo">Correo</th>
-        <th  class="text-center" data-field="estado" data-sortable="true">Estado</th>
+        <th  class="text-center" data-field="codigo_ruta"  data-sortable="true" >Codigo Ruta</th>
+        <th  class="text-center" data-field="cliente" data-sortable="true">Cliente</th>
+        <th  class="text-center" data-field="tipo_ruta">Tipo Ruta</th>
+        <th  class="text-center" data-field="tipo_vehiculo">Tipo Vehiculo requerido</th>
+        <th  class="text-center" data-field="hora_inicio" data-sortable="true">Hora Inicio</th>
+        <th  class="text-center" data-field="hora_fin" data-sortable="true">Hora Fin</th>
+        <th  class="text-center" data-field="estado">Estado</th>
         <th  class="text-center" data-field="acciones">Acciones</th>
     </tr>
   </thead>
 <tbody>
   {% if object_list %}
-  {% for cliente in object_list %}
+  {% for ruta in object_list %}
     <tr>
-        <td><a href="{% url 'dashboard:cliente:cliente_edit' cliente.nit %}">{{ cliente.nit }}</a></td>
-        <td>{{ cliente.razon_social }}</td>
-        <td>{{ cliente.telefono }}</td>
-        <td>{{ cliente.correo }}</td>
+        <td><a href="{% url 'dashboard:ruta:ruta_edit' ruta.codRuta %}">{{ ruta.codRutaruta }}</a></td>
+        <td>{{ ruta.nit }}</td>
+        <td>{{ ruta.tipo_Ruta }}</td>
+        <td>{{ ruta.tipo_Vehiculo_Requerido }}</td>
+        <td>{{ ruta.hora_Inicio }}</td>
+        <td>{{ ruta.hora_Fin }}</td>
         <td>
           {% if cliente.activo_inactivo %}
             Activo
@@ -51,11 +55,11 @@ data-show-columns="true" data-sort-name="stargazers_count" data-sort-order="desc
         </td>
         <td>
           <div class="btn-group">
-            <a class="btn btn-primary" href="{% url 'dashboard:cliente:cliente_edit' cliente.nit %}">Editar</a>
+            <a class="btn btn-primary" href="{% url 'dashboard:ruta:ruta_edit' ruta.codRuta %}">Editar</a>
           </div>
           <div class="btn-group">
             <!-- <a class="btn btn-danger" href="">Cambiar estado</a> -->
-            <a onclick="get_nit({{ cliente.nit }})" class="btn btn-danger" data-toggle="modal" data-target="#modalEmergente">Cambiar estado</a>
+            <a onclick="get_ruta({{ ruta.codRuta }})" class="btn btn-danger" data-toggle="modal" data-target="#modalEmergente">Cambiar estado</a>
           </div>
         </td>
     </tr>
@@ -96,7 +100,7 @@ data-show-columns="true" data-sort-name="stargazers_count" data-sort-order="desc
 
 {% block modal-body %}
 <div class="modal-body">
-  <h3>Está seguro que desea cambiar el estado del cliente?</h3>
+  <h3>Está seguro que desea cambiar el estado de la ruta?</h3>
 </div>
 {% endblock %}
 
@@ -105,25 +109,25 @@ data-show-columns="true" data-sort-name="stargazers_count" data-sort-order="desc
 
 <script>
   $( document ).ready(function() {
-    $(".fixed-table-toolbar").append( '<div class="columns columns-left btn-group pull-left"><a class="btn btn-success" href="{% url 'dashboard:cliente:cliente_new' %}">Añadir Cliente</a></div>' );
+    $(".fixed-table-toolbar").append( '<div class="columns columns-left btn-group pull-left"><a class="btn btn-success" href="{% url 'dashboard:ruta:ruta_new' %}">Añadir Cliente</a></div>' );
   });
 </script>
 <script>
 
-function get_nit(nit){
+function get_ruta(id){
   $('#confirmarDelete').click(function(){
     var request = $.ajax({
         type: "POST",
-        url: "{% url 'dashboard:cliente:cliente_delete' %}",
+        url: "{% url 'dashboard:ruta:ruta_delete' %}",
         data: {
             "csrfmiddlewaretoken": "{{ csrf_token }}",
-            "identificador_id": nit
+            "identificador_id": id
         },
     });
     request.done(function(response) {
         if (response.delete){
           $('#modalEmergente').modal(response.class)
-          location.href ="{% url 'dashboard:cliente:cliente_list' %}";
+          location.href ="{% url 'dashboard:ruta:ruta_list' %}";
         }
     });
   });
