@@ -144,7 +144,7 @@ Directions service
             <div class="form-group has-feedback text-left col-md-6">
               <strong>Cliente:</strong>
               {{ form.nit.erros }}
-              <input type="text" class="form-control" name="nit" data-error="Seleccione el N° NIT del Cliente de la Ruta" required>
+              {{ form.nit }}
               <div class="help-block with-errors"></div>
             </div>
 
@@ -224,8 +224,10 @@ Directions service
             <div class="form-group has-feedback text-left col-md-6">
               <strong>Kilometros(Km):</strong>
               {{ form.kilometros.erros }}
+              {{ form.kilometros }}
+
               <!-- <input type="number" class="form-control" name="kilometros" data-error="Ingrese los kilometros de la ruta" required>-->
-              <input type="number" enable="False" class="form-control" id="Kilometros"  name="kilometros"  data-error="Ingrese los kilometros de la ruta" required>
+                <!--<input type="number" enable="False" class="form-control" id="Kilometros"  name="kilometros"  data-error="Ingrese los kilometros de la ruta" required>-->
               <div class="help-block with-errors"></div>
             </div>
           </div>
@@ -291,7 +293,7 @@ if(document.getElementById('origen').value !="" && document.getElementById('dest
       total += myroute.legs[i].distance.value;
     }
     total = total / 1000;
-    document.getElementById('Kilometros').value = total;
+    document.getElementById('id_kilometros').value = total;
   }
 </script>
 <script async defer

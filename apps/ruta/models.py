@@ -5,7 +5,7 @@ from ..cliente.models import Cliente
 
 class Ruta(models.Model):
     codRuta = models.IntegerField(unique=True)
-    nit = models.ForeignKey(Cliente, null=True, blank=True, on_delete=models.CASCADE)
+    nit = models.ForeignKey(Cliente, on_delete=models.CASCADE)
     tipo_Ruta = models.CharField(max_length=100)
     tipo_Vehiculo_Requerido = models.CharField(max_length=100)
     origen = models.CharField(max_length=100)
@@ -16,6 +16,6 @@ class Ruta(models.Model):
     valor_Ruta = models.IntegerField()
     valor_Tercero = models.IntegerField(null=True)
     comision_Conductor = models.IntegerField(null=True)
-    kilometros = models.IntegerField(null=True)
+    kilometros = models.FloatField(null=True)
     # linkRuta = models.CharField(max_length=100,null=True)
     activo_inactivo = models.BooleanField(default=True)

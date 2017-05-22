@@ -47,7 +47,7 @@ data-show-columns="true" data-sort-name="stargazers_count" data-sort-order="desc
         <td>{{ ruta.hora_Inicio }}</td>
         <td>{{ ruta.hora_Fin }}</td>
         <td>
-          {% if cliente.activo_inactivo %}
+          {% if ruta.activo_inactivo %}
             Activo
           {% else %}
             Inactivo
@@ -109,7 +109,7 @@ data-show-columns="true" data-sort-name="stargazers_count" data-sort-order="desc
 
 <script>
   $( document ).ready(function() {
-    $(".fixed-table-toolbar").append( '<div class="columns columns-left btn-group pull-left"><a class="btn btn-success" href="{% url 'dashboard:ruta:ruta_new' %}">Añadir Cliente</a></div>' );
+    $(".fixed-table-toolbar").append( '<div class="columns columns-left btn-group pull-left"><a class="btn btn-success" href="{% url 'dashboard:ruta:ruta_new' %}">Añadir ruta</a></div>' );
   });
 </script>
 <script>

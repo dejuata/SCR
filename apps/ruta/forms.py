@@ -43,6 +43,7 @@ class RutaForm(forms.ModelForm):
         }
         widgets = {
             'codRuta': forms.NumberInput(attrs={'class': 'form-control'}),
+            'nit': forms.Select(attrs={'class': 'form-control'}),
             'tipo_Ruta': forms.TextInput(attrs={'class': 'form-control'}),
             'tipo_Vehiculo_Requerido': forms.TextInput(attrs={'class': 'form-control'}),
             'origen': forms.TextInput(attrs={'class': 'form-control'}),
@@ -53,5 +54,6 @@ class RutaForm(forms.ModelForm):
             'valor_Ruta': forms.NumberInput(attrs={'class': 'form-control'}),
             'valor_Tercero': forms.NumberInput(attrs={'class': 'form-control'}),
             'comision_Conductor': forms.NumberInput(attrs={'class': 'form-control'}),
+            'kilometros': forms.NumberInput(attrs={'class': 'form-control'}),
             # 'linkRuta': forms.TextInput(attrs={'class': 'form-control'}),
         }

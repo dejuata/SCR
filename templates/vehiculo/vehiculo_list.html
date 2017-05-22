@@ -31,8 +31,8 @@ data-show-columns="true" data-sort-name="stargazers_count" data-sort-order="desc
   <thead>
     <tr>
         <th  class="text-center" data-field="placa"  data-sortable="true" >Placa</th>
-        <th  class="text-center" data-field="conductorDefault" data-sortable="true">Conductor</th>
-        <th  class="text-center" data-field="numeroInterno" data-sortable="true">Numero Interno</th>
+        <th  class="text-center" data-field="conductor_default" data-sortable="true">Conductor</th>
+        <th  class="text-center" data-field="numero_interno" data-sortable="true">Numero Interno</th>
         <th  class="text-center" data-field="marca" data-sortable="true">Marca</th>
         <th  class="text-center" data-field="estado" data-sortable="true">Estado</th>
         <th  class="text-center" data-field="acciones">Acciones</th>
@@ -43,8 +43,8 @@ data-show-columns="true" data-sort-name="stargazers_count" data-sort-order="desc
   {% for vehiculo in object_list %}
     <tr>
         <td><a href="{% url 'dashboard:vehiculo:vehiculo_edit' vehiculo.placa %}">{{ vehiculo.placa }}</a></td>
-        <td>{{ vehiculo.conductorDefault }}</td>
-        <td>{{ vehiculo.numeroInterno }}</td>
+        <td>{{ vehiculo.conductor_default }}</td>
+        <td>{{ vehiculo.numero_interno }}</td>
         <td>{{ vehiculo.marca }}</td>
         <td>
           {% if vehiculo.activo_inactivo %}
