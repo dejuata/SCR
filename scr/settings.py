@@ -37,10 +37,10 @@ SHARED_APPS = (
     'custom_user',
     'apps.users',
     'apps.custom_admin',
-    'captcha',
-    "anymail",
-    # 'mandrill',
-    # 'django_mandrill',
+    'snowpenguin.django.recaptcha2',
+    'anymail',
+    'apps.cities',
+    'django_select2',
 )
 
 TENANT_APPS = (
@@ -206,11 +206,11 @@ JET_THEMES = [
 
 JET_SIDE_MENU_COMPACT = True
 
-# django-capchat
+# django-recapchat
 RECAPTCHA_PUBLIC_KEY = '6Lc_RB4UAAAAAIjVIJgONuqnMd3sVRZwLEVC_rvH'
 RECAPTCHA_PRIVATE_KEY = '6Lc_RB4UAAAAALGWluRsX4qP3TKNy-sw3eUFCYpd'
 
-RECAPTCHA_PROXY = 'http://127.0.0.1:8000'
+# RECAPTCHA_PROXY = 'http://127.0.0.1:8000'
 
 
 # django_tenants
@@ -238,14 +238,7 @@ LOGGING = {
     }
 }
 
-# email transactional mandrill
-# EMAIL_USE_TLS = True
-# EMAIL_HOST = 'smtp.mandrillapp.com'
-# EMAIL_PORT = 587
-# EMAIL_HOST_USER = 'ScriptWeb'
-# EMAIL_HOST_PASSWORD = '23oiX8VSBNjZ5PEoPnt6Yg'
-# EMAIL_BACKEND = 'django_mandrill.mail.backends.mandrillbackend.EmailBackend'
-# MANDRILL_API_KEY = '23oiX8VSBNjZ5PEoPnt6Yg'
+# Email transactional anymail
 ANYMAIL = {
     # (exact settings here depend on your ESP...)
     "MAILGUN_API_KEY": "key-c91e693c95ab9d0ade486c8b5cc1cde6",

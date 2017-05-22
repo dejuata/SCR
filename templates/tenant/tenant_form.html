@@ -1,13 +1,35 @@
 {% extends 'base/base.html' %}
 {% load staticfiles %}
 
-{% block title %}
-Registrar Empresa
+{% block extrastatic %}
+  {{ form.media.css }}
+  <style>
+    select{
+      border-width: 2px;
+      -webkit-box-shadow: none;
+      box-shadow: none;
+      display: block;
+      width: 100%;
+      height: 45px;
+      padding: 10px 15px !important;
+      font-size: 15px;
+      line-height: 1.42857143;
+      color: #2c3e50;
+      background-color: #ffffff;
+      background-image: none;
+      border: 1px solid #dce4ec;
+      border-radius: 4px;
+      -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+      box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+      -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+      -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+      transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    }
+  </style>
 {% endblock %}
 
-{% block extrastatic %}
-<link rel="stylesheet" href="{% static 'css/login.css' %}"/>
-<!-- <script src='https://www.google.com/recaptcha/api.js'></script> -->
+{% block title %}
+Registrar Empresa
 {% endblock %}
 
 {% block content %}
@@ -89,15 +111,21 @@ Registrar Empresa
 
         <div class="form-input form-input-empresa">
           <div class="form-group has-feedback disableModal">
+            {{ form.departamento.label_tag }}
+            {{ form.departamento }}
+            <div class="help-block with-errors"></div>
+          </div>
+          <div class="form-group has-feedback disableModal">
             {{ form.ciudad.label_tag }}
             {{ form.ciudad }}
             <div class="help-block with-errors"></div>
           </div>
-          <div class="form-group has-feedback disableModal">
-            {{ form.direccion.label_tag }}
-            {{ form.direccion }}
-            <div class="help-block with-errors"></div>
-          </div>
+        </div>
+
+        <div class="form-group has-feedback disableModal">
+          {{ form.direccion.label_tag }}
+          {{ form.direccion }}
+          <div class="help-block with-errors"></div>
         </div>
 
         <div class="form-group has-feedback text-left">
@@ -106,14 +134,16 @@ Registrar Empresa
             <div class="help-block with-errors"></div>
         </div>
 
-        <div class="form-input">
-          <div class="g-recaptcha" data-sitekey="6Lc_RB4UAAAAAIjVIJgONuqnMd3sVRZwLEVC_rvH"></div>
-        </div>
+        <div class="form-group has-feedback text-left">
+      		{{ form.captcha }}
+      		<div class="help-block with-errors">
+      			<p class="errors">{{ form.captcha.errors|striptags }}</p>
+      		</div>
+      	</div>
 
         <br>
 
 				<div class="form-group form-input">
-
 					<button type="submit" class="btn btn-primary login-btn">Guardar</button>
 				</div>
 
@@ -130,4 +160,11 @@ Registrar Empresa
 {% block extrajs %}
   <script type="text/javascript" src="{% static 'js/uploadPreview.min.js'%}"></script>
   <script type="text/javascript" src="{% static 'js/main.js'%}"></script>
+  <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+  <script type="text/javascript">
+    window.onerror = function (msg) {
+      $("body").attr("JSError", msg);
+    }
+  </script>
+  {{ form.media.js }}
 {% endblock %}

@@ -112,3 +112,10 @@
 .left-input{
   margin-left: 16px !important;
 }
+
+/*errors*/
+.errors{
+  color: #e74c3c ;
+}
+
+/* select */

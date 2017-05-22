@@ -3,7 +3,6 @@ from __future__ import unicode_literals
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django_tenants.models import TenantMixin, DomainMixin
-from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 
 
@@ -15,6 +14,7 @@ class Tenant(TenantMixin):
     nombre_comercial = models.CharField(max_length=100, unique=True)
     telefono = models.IntegerField()
     correo = models.EmailField()
+    departamento = models.CharField(max_length=100, default='')
     ciudad = models.CharField(max_length=100)
     direccion = models.TextField(max_length=200)
 

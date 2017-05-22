@@ -1,3 +1,18 @@
+/******
+* navbar
+********/
+.navbar-default {
+    background-color: #2c3e50;
+    border-color: transparent;
+}
+.navbar {
+    margin-bottom: 0 !important;
+}
+.nav-btn{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .header{
   padding: 2rem 0;
   background-color: transparent !important;
@@ -564,6 +579,7 @@
         font-size: 18px;
     }
 }
+
 
 
 /*---------- MEDIA 480px ----------*/
