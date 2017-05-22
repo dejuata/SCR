@@ -41,7 +41,9 @@ Perfil
               <div class="panel-body bio-graph-info">
                   <div class="row profile">
                     <div class="col-md-4 profile-avatar">
-                        <img class="profile-img" src="https://es.gravatar.com/userimage/102441232/fedc48aa86c9e6b7299066b28149b18c.jpg?size=200" alt="">
+                      {% if user.logo.url != ''%}
+                        <img src="{{ user.logo }}" class="profile-img" >
+                      {% endif %}
                     </div>
                     <div class="col-md-8">
                       <br>

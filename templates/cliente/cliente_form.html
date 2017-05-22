@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block overview %}
-<li><i class="fa fa-laptop"></i><a href="{% url 'cliente:cliente_list'%}">Clientes</a></li>
+<li><i class="fa fa-laptop"></i><a href="{% url 'dashboard:cliente:cliente_list'%}">Clientes</a></li>
 <li><i class="fa fa-laptop"></i>Nuevo</li>
 {% endblock %}
 
@@ -58,17 +58,17 @@
         <div class="row">
           <div class="col-md-4">
             <strong>Logo</strong>
-            <div class="cuadrado">
+
+            <div class="cuadrado" id="image-preview">
               {% if cliente.logo.url != ''%}
-                <img src="{{ cliente.logo.url }}" alt="perfil" style="width:100%">
+                <img src="{{ cliente.logo.url }}" style="width:100%">
               {% endif %}
             </div>
 
             <div class="form-group has-feedback text-left col-md-12">
-
               {{ form.logo.erros }}
+              <label for="image-upload" id="image-label">Elige una imagen</label>
               {{ form.logo }}
-
             </div>
           </div>
 
@@ -127,4 +127,9 @@
   </div>
 </section>
 
+{% endblock %}
+
+{% block extrajs %}
+  <script type="text/javascript" src="{% static 'js/uploadPreview.min.js'%}"></script>
+  <script type="text/javascript" src="{% static 'js/main.js'%}"></script>
 {% endblock %}

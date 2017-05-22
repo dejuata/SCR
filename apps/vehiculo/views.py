@@ -1,15 +1,10 @@
-from django.shortcuts import render
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView, TemplateView
+from django.views.generic import ListView, CreateView, UpdateView
 from django.core.urlresolvers import reverse_lazy
 from django.contrib.messages.views import SuccessMessageMixin
 
 from .forms import VehiculoForm
 from .models import Vehiculo
 from .sorting import SortMixin
-
-
-class Dashboard(TemplateView):
-    template_name = 'dashboard/index.html'
 
 
 class VehiculoList(SortMixin, ListView):
@@ -30,7 +25,7 @@ class VehiculoCreate(SuccessMessageMixin, CreateView):
     model = Vehiculo
     form_class = VehiculoForm
     template_name = 'vehiculo/vehiculo_form.html'
-    success_url = reverse_lazy('vehiculo:vehiculo_list')
+    success_url = reverse_lazy('dashboard:vehiculo:vehiculo_list')
     success_message = "El vehiculo fue creado exitosamente"
 
 
@@ -38,5 +33,5 @@ class VehiculoUpdate(SuccessMessageMixin, UpdateView):
     model = Vehiculo
     form_class = VehiculoForm
     template_name = 'vehiculo/vehiculo_form.html'
-    success_url = reverse_lazy('vehiculo:vehiculo_list')
+    success_url = reverse_lazy('dashboard:vehiculo:vehiculo_list')
     success_message = "El vehiculo fue editado exitosamente"

@@ -37,21 +37,18 @@ Registrar Empresa
   <div class="panel panel-success">
 	  <div class="panel-heading" style="text-align:center;font-size:22px">Registrar Empresa</div>
 	  <div class="panel-body">
-      <form method="post" class="form-empresa" data-toggle="validator">
+      <form enctype="multipart/form-data" method="post" class="form-empresa" data-toggle="validator">
 			{% csrf_token %}
 
       <div class="col-sm-4">
-        <div class="row">
-          <div class="">
-            <div class="logo cuadrado">
-            </div>
-          </div>
-          <div class="">
-            <br>
-            {{ form.logo }}
-            <br>
-
-          </div>
+        <div class="cuadrado" id="image-preview">
+          {% if user.logo.url != ''%}
+            <img src="{{ user.logo }}" style="width:100%">
+          {% endif %}
+        </div>
+        <div class="text-left">
+          <label for="image-upload" id="image-label">Elige una imagen</label>
+          {{ form.logo }}
         </div>
       </div>
 
@@ -130,12 +127,7 @@ Registrar Empresa
 </div>
 {% endblock %}
 
-<script>
-if ($(".disableModal").hasClass( "has-error" )){
-  $("#openModal").attr("disabled", "true");
-}
-
-
-
-
-</script>
+{% block extrajs %}
+  <script type="text/javascript" src="{% static 'js/uploadPreview.min.js'%}"></script>
+  <script type="text/javascript" src="{% static 'js/main.js'%}"></script>
+{% endblock %}

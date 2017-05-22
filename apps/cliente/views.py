@@ -1,15 +1,10 @@
-from django.shortcuts import render
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView, TemplateView
+from django.views.generic import ListView, CreateView, UpdateView
 from django.core.urlresolvers import reverse_lazy
 from django.contrib.messages.views import SuccessMessageMixin
 
 from .forms import ClienteForm
 from .models import Cliente
 from .sorting import SortMixin
-
-
-class Dashboard(TemplateView):
-    template_name = 'dashboard/index.html'
 
 
 class ClienteList(SortMixin, ListView):
@@ -30,7 +25,7 @@ class ClienteCreate(SuccessMessageMixin, CreateView):
     model = Cliente
     form_class = ClienteForm
     template_name = 'cliente/cliente_form.html'
-    success_url = reverse_lazy('cliente:cliente_list')
+    success_url = reverse_lazy('dashboard:cliente:cliente_list')
     success_message = "El cliente fue creado exitosamente"
 
 
@@ -38,5 +33,5 @@ class ClienteUpdate(SuccessMessageMixin, UpdateView):
     model = Cliente
     form_class = ClienteForm
     template_name = 'cliente/cliente_form.html'
-    success_url = reverse_lazy('cliente:cliente_list')
+    success_url = reverse_lazy('dashboard:cliente:cliente_list')
     success_message = "El cliente fue editado exitosamente"

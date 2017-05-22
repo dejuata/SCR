@@ -12,6 +12,7 @@ Home
 
 
 {% block content %}
+<!-- header -->
   <header>
     <div class="shadow">
       <!-- section -->
@@ -40,4 +41,128 @@ Home
       <!-- end section -->
     </div>
   </header>
+  <!-- end header -->
+
+  <!-- beneficios -->
+<section id="services" class="services">
+  <div class="container text-center">
+    <div class="row">
+      <h1 class="title">What we do</h1>
+      <h2 class="subtitle">Lorem Ipsum is simply dummy text</h2>
+
+      <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+        <div class="service-item">
+          <img src="{% static 'img/landing/services/responsive.png' %}" alt="">
+          <h3>Fully Responsive</h3>
+          <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text</p>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+        <div class="service-item">
+          <img src="{% static 'img/landing/services/bs3.png' %}" alt="">
+          <h3>Bootstrap 3</h3>
+          <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text</p>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+        <div class="service-item">
+          <img src="{% static 'img/landing/services/free.png' %}" alt="">
+          <h3>100% Free</h3>
+          <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+<!-- end beneficios -->
+
+<!-- clientes -->
+<section id="clients" class="clients">
+  <div class="container">
+    <div class="row">
+
+    <h1 class="title">Clients</h1>
+    <h2 class="subtitle">Lorem Ipsum is simply dummy text</h2>
+
+    <div class="wow fadeInDown">
+      <img class="col-md-3 col-md-3 col-sm-3 col-xs-12" src="{% static 'img/landing/clients/img1.png' %}" alt="client-1">
+
+      <img class="col-md-3 col-md-3 col-sm-3 col-xs-12" src="{% static 'img/landing/clients/img2.png' %}" alt="client-2">
+
+      <img class="col-md-3 col-md-3 col-sm-3 col-xs-12" src="{% static 'img/landing/clients/img3.png' %}" alt="client-3">
+
+      <img class="col-md-3 col-md-3 col-sm-3 col-xs-12" src="{% static 'img/landing/clients/img4.png' %}" alt="client-4">
+
+    </div>
+    </div>
+  </div>
+</section>
+<!-- end clientes -->
+
+<!-- contact -->
+<section id="contact" class="contact">
+  <div class="container text-center">
+    <div class="row">
+
+      <h1 class="title">Contact us</h1>
+      <h2 class="subtitle">Lorem Ipsum is simply dummy text</h2>
+
+      <form role="form" class="contact-form" method="post">
+        <div class="col-md-6 wow fadeInLeft" data-wow-delay=".5s">
+
+          <div class="form-group">
+            <div class="controls">
+              <input type="text" class="form-control" placeholder="Name" name="name">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="controls">
+              <input type="email" class="form-control email" placeholder="Email" name="email">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="controls">
+              <input type="text" class="form-control requiredField" placeholder="Subject" name="subject">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="controls">
+              <textarea rows="7" class="form-control" placeholder="Message" name="message"></textarea>
+            </div>
+          </div>
+
+          <button type="submit" id="submit" class="btn btn-lg btn-primary">Send</button><div id="success" style="color:#34495e;"></div>
+
+        </div>
+      </form>
+
+      <div class="col-md-6 wow fadeInRight">
+        <div class="social-links">
+          <a class="social" href="#" target="_blank"><i class="fa fa-facebook fa-2x"></i></a>
+          <a class="social" href="#" target="_blank"><i class="fa fa-twitter fa-2x"></i></a>
+          <a class="social" href="#" target="_blank"><i class="fa fa-google-plus fa-2x"></i></a>
+          <a class="social" href="#" target="_blank"><i class="fa fa-linkedin fa-2x"></i></a>
+        </div>
+        <div class="contact-info">
+          <p><i class="fa fa-map-marker"></i> Seattle, WA 00000, USA</p>
+          <p><i class="fa fa-envelope"></i> info@yourwebsite.com</p>
+        </div>
+
+        <p>
+        A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque. Duis vulputate commodo lectus, ac blandit elit.<br>
+        </p>
+
+    </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- end contact-->
 {% endblock%}

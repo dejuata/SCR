@@ -1,9 +1,6 @@
 {% extends 'base/base_dashboard.html' %}
 {% load staticfiles %}
 
-{% block extrastatic %}
-<link rel="stylesheet" href="{% static 'tenant/css/bootstrap-table.css'%}">
-{% endblock %}
 
 {% block overview %}
 <li><i class="fa fa-laptop"></i>Conductores</li>
@@ -43,7 +40,7 @@ data-show-columns="true" data-sort-name="stargazers_count" data-sort-order="desc
   {% if object_list %}
   {% for conductor in object_list %}
     <tr>
-        <td><a href="{% url 'conductor:conductor_edit' conductor.cedula %}">{{ conductor.cedula }}</a></td>
+        <td><a href="{% url 'dashboard:conductor:conductor_edit' conductor.cedula %}">{{ conductor.cedula }}</a></td>
         <td>{{ conductor.nombres }}</td>
         <td>{{ conductor.apellidos }}</td>
         <td>{{ conductor.celular }}</td>
@@ -57,7 +54,7 @@ data-show-columns="true" data-sort-name="stargazers_count" data-sort-order="desc
         </td>
         <td>
           <div class="btn-group">
-            <a class="btn btn-primary" href="{% url 'conductor:conductor_edit' conductor.cedula %}">Editar</a>
+            <a class="btn btn-primary" href="{% url 'dashboard:conductor:conductor_edit' conductor.cedula %}">Editar</a>
           </div>
           <div class="btn-group">
             <!-- <a class="btn btn-danger" href="">Cambiar estado</a> -->
@@ -111,7 +108,7 @@ data-show-columns="true" data-sort-name="stargazers_count" data-sort-order="desc
 <script src="{% static 'tenant/js/bootstrap-table.js'%}"></script>
 <script>
   $( document ).ready(function() {
-    $(".fixed-table-toolbar").append( '<div class="columns columns-left btn-group pull-left"><a class="btn btn-success" href="{% url 'conductor:conductor_new' %}">Crear Conductor</a></div>' );
+    $(".fixed-table-toolbar").append( '<div class="columns columns-left btn-group pull-left"><a class="btn btn-success" href="{% url 'dashboard:conductor:conductor_new' %}">Crear Conductor</a></div>' );
   });
 </script>
 <script>
@@ -120,7 +117,7 @@ data-show-columns="true" data-sort-name="stargazers_count" data-sort-order="desc
     $('#confirmarDelete').click(function(){
       var request = $.ajax({
           type: "POST",
-          url: "{% url 'conductor:conductor_delete' %}",
+          url: "{% url 'dashboard:conductor:conductor_delete' %}",
           data: {
               "csrfmiddlewaretoken": "{{ csrf_token }}",
               "identificadorC_id": cedula
@@ -129,7 +126,7 @@ data-show-columns="true" data-sort-name="stargazers_count" data-sort-order="desc
       request.done(function(response) {
           if (response.delete){
             $('#modalEmergente').modal(response.class)
-            location.href ="{% url 'conductor:conductor_list' %}";
+            location.href ="{% url 'dashboard:conductor:conductor_list' %}";
           }
       });
     });

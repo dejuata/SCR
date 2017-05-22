@@ -31,8 +31,8 @@ data-show-columns="true" data-sort-name="stargazers_count" data-sort-order="desc
   <thead>
     <tr>
         <th  class="text-center" data-field="placa"  data-sortable="true" >Placa</th>
-        <th  class="text-center" data-field="conductorDefault" data-sortable="true">Conductor</th>
-        <th  class="text-center" data-field="numeroInterno" data-sortable="true">Numero Interno</th>
+        <th  class="text-center" data-field="conductor_default" data-sortable="true">Conductor</th>
+        <th  class="text-center" data-field="numero_interno" data-sortable="true">Numero Interno</th>
         <th  class="text-center" data-field="marca" data-sortable="true">Marca</th>
         <th  class="text-center" data-field="estado" data-sortable="true">Estado</th>
         <th  class="text-center" data-field="acciones">Acciones</th>
@@ -42,9 +42,9 @@ data-show-columns="true" data-sort-name="stargazers_count" data-sort-order="desc
   {% if object_list %}
   {% for vehiculo in object_list %}
     <tr>
-        <td><a href="{% url 'vehiculo:vehiculo_edit' vehiculo.placa %}">{{ vehiculo.placa }}</a></td>
-        <td>{{ vehiculo.conductorDefault }}</td>
-        <td>{{ vehiculo.numeroInterno }}</td>
+        <td><a href="{% url 'dashboard:vehiculo:vehiculo_edit' vehiculo.placa %}">{{ vehiculo.placa }}</a></td>
+        <td>{{ vehiculo.conductor_default }}</td>
+        <td>{{ vehiculo.numero_interno }}</td>
         <td>{{ vehiculo.marca }}</td>
         <td>
           {% if vehiculo.activo_inactivo %}
@@ -55,7 +55,7 @@ data-show-columns="true" data-sort-name="stargazers_count" data-sort-order="desc
         </td>
         <td>
           <div class="btn-group">
-            <a class="btn btn-primary" href="{% url 'vehiculo:vehiculo_edit' vehiculo.placa %}">Editar</a>
+            <a class="btn btn-primary" href="{% url 'dashboard:vehiculo:vehiculo_edit' vehiculo.placa %}">Editar</a>
           </div>
           <div class="btn-group">
             <!-- <a class="btn btn-danger" href="">Cambiar estado</a> -->
@@ -109,7 +109,7 @@ data-show-columns="true" data-sort-name="stargazers_count" data-sort-order="desc
 <script src="{% static 'tenant/js/bootstrap-table.js'%}"></script>
 <script>
   $( document ).ready(function() {
-    $(".fixed-table-toolbar").append( '<div class="columns columns-left btn-group pull-left"><a class="btn btn-success" href="{% url 'vehiculo:vehiculo_new' %}">Crear vehiculo</a></div>' );
+    $(".fixed-table-toolbar").append( '<div class="columns columns-left btn-group pull-left"><a class="btn btn-success" href="{% url 'dashboard:vehiculo:vehiculo_new' %}">Crear vehiculo</a></div>' );
   });
 </script>
 <script>
@@ -118,7 +118,7 @@ function get_placa(placa){
   $('#confirmarDelete').click(function(){
     var request = $.ajax({
         type: "POST",
-        url: "{% url 'vehiculo:vehiculo_delete' %}",
+        url: "{% url 'dashboard:vehiculo:vehiculo_delete' %}",
         data: {
             "csrfmiddlewaretoken": "{{ csrf_token }}",
             "identificadorV_id": placa
@@ -127,7 +127,7 @@ function get_placa(placa){
     request.done(function(response) {
         if (response.delete){
           $('#modalEmergente').modal(response.class)
-          location.href ="{% url 'vehiculo:vehiculo_list' %}";
+          location.href ="{% url 'dashboard:vehiculo:vehiculo_list' %}";
         }
     });
   });

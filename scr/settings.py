@@ -37,7 +37,10 @@ SHARED_APPS = (
     'custom_user',
     'apps.users',
     'apps.custom_admin',
-    'captcha'
+    'captcha',
+    "anymail",
+    # 'mandrill',
+    # 'django_mandrill',
 )
 
 TENANT_APPS = (
@@ -48,6 +51,7 @@ TENANT_APPS = (
     'apps.cliente',
     'apps.conductor',
     'apps.vehiculo',
+    'apps.ruta',
 )
 
 INSTALLED_APPS = list(set(SHARED_APPS + TENANT_APPS))
@@ -233,3 +237,19 @@ LOGGING = {
         },
     }
 }
+
+# email transactional mandrill
+# EMAIL_USE_TLS = True
+# EMAIL_HOST = 'smtp.mandrillapp.com'
+# EMAIL_PORT = 587
+# EMAIL_HOST_USER = 'ScriptWeb'
+# EMAIL_HOST_PASSWORD = '23oiX8VSBNjZ5PEoPnt6Yg'
+# EMAIL_BACKEND = 'django_mandrill.mail.backends.mandrillbackend.EmailBackend'
+# MANDRILL_API_KEY = '23oiX8VSBNjZ5PEoPnt6Yg'
+ANYMAIL = {
+    # (exact settings here depend on your ESP...)
+    "MAILGUN_API_KEY": "key-c91e693c95ab9d0ade486c8b5cc1cde6",
+    "MAILGUN_SENDER_DOMAIN": 'juandavidpino.com',  # your Mailgun domain, if needed
+}
+EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"  # or sendgrid.EmailBackend, or...
+DEFAULT_FROM_EMAIL = "juan.david.pino.reyes@gmail.com"  # if you don't already have this in settings

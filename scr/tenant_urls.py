@@ -1,9 +1,7 @@
 from django.conf.urls import url, include
 from django.contrib.auth.views import login, logout_then_login
-from django.contrib.auth.decorators import login_required
-from django.views.generic import TemplateView
 from django.conf import settings
-from django.conf.urls.static import static  # ARCHIVOS MEDIA JODA_BETA
+from django.conf.urls.static import static
 
 from apps.custom_admin.admin_tenant import admin_site
 
@@ -17,12 +15,11 @@ urlpatterns = [
     url(r'^logout/', logout_then_login, name='usuario_logout'),
     url(r'^accounts/login/', login, {'template_name': 'users/user_login.html'}, name='usuario_login'),
 
-    url(r'^dashboard/', include('apps.cliente.urls', namespace='cliente')),
-    url(r'^dashboard/', include('apps.conductor.urls', namespace='conductor')),
-    url(r'^dashboard/', include('apps.vehiculo.urls', namespace='vehiculo')),
     url(r'^', include('apps.users.urls_usuario', namespace='usuario_tenant')),
 
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)  # ARCHIVOS MEDIA JODA_BETA
+    url(r'^dashboard/', include('scr.dashboard_urls', namespace='dashboard')),
+
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
     import debug_toolbar
