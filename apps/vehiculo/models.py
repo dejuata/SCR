@@ -47,3 +47,6 @@ class Vehiculo(models.Model):
     fecha_vencimiento_rce_rcc = models.DateField()
     aseguradora_rce_rcc = models.TextField()
     activo_inactivo = models.BooleanField(blank=True, default=True)
+
+    def __str__(self):
+        return self.placa

@@ -19,3 +19,6 @@ class Ruta(models.Model):
     kilometros = models.FloatField(null=True)
     # linkRuta = models.CharField(max_length=100,null=True)
     activo_inactivo = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.tipo_Ruta

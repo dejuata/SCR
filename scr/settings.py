@@ -52,6 +52,7 @@ TENANT_APPS = (
     'apps.conductor',
     'apps.vehiculo',
     'apps.ruta',
+    'apps.planilla',
 )
 
 INSTALLED_APPS = list(set(SHARED_APPS + TENANT_APPS))
