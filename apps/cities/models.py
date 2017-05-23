@@ -16,7 +16,7 @@ class CitiesColombia(models.Model):
     department = models.ForeignKey(DepartmentColombia, related_name="cities", null=True, blank=True, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.name
+        return self.name.capitalize()
 
     class Meta:
         ordering = ['name']

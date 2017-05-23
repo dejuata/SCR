@@ -26,22 +26,3 @@ def ciudad_widget():
         )
     )
     return ciudad
-
-
-# class citiesForm(forms.Form):
-#
-#     department = forms.ModelChoiceField(
-#         widget=Select2Widget(attrs={'data-placeholder': 'selecciona una categoria', 'class': 'form-control'},),
-#         queryset=DepartmentColombia.objects.all(),
-#         required=False,
-#     )
-#
-#     city = forms.ModelChoiceField(
-#         queryset=CitiesColombia.objects.all(),
-#         label="Ciudad",
-#         widget=ModelSelect2Widget(
-#             search_fields=['name__icontains'],
-#             dependent_fields={'department': 'department'},
-#             max_results=500,
-#         )
-#     )

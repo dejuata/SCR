@@ -34,6 +34,9 @@
     <!-- pikaday -->
     <link rel="stylesheet" href="{% static 'css/pikaday.min.css' %}">
 
+    <!-- fontawesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" media="all">
+
     <style>
     footer{
       position: absolute;
@@ -229,10 +232,14 @@
     <script src="{% static 'js/pikaday.min.js' %}"></script>
     <script src="{% static 'js/pikaday.jquery.js' %}"></script>
 
+    <!-- dropzone -->
+    <script src="{% static 'js/dropzone.js' %}"></script>
+
     <script>
       $( document ).ready(function(){
         $(".alert").fadeIn("slow").delay(2000).fadeOut("slow");
         $('.datepicker').pikaday({ firstDay: 1 });
+        $('#id_file').addClass('inputfile');
       });
       function tabActive(id){
         $('.active').removeClass('active');
