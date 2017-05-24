@@ -23,28 +23,24 @@
 <section class="panel" style="padding:5px 10px">
 
   <div id="toolbar" class="btn-group">
-    <a class="btn btn-success" href="{% url 'dashboard:cliente:cliente_new' %}">
-      <i class="fa fa-user-plus margin-right" aria-hidden="true"></i> Nuevo Cliente
+    <a class="btn btn-link" href="{% url 'dashboard:cliente:cliente_new' %}">
+      <i class="fa fa-user-plus table-btn-padding-right" aria-hidden="true"></i> Nuevo Cliente
+    </a>
+
+    <a href="#" class="btn btn-link" data-toggle="modal" data-target="#modalUpload">
+      <i class="fa fa-upload table-btn-padding-right" aria-hidden="true"></i>Carga Masiva
     </a>
 
     <!-- download file -->
-    <a href="{% url 'dashboard:cliente:cliente_export' %}" id="download" class="btn btn-success left-input">
-      <i class="fa fa-file-excel-o margin-right" aria-hidden="true"></i>Excel
+    <a href="{% url 'dashboard:cliente:cliente_export' %}" id="download" class="btn btn-link">
+      <i class="fa fa-file-excel-o table-btn-padding-right" aria-hidden="true"></i>Excel
     </a>
     <!-- end download file -->
 
     <!-- upload file -->
-    <form id="upload" class="display-flex left-input" method="post" enctype="multipart/form-data">
-      {% csrf_token %}
 
-        <input id="id_file" name="file" type="file" class="inputfile" required>
-        <label id="label_file" for="id_file" class="btn btn-primary" style="display:flex;align-items:center">
-          <i class="fa fa-upload" aria-hidden="true"></i><div style="padding-left:10px">Carga Masiva</div>
-        </label>
 
-        <input type="submit" value="Subir" style="padding-left:10px" class="btn btn-default">
 
-    </form>
     <!-- end upload file -->
 
 
@@ -126,25 +122,15 @@
 {% endblock %}
 <!-- end modal -->
 
+<!-- modal upload-->
+
+
+
+
 
 {% block extrajs %}
 
 <script>
-  $( document ).ready(function() {
-    // $(".fixed-table-toolbar").append( '<div class="columns columns-left btn-group pull-left"><a class="btn btn-success" href="{% url 'dashboard:cliente:cliente_new' %}"><i class="fa fa-user-plus margin-right" aria-hidden="true"></i> Nuevo Cliente</a></div>' );
-  });
-
-  $("#id_file").change(function(ev) {
-    var name = ev.target.files[0].name;
-    console.log(name)
-    $("#label_file").html('<i class="fa fa-upload" aria-hidden="true"></i>' + '<strong style="padding-left:10px">' + name + '</strong>')
-
-  });
-</script>
-<script>
-
-
-
 function get_nit(nit){
   $('#modal-title').text('Cambiar estado');
   $('#confirmarDelete').click(function(){
@@ -164,27 +150,42 @@ function get_nit(nit){
     });
   });
 }
-function upload(event) {
-event.preventDefault();
-var data = new FormData($('form').get(0));
-console.log(data)
 
-$.ajax({
-    url: "{% url 'dashboard:cliente:cliente_import' %}",
-    type: "POST",
-    data: data,
-    cache: false,
-    processData: false,
-    contentType: false,
-    success: function(data) {
-        alert('success');
-    }
-});
-return false;
-}
+Dropzone.options.upload = {
+  // Prevents Dropzone from uploading dropped files immediately
+  autoProcessQueue : false,
+  uploadMultiple: false,
+  maxFilesize: 5,
+  maxFiles:	1,
+  addRemoveLinks: true,
+  acceptedFiles: '.xls,.xlsx',
+  dictDefaultMessage: 'Arrastra los archivos aqui para subirlos',
 
-$(function() {
-    $('form').submit(upload);
-});
+  init : function() {
+      var submitButton = $("#upload-submit")
+      myDropzone = this;
+
+      submitButton.click(function() {
+          myDropzone.processQueue();
+
+      });
+      // You might want to show the submit button only when
+      // files are dropped here:
+      this.on("addedfile", function() {
+          $('#upload-submit').removeClass('hide')
+      });
+
+  },
+
+  success: function(request){
+    this.on("complete", function(file) {
+      myDropzone.removeFile(file);
+    });
+    // Cerrar el modal
+    $('#modalUpload').modal('hide')
+    console.log(request)
+  }
+};
+
 </script>
 {% endblock %}

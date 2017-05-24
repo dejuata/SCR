@@ -60,7 +60,6 @@ class ClienteList(FormMixin, SortMixin, ListView):
     model = Cliente
     template_name = 'cliente/cliente_list.html'
     form_class = UploadFileForm
-    # paginate_by = 10
     default_sort_params = ('razon_social', 'asc')
 
     def sort_queryset(self, qs, sort_by, order):

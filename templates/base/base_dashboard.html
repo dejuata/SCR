@@ -25,9 +25,18 @@
     <link rel="stylesheet" href="{% static 'tenant/css/bootstrap-table.min.css'%}">
     <link rel="stylesheet" href="{% static 'tenant/css/bootstrap-table-sticky-header.css'%}">
 
-
     <!-- pikaday -->
     <link rel="stylesheet" href="{% static 'css/pikaday.min.css' %}">
+
+    <!-- custom style -->
+    <link rel="stylesheet" href="{% static 'tenant/css/custom-style.css'%}">
+
+    <!-- hoja de calculo -->
+    <script src="{% static 'tenant/js/handsontable.full.js' %}"></script>
+    <link rel="stylesheet" media="screen" href="{% static 'tenant/css/handsontable.full.css' %}">
+
+    <!-- Dropzone.js -->
+    <link rel="stylesheet" href="{% static 'tenant/css/dropzone.min.css'%}">
 
     <!-- fontawesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" media="all">
@@ -160,7 +169,7 @@
       </section>
       <!-- end content -->
 
-      <!-- modal -->
+      <!-- modal state-->
       <div class="modal fade" id="modalEmergente">
         <div class="modal-dialog">
           <div class="modal-content">
@@ -178,6 +187,37 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+            {% endblock %}
+          </div>
+        </div>
+      </div>
+      <!-- end modal -->
+
+      <!-- modal upload-->
+      <div class="modal fade" id="modalUpload">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            {% block modal-upload-title %}
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title">Carga Masiva</h4>
+            </div>
+            {% endblock %}
+            {% block modal-upload-body %}
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                  <form action="{% url 'dashboard:cliente:cliente_import' %}" id="upload" class="dropzone" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                  </form>
+                </div>
+            </div>
+            {% endblock %}
+            {% block modal-upload-footer %}
+            <div class="modal-footer">
+              <button id="upload-submit" class="btn btn-danger hide">Enviar</button>
+              <a class="btn btn-default" href="" data-dismiss="modal">Cancelar</a>
             </div>
             {% endblock %}
           </div>
@@ -216,6 +256,10 @@
     <script src="{% static 'tenant/js/xlsx.core.min.js'%}"></script>
     <script src="{% static 'tenant/js/tableExport.min.js'%}"></script>
     <script src="{% static 'tenant/js/bootstrap-table-sticky-header.js'%}"></script>
+
+    <!-- dropzone.js -->
+    <script src="{% static 'tenant/js/dropzone.min.js'%}"></script>
+
 
 
     <!-- Pikaday -->
