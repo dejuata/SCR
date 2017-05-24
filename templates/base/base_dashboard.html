@@ -14,40 +14,23 @@
     <!-- bootstrap theme -->
     <link href="{% static 'css/bootstrap-theme.css' %}" rel="stylesheet">
 
-    <!--external css-->
-    <!-- font icon -->
-    <link href="{% static 'tenant/css/elegant-icons-style.css' %}" rel="stylesheet" />
-    <link href="{% static 'tenant/css/css/font-awesome.min.css' %}" rel="stylesheet" />
-
-    <!-- easy pie chart-->
-    <link href="{% static 'tenant/assets/jquery-easy-pie-chart/jquery.easy-pie-chart.css' %}" rel="stylesheet" type="text/css" media="screen"/>
+    <!-- style -->
     <link href="{% static 'tenant/css/style.css' %}" rel="stylesheet">
     <link href="{% static 'tenant/css/style-responsive.css' %}" rel="stylesheet" />
-	  <link href="{% static 'tenant/css/jquery-ui-1.10.4.min.css' %}" rel="stylesheet">
 
     <!-- login -->
     <link rel="stylesheet" href="{% static 'css/login.css' %}"/>
 
     <!-- Boostrap table -->
-    <link rel="stylesheet" href="{% static 'tenant/css/bootstrap-table.css'%}">
+    <link rel="stylesheet" href="{% static 'tenant/css/bootstrap-table.min.css'%}">
+    <link rel="stylesheet" href="{% static 'tenant/css/bootstrap-table-sticky-header.css'%}">
+
 
     <!-- pikaday -->
     <link rel="stylesheet" href="{% static 'css/pikaday.min.css' %}">
 
     <!-- fontawesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" media="all">
-
-    <style>
-    footer{
-      position: absolute;
-      bottom: 0;
-      padding-top: 20px;
-    }
-    #main-content{
-      display: flex;
-      justify-content: center;
-    }
-    </style>
 
     {% block extrastatic %}
     {% endblock %}
@@ -68,7 +51,9 @@
 
       <header class="header dark-bg">
             <div class="toggle-nav">
-                <div class="icon-reorder tooltips" data-original-title="Toggle Navigation" data-placement="bottom"><i class="icon_menu"></i></div>
+                <div class="icon-reorder tooltips" data-original-title="Toggle Navigation" data-placement="bottom">
+                  <i class="fa fa-bars" aria-hidden="true"></i>
+                </div>
             </div>
 
             <!--logo start-->
@@ -115,25 +100,25 @@
               <ul class="sidebar-menu">
                   <li class="active">
                       <a class="" href="{% url 'dashboard:cliente:cliente_list' %}">
-                          <i class="icon_house_alt"></i>
+                          <i class="fa fa-user-circle-o" aria-hidden="true"></i>
                           <span>Clientes</span>
                       </a>
                   </li>
                   <li class="active">
                       <a class="" href="{% url 'dashboard:conductor:conductor_list' %}">
-                          <i class="icon_genius"></i>
+                          <i class="fa fa-id-card-o" aria-hidden="true"></i>
                           <span>Conductores</span>
                       </a>
                   </li>
                   <li class="active">
                       <a class="" href="{% url 'dashboard:vehiculo:vehiculo_list' %}">
-                          <i class="icon_desktop"></i>
+                          <i class="fa fa-bus" aria-hidden="true"></i>
                           <span>Vehiculos</span>
                       </a>
                   </li>
                   <li>
                       <a class="" href="{% url 'dashboard:ruta:ruta_list' %}">
-                          <i class="icon_genius"></i>
+                          <i class="fa fa-arrows-h" aria-hidden="true"></i>
                           <span>Rutas</span>
                       </a>
                   </li>
@@ -222,18 +207,24 @@
 
     <!--  Upload Preview -->
     <script type="text/javascript" src="{% static 'js/uploadPreview.min.js'%}"></script>
-    <script type="text/javascript" src="{% static 'js/main.js'%}"></script>
 
     <!-- Bootstrap table -->
-    <script src="{% static 'tenant/js/bootstrap-table.js'%}"></script>
+    <script src="{% static 'tenant/js/bootstrap-table.min.js'%}"></script>
+    <script src="{% static 'tenant/js/bootstrap-table-es-ES.min.js'%}"></script>
+    <script src="{% static 'tenant/js/bootstrap-table-export.min.js'%}"></script>
+    <script src="{% static 'tenant/js/FileSaver.min.js'%}"></script>
+    <script src="{% static 'tenant/js/xlsx.core.min.js'%}"></script>
+    <script src="{% static 'tenant/js/tableExport.min.js'%}"></script>
+    <script src="{% static 'tenant/js/bootstrap-table-sticky-header.js'%}"></script>
+
 
     <!-- Pikaday -->
     <script src="{% static 'js/moment.js' %}"></script>
     <script src="{% static 'js/pikaday.min.js' %}"></script>
     <script src="{% static 'js/pikaday.jquery.js' %}"></script>
 
-    <!-- dropzone -->
-    <script src="{% static 'js/dropzone.js' %}"></script>
+    <!-- dashboard js -->
+    <script src="{% static 'tenant/js/dashboard.js' %}"></script>
 
     <script>
       $( document ).ready(function(){

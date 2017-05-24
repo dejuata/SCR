@@ -39,7 +39,7 @@ def import_data(request):
 
 
 def export_data(request):
-    return excel.make_response_from_a_table(CitiesColombia, 'xls', file_name="ciudades")
+    # return excel.make_response_from_a_table(CitiesColombia, 'xls', file_name="ciudades")
     # if atype == "sheet":
     #     return excel.make_response_from_a_table(
     #         Question, 'xls', file_name="sheet")
@@ -47,15 +47,16 @@ def export_data(request):
     #     return excel.make_response_from_tables(
     #         [Question, Choice], 'xls', file_name="book")
     # elif atype == "custom":
-    #     question = Question.objects.get(slug='ide')
-    #     query_sets = Choice.objects.filter(question=question)
-    #     column_names = ['choice_text', 'id', 'votes']
-    #     return excel.make_response_from_query_sets(
-    #         query_sets,
-    #         column_names,
-    #         'xls',
-    #         file_name="custom"
-    #     )
+        # question = Question.objects.get(slug='ide')
+    query_sets = CitiesColombia.objects.all()
+    column_names = ['id', 'name']
+    # column_names = [{'id': 'id'}, {'name': 'name'}]
+    return excel.make_response_from_query_sets(
+        query_sets,
+        column_names,
+        'xls',
+        file_name="custom"
+    )
     # else:
     #     return HttpResponseBadRequest(
     #         "Bad request. please put one of these " +

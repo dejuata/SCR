@@ -44,11 +44,23 @@ def import_data(request):
         })
 
 
+def export_data(request):
+    # return excel.make_response_from_a_table(Cliente, 'xls', file_name="clientes")
+    query_sets = Cliente.objects.all()
+    column_names = ['nit', 'razon_social', 'telefono', 'correo', 'ciudad', 'direccion', 'activo_inactivo']
+    return excel.make_response_from_query_sets(
+        query_sets,
+        column_names,
+        'xls',
+        file_name="clientes"
+    )
+
+
 class ClienteList(FormMixin, SortMixin, ListView):
     model = Cliente
     template_name = 'cliente/cliente_list.html'
     form_class = UploadFileForm
-    paginate_by = 10
+    # paginate_by = 10
     default_sort_params = ('razon_social', 'asc')
 
     def sort_queryset(self, qs, sort_by, order):
@@ -57,31 +69,6 @@ class ClienteList(FormMixin, SortMixin, ListView):
         if order == 'desc':
             qs = qs.reverse()
         return qs
-
-    # def get(self, request, *args, **kwargs):
-    #     self.object = None
-    #     self.form = self.get_form(self.form_class)
-    #     # Explicitly states what get to call:
-    #     return ListView.get(self, request, *args, **kwargs)
-    #
-    # def post(self, request, *args, **kwargs):
-    #     # When the form is submitted, it will enter here
-    #     self.object = None
-    #     self.form = self.get_form(self.form_class)
-    #
-    #     if self.form.is_valid():
-    #         self.object = self.form.save()
-    #         # Here ou may consider creating a new instance of form_class(),
-    #         # so that the form will come clean.
-    #
-    #     # Whether the form validates or not, the view will be rendered by get()
-    #     return self.get(request, *args, **kwargs)
-    #
-    # def get_context_data(self, *args, **kwargs):
-    #     # Just include the form
-    #     context = super(ClienteList, self).get_context_data(*args, **kwargs)
-    #     context['form'] = self.form
-    #     return context
 
 
 class ClienteCreate(SuccessMessageMixin, CreateView):
