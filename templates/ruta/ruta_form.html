@@ -222,7 +222,6 @@ if(document.getElementById('origen').value !="" && document.getElementById('dest
 {
 	var origen = document.getElementById('origen').value;
 	var destino = document.getElementById('destino').value;
-	console.log(origen);
 	displayRoute(origen, destino, directionsService,
 		directionsDisplay);
 }
@@ -246,12 +245,37 @@ if(document.getElementById('origen').value !="" && document.getElementById('dest
 
   function computeTotalDistance(result) {
     var total = 0;
+		var ruta = new Array();
     var myroute = result.routes[0];
+    var place;
+		var geocoder = new google.maps.Geocoder;
     for (var i = 0; i < myroute.legs.length; i++) {
       total += myroute.legs[i].distance.value;
     }
+    for (var i = 0; i < result.geocoded_waypoints.length; i++) {
+		  place= result.geocoded_waypoints[i].place_id;
+		  ruta[i] = geocodePlaceId(geocoder,map,place);
+    }
     total = total / 1000;
     document.getElementById('Kilometros').value = total;
+  }
+
+  function geocodePlaceId(geocoder, map, placeId) {
+  var address;
+    geocoder.geocode({'placeId': placeId}, function(results, status) {
+    if (status === 'OK') {
+        if (results[0]) {
+        address = results[0].formatted_address;
+        }
+        else {
+          window.alert('No results found');
+        }
+    }
+    else {
+      window.alert('Geocoder failed due to: ' + status);
+    }
+    console.log(address);
+    });
   }
 </script>
 <script async defer
