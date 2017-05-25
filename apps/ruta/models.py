@@ -1,7 +1,8 @@
 from django.db import models
 
 from ..cliente.models import Cliente
-#Create your models here.
+
+
 class Ruta(models.Model):
     codRuta = models.IntegerField(unique=True)
     nit = models.ForeignKey(Cliente, null=True, blank=True, on_delete=models.CASCADE)
@@ -11,10 +12,10 @@ class Ruta(models.Model):
     destino = models.CharField(max_length=100)
     hora_Inicio = models.TimeField()
     hora_Fin = models.TimeField()
-    valor_Hora_Add = models.IntegerField(null=True)
+    valor_Hora_Add = models.IntegerField(null=True, blank=True)
     valor_Ruta = models.IntegerField()
-    valor_Tercero = models.IntegerField(null=True)
-    comision_Conductor = models.IntegerField(null=True)
-    kilometros = models.IntegerField(null=True)
-    #linkRuta = models.CharField(max_length=100,null=True)
+    valor_Tercero = models.IntegerField(null=True, blank=True)
+    comision_Conductor = models.IntegerField(null=True, blank=True)
+    kilometros = models.CharField(null=True, blank=True, max_length=10)
+    # linkRuta = models.CharField(max_length=100,null=True)
     activo_inactivo = models.BooleanField(default=True)

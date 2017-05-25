@@ -37,7 +37,10 @@ SHARED_APPS = (
     'custom_user',
     'apps.users',
     'apps.custom_admin',
-    'captcha'
+    'snowpenguin.django.recaptcha2',
+    'anymail',
+    'apps.cities',
+    'django_select2',
 )
 
 TENANT_APPS = (
@@ -46,6 +49,8 @@ TENANT_APPS = (
     'django.contrib.messages',
     'apps.users',
     'apps.cliente',
+    'apps.conductor',
+    'apps.vehiculo',
     'apps.ruta',
 )
 
@@ -99,12 +104,10 @@ WSGI_APPLICATION = 'scr.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django_tenants.postgresql_backend',
-        'NAME': 'scr_dev',
-        #'USER': 'dejuata',
-        #'PASSWORD': 'America27',
+        'NAME': 'scr_test',
+        'USER': 'dejuata',
+        'PASSWORD': 'America27',
         'HOST': 'localhost',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
         'PORT': '5432',
     }
 }
@@ -135,7 +138,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
 
-LANGUAGE_CODE = 'es'
+LANGUAGE_CODE = 'es-co'
 
 TIME_ZONE = 'America/Bogota'
 
@@ -203,11 +206,11 @@ JET_THEMES = [
 
 JET_SIDE_MENU_COMPACT = True
 
-# django-capchat
+# django-recapchat
 RECAPTCHA_PUBLIC_KEY = '6Lc_RB4UAAAAAIjVIJgONuqnMd3sVRZwLEVC_rvH'
 RECAPTCHA_PRIVATE_KEY = '6Lc_RB4UAAAAALGWluRsX4qP3TKNy-sw3eUFCYpd'
 
-RECAPTCHA_PROXY = 'http://127.0.0.1:8000'
+# RECAPTCHA_PROXY = 'http://127.0.0.1:8000'
 
 
 # django_tenants
@@ -234,3 +237,16 @@ LOGGING = {
         },
     }
 }
+
+# Email transactional anymail
+ANYMAIL = {
+    # (exact settings here depend on your ESP...)
+    "MAILGUN_API_KEY": "key-c91e693c95ab9d0ade486c8b5cc1cde6",
+    "MAILGUN_SENDER_DOMAIN": 'juandavidpino.com',  # your Mailgun domain, if needed
+}
+EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"  # or sendgrid.EmailBackend, or...
+DEFAULT_FROM_EMAIL = "juan.david.pino.reyes@gmail.com"  # if you don't already have this in settings
+
+# django-excel
+FILE_UPLOAD_HANDLERS = ("django_excel.ExcelMemoryFileUploadHandler",
+                        "django_excel.TemporaryExcelFileUploadHandler")

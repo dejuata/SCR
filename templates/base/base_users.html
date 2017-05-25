@@ -1,0 +1,45 @@
+{% extends 'base/base.html' %}
+{% load staticfiles %}
+
+{% block extrastatic %}
+<link rel="stylesheet" href="{% static 'css/login.css' %}"/>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="login text-center">
+    {% block message %}
+    {% endblock %}
+    <!-- messages erros -->
+		{% if form.errors %}
+			{% for error in form.non_field_errors %}
+					<div class="alert alert-danger">
+							<strong>{{ error|escape }}</strong>
+					</div>
+			{% endfor %}
+		{% endif %}
+		<!-- end messages erros -->
+
+    <div class="panel {% block color_panel %}{% endblock %}">
+      <div class="panel-heading" style="text-align:center;font-size:22px">
+        {% block title_panel %}
+        {% endblock %}
+      </div>
+      <div class="panel-body">
+        <div class="col-md-6">
+          {% block colum_one %}
+          {% endblock %}
+        </div>
+
+        <div class="col-md-6">
+          {% block colum_two %}
+          {% endblock %}
+        </div>
+      </div>
+    </div>
+
+    {% block row %}
+    {% endblock %}
+
+  </div>
+{% endblock %}

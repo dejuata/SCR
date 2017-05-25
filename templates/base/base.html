@@ -1,12 +1,20 @@
 {% load staticfiles %}
+{% load recaptcha2 %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  {% recaptcha_init %}
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
   <link rel="stylesheet" href="{% static 'css/bootstrap-theme.css' %}"/>
+  <link rel="stylesheet" href="{% static 'css/login.css' %}"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" media="all">
+
+  <!--  recapchat-->
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
   {% block extrastatic %}
   {% endblock %}
 
@@ -26,7 +34,10 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#">SCR</a>
+        <div>
+          <a class="navbar-brand" href="#">SCR</a>
+        </div>
+
       </div>
 
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -35,21 +46,22 @@
           <li><a href="#">Beneficios</a></li>
           <li><a href="#">Clientes</a></li>
           <li><a href="#">Planes</a></li>
+            <li><a href="#">Contactenos</a></li>
           {% if user.is_authenticated %}
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" style="text-transform:uppercase" data-toggle="dropdown" role="button" aria-expanded="false">
-                {{ user.email }} <span class="caret"></span>
+                {{ user.get_short_name }} <span class="caret"></span>
               </a>
               <ul class="dropdown-menu" role="menu">
-                <li><a href="{% url 'usuario:usuario_profile' %}">Ver Perfil</a></li>
-                <li><a href="{% url 'registrar-empresa' %}">Pagar</a></li>
+                <li><a href="{% url 'usuario:usuario_edit' user.id %}">Ver Perfil</a></li>
+                <li><a href="{% url 'tenant:tenant_new' %}">Pagar</a></li>
                 <li><a href="{% url 'logout' %}">Salir</a></li>
               </ul>
             </li>
           {% else %}
             <li>
               {% block navbar-btn %}
-              <a href="{% url 'tenant_login' %}" style="padding: 0 10px !important;">
+              <a href="{% url 'tenant_login' %}" style="">
                 <button  class="btn btn-warning">Iniciar sesión</button>
               </a>
               {% endblock navbar-btn %}
@@ -62,11 +74,6 @@
   <!-- end navbar -->
   {% endblock %}
 
-  {% if messages %}
-  {% for message in messages %}
-    <div class="alert {% if message.tags %} alert-{{ message.tags }}{% endif %}">{{ message|safe }}</div>
-  {% endfor %}
-{% endif %}
 
   {% block content %}
   {% endblock%}
@@ -100,21 +107,30 @@
 
 
   <script src="{% static 'js/jquery-3.2.1.min.js'%}"></script>
-  <!-- <script type="text/javascript" src="{% static 'js/bootstrap.min.js'%}"></script> -->
+  <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/validator.js' %}"></script>
-
-
-  <!-- <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script> -->
-  <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script> -->
   <script type="text/javascript" src="{% static 'js/mailcheck.min.js' %}"></script>
-  <script>
-  $(function () {
-    $('[data-toggle="popover"]').popover()
-  })
-  </script>
+
 
   {% block extrajs %}
   {% endblock %}
+
+  <script>
+  // Cierra los mensajes de alerta
+  $(function () {
+    $('[data-toggle="popover"]').popover()
+  })
+  $( document ).ready(function(){
+    $(".alert").fadeIn("slow").delay(6000).fadeOut("slow");
+    // $('select').select2();
+
+  });
+
+  </script>
+
+
+
+
+
 </body>
 </html>

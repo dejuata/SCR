@@ -1,16 +1,18 @@
 # -*- encoding:utf-8 -*-
 from django import forms
 
-# from captcha.fields import ReCaptchaField
+from snowpenguin.django.recaptcha2.fields import ReCaptchaField
+from snowpenguin.django.recaptcha2.widgets import ReCaptchaWidget
+
 from .models import Tenant
+from ..cities.forms import departamento_widget, ciudad_widget
 
 
 class TenantForm(forms.ModelForm):
-    #
-    # captcha = ReCaptchaField(
-    # public_key='76wtgdfsjhsydt7r5FFGFhgsdfytd656sad75fgh',
-    # private_key='98dfg6df7g56df6gdfgdfg65JHJH656565GFGFGs',
-    # )
+
+    captcha = ReCaptchaField(widget=ReCaptchaWidget())
+    departamento = departamento_widget()
+    ciudad = ciudad_widget()
 
     class Meta:
         model = Tenant
@@ -23,6 +25,7 @@ class TenantForm(forms.ModelForm):
             'nombre_comercial',
             'telefono',
             'correo',
+            'departamento',
             'ciudad',
             'direccion',
         ]
@@ -34,6 +37,7 @@ class TenantForm(forms.ModelForm):
             'nombre_comercial': 'Nombre Comercial',
             'telefono': 'Teléfono Corporativo',
             'correo': 'Correo Corporativo',
+            'departamento': 'Departamento',
             'ciudad': 'Ciudad',
             'direccion': 'Dirección',
         }
@@ -47,17 +51,18 @@ class TenantForm(forms.ModelForm):
                                                        'data-toggle': 'popover',
                                                        'data-placement': 'top',
                                                        'data-content': 'Tenga en cuenta que con el Nombre comercial, se genera la URL a la cual debera acceder. Ejemplo: https://nombreComercial.scr.com'
-                                                }),
+                                                       }),
             'telefono': forms.NumberInput(attrs={'class': 'form-control'}),
             'correo': forms.EmailInput(attrs={'class': 'form-control'}),
-            'ciudad': forms.TextInput(attrs={'class': 'form-control'}),
+            # 'departamento':  forms.TextInput(attrs={'class': 'form-control'}),
+            # 'ciudad': forms.TextInput(attrs={'class': 'form-control'}),
             'direccion': forms.TextInput(attrs={'class': 'form-control'}),
-            # 'captcha': ReCaptchaField(attrs={'theme': 'clean'}),
         }
 
     def clean_nombre_comercial(self):
         nombre_comercial = self.cleaned_data['nombre_comercial']
-        if nombre_comercial != nombre_comercial.lower():
-            self.add_error('nombre_comercial', 'El nombre comercial debe ir en minusculas')
+        if nombre_comercial.isupper() or not(nombre_comercial.islower()) or (nombre_comercial.find(' ') > 0):
+        if nombre_comercial.isupper() or (nombre_comercial.find(" ") > 0) or not(nombre_comercial.islower()):
+            self.add_error('nombre_comercial', 'El nombre comercial debe ir en minusculas y sin espacios')
         else:
             return self.cleaned_data['nombre_comercial']

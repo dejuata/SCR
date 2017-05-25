@@ -1,26 +1,31 @@
 {% extends 'base/base_dashboard.html' %}
 {% load staticfiles %}
 
-
-{% block extrastatic %}
-<link rel="stylesheet" href="{% static 'css/login.css' %}"/>
-<!-- <script src='https://www.google.com/recaptcha/api.js'></script> -->
-{% endblock %}
-
 {% block overview %}
-<li><i class="fa fa-laptop"></i>Clientes</li>
+<li><i class="fa fa-user-circle-o" aria-hidden="true"></i><a href="{% url 'dashboard:cliente:cliente_list'%}">Clientes</a></li>
+<li><i class="fa fa-user-plus margin-right" aria-hidden="true"></i>Nuevo</li>
 {% endblock %}
-
-
 
 {% block content %}
+<!-- messages success -->
+{% if messages %}
+<div class="alert alert-dismissible alert-info">
+  <button type="button" class="close text-center" data-dismiss="alert">&times;</button>
+  {% for message in messages %}
+  <strong>
+    <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+  </strong>
+  {% endfor %}
+</div>
+{% endif %}
+<!-- end messages success -->
 
 <!-- messages erros -->
 {% if form.errors %}
     <div class="alert alert-danger">
     {% for field in form %}
         {% for error in field.errors %}
-          <strong><div>{{field}}{{ error|escape }}</div></strong>
+          <strong><div>{{ error|escape }}</div></strong>
         {% endfor %}
     {% endfor %}
     </div>
@@ -35,13 +40,6 @@
 <!-- end messages erros -->
 
 <section class="panel">
-  {% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-    {% endfor %}
-</ul>
-{% endif %}
   <header class="panel-heading">
     Nuevo Cliente
   </header>
@@ -50,16 +48,18 @@
         {% csrf_token %}
         <div class="row">
           <div class="col-md-4">
+            <strong>Logo</strong>
 
-            <!--<div class="cuadrado"></div>-->
-            <div class="cuadrado">
-              <img src="{{ cliente.logo.url }}" width="200" height="200">
+            <div class="cuadrado" id="image-preview">
+              {% if cliente.logo.url != ''%}
+                <img src="{{ cliente.logo.url }}" style="width:100%">
+              {% endif %}
             </div>
 
-            <div class="form-group has-feedback text-left col-md-12">-
-              {{ form.logo.label_tag }}
+            <div class="form-group has-feedback text-left col-md-12">
               {{ form.logo.erros }}
-              <input type="file" class="form-control" name="logo">
+              <label for="image-upload" id="image-label">Elige una imagen</label>
+              {{ form.logo }}
             </div>
           </div>
 
@@ -67,29 +67,29 @@
 
             <div class="form-group has-feedback text-left col-md-12">
               <strong>NIT</strong>
-            </br>
-              {{ form.nit.erros }}
-              <input type="text" class="form-control" name="nit" data-error="Ingrese el N° NIT de la empresa" required>
+                {{ form.nit.erros }}
+                {{ form.nit }}
               <div class="help-block with-errors"></div>
             </div>
 
             <div class="form-group has-feedback text-left col-md-12">
               <strong>Razón social</strong>
               {{ form.razon_social.erros }}
-              <input type="text" class="form-control" name="razon_social" data-error="Ingrese la Razón Social de la empresa" required>
+              {{ form.razon_social }}
               <div class="help-block with-errors"></div>
             </div>
 
             <div class="form-group has-feedback  col-md-12">
-              <strong>Telefono:</strong>
+              <strong>Teléfono:</strong>
               {{ form.telefono.erros }}
-              <input class="form-control" id="id_telefono" maxlength="12" name="telefono" type="text" data-error="Ingrese el Telefono de la empresa" required="">
+              {{ form.telefono }}
               <div class="help-block with-errors"></div>
             </div>
 
             <div class="form-group has-feedback  col-md-12">
               <strong>Correo</strong>
               {{ form.correo.erros }}
+              {{ form.correo }}
               <div class="help-block with-errors"></div>
             </div>
 
@@ -97,14 +97,14 @@
             <div class="form-group has-feedback text-left col-md-12">
               <strong>Ciudad</strong>
               {{ form.ciudad.erros }}
-              <input type="text" class="form-control" name="ciudad" data-error="Ingrese la ciudad donde esta ubicada la empresa" required>
+              {{ form.ciudad }}
               <div class="help-block with-errors"></div>
             </div>
 
             <div class="form-group has-feedback text-left col-md-12">
               <strong>Dirección</strong>
               {{ form.direccion.erros }}
-              <input type="text" class="form-control" name="direccion" data-error="Ingrese la dirección de la empresa" required>
+              {{ form.direccion }}
               <div class="help-block with-errors"></div>
             </div>
 
@@ -118,4 +118,9 @@
   </div>
 </section>
 
+{% endblock %}
+
+{% block extrajs %}
+  <script type="text/javascript" src="{% static 'js/uploadPreview.min.js'%}"></script>
+  <script type="text/javascript" src="{% static 'js/main.js'%}"></script>
 {% endblock %}

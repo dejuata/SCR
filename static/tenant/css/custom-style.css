@@ -1,0 +1,13 @@
+/* Estilos para tablas */
+
+.table-btn-padding-right{
+  padding-right: 8px;
+}
+
+/*mostrar btn cuando archivos son subidos*/
+.hide{
+  display: none;
+}
+.show{
+  display: initial;
+}

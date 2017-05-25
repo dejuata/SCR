@@ -1,10 +1,6 @@
 {% extends 'base/base_dashboard.html' %}
 {% load staticfiles %}
 
-{% block extrastatic %}
-<link rel="stylesheet" href="{% static 'tenant/css/bootstrap-table.css'%}">
-{% endblock %}
-
 {% block overview %}
 <li><i class="fa fa-laptop"></i>Rutas</li>
 {% endblock%}
@@ -30,20 +26,21 @@ data-toggle="table" data-search="true" data-show-refresh="true"
 data-show-columns="true" data-sort-name="stargazers_count" data-sort-order="desc">
   <thead>
     <tr>
-        <th  class="text-center" data-field="codRuta"  data-sortable="true" >Codigo Ruta</th>
-        <th  class="text-center" data-field="nit"  data-sortable="true" >NIT</th>
-        <th  class="text-center" data-field="tipo_Ruta" data-sortable="true">Tipo Ruta</th>
-        <th  class="text-center" data-field="tipo_Vehiculo_Requerido" data-sortable="true">Tipo Vehiculo requerido</th>
-        <th  class="text-center" data-field="hora_Inicio" data-sortable="true">Hora Fin</th>
-        <th  class="text-center" data-field="hora_Fin" data-sortable="true">Hora Inicio</th>
-        <th  class="text-center" data-field="activo_inactivo">Acciones</th>
+        <th  class="text-center" data-field="codigo_ruta"  data-sortable="true" >Codigo Ruta</th>
+        <th  class="text-center" data-field="cliente" data-sortable="true">Cliente</th>
+        <th  class="text-center" data-field="tipo_ruta">Tipo Ruta</th>
+        <th  class="text-center" data-field="tipo_vehiculo">Tipo Vehiculo requerido</th>
+        <th  class="text-center" data-field="hora_inicio" data-sortable="true">Hora Inicio</th>
+        <th  class="text-center" data-field="hora_fin" data-sortable="true">Hora Fin</th>
+        <th  class="text-center" data-field="estado">Estado</th>
+        <th  class="text-center" data-field="acciones">Acciones</th>
     </tr>
   </thead>
 <tbody>
   {% if object_list %}
   {% for ruta in object_list %}
     <tr>
-        <td>{{ ruta.codRuta }}</td>
+        <td><a href="{% url 'dashboard:ruta:ruta_edit' ruta.codRuta %}">{{ ruta.codRutaruta }}</a></td>
         <td>{{ ruta.nit }}</td>
         <td>{{ ruta.tipo_Ruta }}</td>
         <td>{{ ruta.tipo_Vehiculo_Requerido }}</td>
@@ -58,10 +55,11 @@ data-show-columns="true" data-sort-name="stargazers_count" data-sort-order="desc
         </td>
         <td>
           <div class="btn-group">
-            <a class="btn btn-primary" href="{% url 'ruta:ruta_edit' ruta.codRuta %}">Editar</a>
+            <a class="btn btn-primary" href="{% url 'dashboard:ruta:ruta_edit' ruta.codRuta %}">Editar</a>
           </div>
           <div class="btn-group">
-            <a class="btn btn-danger" href="{% url 'ruta:ruta_delete' ruta.codRuta %}">Cambiar estado</a>
+            <!-- <a class="btn btn-danger" href="">Cambiar estado</a> -->
+            <a onclick="get_ruta({{ ruta.id }})" class="btn btn-danger" data-toggle="modal" data-target="#modalEmergente">Cambiar estado</a>
           </div>
         </td>
     </tr>
@@ -84,15 +82,55 @@ data-show-columns="true" data-sort-name="stargazers_count" data-sort-order="desc
     </li>
 </ul>
 </section>
-
-
 {% endblock %}
 
+{% block modal-title %}
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+  <h4 class="modal-title">Cambiar estado</h4>
+</div>
+{% endblock %}
+
+{% block modal-footer %}
+<div class="modal-footer">
+  <button class="btn btn-danger" id="confirmarDelete">Confirmar</button>
+  <a class="btn btn-default" href="">Cancelar</a>
+</div>
+{% endblock %}
+
+{% block modal-body %}
+<div class="modal-body">
+  <h3>Está seguro que desea cambiar el estado de la ruta?</h3>
+</div>
+{% endblock %}
+
+
 {% block extrajs %}
-<script src="{% static 'tenant/js/bootstrap-table.js'%}"></script>
+
 <script>
   $( document ).ready(function() {
-    $(".fixed-table-toolbar").append( '<div class="columns columns-left btn-group pull-left"><a class="btn btn-success" href="{% url 'ruta:ruta_new' %}">Crear Ruta</a></div>' );
+    $(".fixed-table-toolbar").append( '<div class="columns columns-left btn-group pull-left"><a class="btn btn-success" href="{% url 'dashboard:ruta:ruta_new' %}">Añadir Ruta</a></div>' );
   });
+</script>
+<script>
+
+function get_ruta(id){
+  $('#confirmarDelete').click(function(){
+    var request = $.ajax({
+        type: "POST",
+        url: "{% url 'dashboard:ruta:ruta_delete' %}",
+        data: {
+            "csrfmiddlewaretoken": "{{ csrf_token }}",
+            "identificador_id": id
+        },
+    });
+    request.done(function(response) {
+        if (response.delete){
+          $('#modalEmergente').modal(response.class)
+          location.href ="{% url 'dashboard:ruta:ruta_list' %}";
+        }
+    });
+  });
+}
 </script>
 {% endblock %}

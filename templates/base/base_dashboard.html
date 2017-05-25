@@ -14,28 +14,32 @@
     <!-- bootstrap theme -->
     <link href="{% static 'css/bootstrap-theme.css' %}" rel="stylesheet">
 
-    <!--external css-->
-    <!-- font icon -->
-    <link href="{% static 'tenant/css/elegant-icons-style.css' %}" rel="stylesheet" />
-    <link href="{% static 'tenant/css/css/font-awesome.min.css' %}" rel="stylesheet" />
-
-    <!-- easy pie chart-->
-    <link href="{% static 'tenant/assets/jquery-easy-pie-chart/jquery.easy-pie-chart.css' %}" rel="stylesheet" type="text/css" media="screen"/>
+    <!-- style -->
     <link href="{% static 'tenant/css/style.css' %}" rel="stylesheet">
     <link href="{% static 'tenant/css/style-responsive.css' %}" rel="stylesheet" />
-	  <link href="{% static 'tenant/css/jquery-ui-1.10.4.min.css' %}" rel="stylesheet">
 
-    <style>
-    footer{
-      position: absolute;
-      bottom: 0;
-      padding-top: 20px;
-    }
-    #main-content{
-      display: flex;
-      justify-content: center;
-    }
-    </style>
+    <!-- login -->
+    <link rel="stylesheet" href="{% static 'css/login.css' %}"/>
+
+    <!-- Boostrap table -->
+    <link rel="stylesheet" href="{% static 'tenant/css/bootstrap-table.min.css'%}">
+    <link rel="stylesheet" href="{% static 'tenant/css/bootstrap-table-sticky-header.css'%}">
+
+    <!-- pikaday -->
+    <link rel="stylesheet" href="{% static 'css/pikaday.min.css' %}">
+
+    <!-- custom style -->
+    <link rel="stylesheet" href="{% static 'tenant/css/custom-style.css'%}">
+
+    <!-- hoja de calculo -->
+    <script src="{% static 'tenant/js/handsontable.full.js' %}"></script>
+    <link rel="stylesheet" media="screen" href="{% static 'tenant/css/handsontable.full.css' %}">
+
+    <!-- Dropzone.js -->
+    <link rel="stylesheet" href="{% static 'tenant/css/dropzone.min.css'%}">
+
+    <!-- fontawesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" media="all">
 
     {% block extrastatic %}
     {% endblock %}
@@ -56,11 +60,13 @@
 
       <header class="header dark-bg">
             <div class="toggle-nav">
-                <div class="icon-reorder tooltips" data-original-title="Toggle Navigation" data-placement="bottom"><i class="icon_menu"></i></div>
+                <div class="icon-reorder tooltips" data-original-title="Toggle Navigation" data-placement="bottom">
+                  <i class="fa fa-bars" aria-hidden="true"></i>
+                </div>
             </div>
 
             <!--logo start-->
-            <a href="index.html" class="logo"><span class="lite">SCR</span></a>
+            <a href="{% url 'dashboard:index' %}" class="logo"><span class="lite">SCR</span></a>
             <!--logo end-->
 
             <div class="top-nav notification-row">
@@ -70,9 +76,9 @@
                     <li class="dropdown">
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                             <span class="profile-ava">
-                                <img alt="" src="img/avatar1_small.jpg">
+                                <!-- <img alt="" src="img/avatar1_small.jpg"> -->
                             </span>
-                            <span class="username">Jenifer Smith</span>
+                            <span class="username">{{ user.get_short_name }}</span>
                             <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu extended logout">
@@ -102,39 +108,28 @@
               <!-- sidebar menu start-->
               <ul class="sidebar-menu">
                   <li class="active">
-                      <a class="" href="{% url 'cliente:cliente_list' %}">
-                          <i class="icon_house_alt"></i>
+                      <a class="" href="{% url 'dashboard:cliente:cliente_list' %}">
+                          <i class="fa fa-user-circle-o" aria-hidden="true"></i>
                           <span>Clientes</span>
                       </a>
                   </li>
                   <li class="active">
-                      <a class="" href="{% url 'ruta:ruta_list' %}">
-                          <i class="icon_genius"></i>
+                      <a class="" href="{% url 'dashboard:conductor:conductor_list' %}">
+                          <i class="fa fa-id-card-o" aria-hidden="true"></i>
+                          <span>Conductores</span>
+                      </a>
+                  </li>
+                  <li class="active">
+                      <a class="" href="{% url 'dashboard:vehiculo:vehiculo_list' %}">
+                          <i class="fa fa-bus" aria-hidden="true"></i>
+                          <span>Vehiculos</span>
+                      </a>
+                  </li>
+                  <li>
+                      <a class="" href="{% url 'dashboard:ruta:ruta_list' %}">
+                          <i class="fa fa-arrows-h" aria-hidden="true"></i>
                           <span>Rutas</span>
                       </a>
-                  </li>
-				          <li class="sub-menu">
-                      <a href="javascript:;" class="">
-                          <i class="icon_document_alt"></i>
-                          <span>Conductores</span>
-                          <span class="menu-arrow arrow_carrot-right"></span>
-                      </a>
-                      <ul class="sub">
-                          <li><a class="" href="form_component.html">Form Elements</a></li>
-                          <li><a class="" href="form_validation.html">Form Validation</a></li>
-                      </ul>
-                  </li>
-                  <li class="sub-menu">
-                      <a href="javascript:;" class="">
-                          <i class="icon_desktop"></i>
-                          <span>Vehiculos</span>
-                          <span class="menu-arrow arrow_carrot-right"></span>
-                      </a>
-                      <ul class="sub">
-                          <li><a class="" href="general.html">Elements</a></li>
-                          <li><a class="" href="buttons.html">Buttons</a></li>
-                          <li><a class="" href="grids.html">Grids</a></li>
-                      </ul>
                   </li>
               </ul>
               <!-- sidebar menu end-->
@@ -150,7 +145,7 @@
           <div class="row">
   				<div class="col-lg-12">
   					<ol class="breadcrumb">
-  						<li><i class="fa fa-home"></i><a href="index.html">Home</a></li>
+  						<li><i class="fa fa-home"></i><a href="{% url 'dashboard:index' %}">Home</a></li>
               {% block overview %}
               {% endblock%}
   					</ol>
@@ -174,7 +169,61 @@
       </section>
       <!-- end content -->
 
+      <!-- modal state-->
+      <div class="modal fade" id="modalEmergente">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            {% block modal-title %}
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title"></h4>
+            </div>
+            {% endblock %}
+            {% block modal-body %}
+            <div class="modal-body">
+            </div>
+            {% endblock %}
+            {% block modal-footer %}
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+            {% endblock %}
+          </div>
+        </div>
+      </div>
+      <!-- end modal -->
 
+      <!-- modal upload-->
+      <div class="modal fade" id="modalUpload">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            {% block modal-upload-title %}
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title">Carga Masiva</h4>
+            </div>
+            {% endblock %}
+            {% block modal-upload-body %}
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                  <form action="{% url 'dashboard:cliente:cliente_import' %}" id="upload" class="dropzone" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                  </form>
+                </div>
+            </div>
+            {% endblock %}
+            {% block modal-upload-footer %}
+            <div class="modal-footer">
+              <button id="upload-submit" class="btn btn-danger hide">Enviar</button>
+              <a class="btn btn-default" href="" data-dismiss="modal">Cancelar</a>
+            </div>
+            {% endblock %}
+          </div>
+        </div>
+      </div>
+      <!-- end modal -->
 
 
     <!-- javascripts -->
@@ -196,8 +245,46 @@
     <!-- bootstrap validator -->
     <script src="{% static 'js/validator.js' %}"></script>
 
+    <!--  Upload Preview -->
+    <script type="text/javascript" src="{% static 'js/uploadPreview.min.js'%}"></script>
+
+    <!-- Bootstrap table -->
+    <script src="{% static 'tenant/js/bootstrap-table.min.js'%}"></script>
+    <script src="{% static 'tenant/js/bootstrap-table-es-ES.min.js'%}"></script>
+    <script src="{% static 'tenant/js/bootstrap-table-export.min.js'%}"></script>
+    <script src="{% static 'tenant/js/FileSaver.min.js'%}"></script>
+    <script src="{% static 'tenant/js/xlsx.core.min.js'%}"></script>
+    <script src="{% static 'tenant/js/tableExport.min.js'%}"></script>
+    <script src="{% static 'tenant/js/bootstrap-table-sticky-header.js'%}"></script>
+
+    <!-- dropzone.js -->
+    <script src="{% static 'tenant/js/dropzone.min.js'%}"></script>
+
+
+
+    <!-- Pikaday -->
+    <script src="{% static 'js/moment.js' %}"></script>
+    <script src="{% static 'js/pikaday.min.js' %}"></script>
+    <script src="{% static 'js/pikaday.jquery.js' %}"></script>
+
+    <!-- dashboard js -->
+    <script src="{% static 'tenant/js/dashboard.js' %}"></script>
+
+    <script>
+      $( document ).ready(function(){
+        $(".alert").fadeIn("slow").delay(2000).fadeOut("slow");
+        $('.datepicker').pikaday({ firstDay: 1 });
+        $('#id_file').addClass('inputfile');
+      });
+      function tabActive(id){
+        $('.active').removeClass('active');
+        $(id).addClass('active')
+      }
+    </script>
+
     {% block extrajs %}
     {% endblock %}
+
 
   </body>
 </html>
