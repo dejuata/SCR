@@ -4,6 +4,10 @@ from django import forms
 from .models import Cliente
 
 
+class UploadFileForm(forms.Form):
+    file = forms.FileField()
+
+
 class ClienteForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
@@ -41,10 +45,10 @@ class ClienteForm(forms.ModelForm):
             'direccion': 'Direccion',
         }
         widgets = {
-            'nit': forms.TextInput(attrs={'class': 'form-control', 'data-error': 'Ingrese el N° NIT de la empresa'}),
+            'nit': forms.NumberInput(attrs={'class': 'form-control', 'data-error': 'Ingrese el N° NIT de la empresa'}),
             'razon_social': forms.TextInput(attrs={'class': 'form-control', 'data-error': 'Ingrese la Razón Social de la empresa'}),
             'logo': forms.FileInput(),
-            'telefono': forms.TextInput(attrs={'class': 'form-control', 'maxlength': '12', 'data-error': 'Ingrese el Teléfono de la empresa'}),
+            'telefono': forms.NumberInput(attrs={'class': 'form-control', 'maxlength': '12', 'data-error': 'Ingrese el Teléfono de la empresa'}),
             'correo': forms.TextInput(attrs={'class': 'form-control',
                                              'pattern': '^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$',
                                              'data-error': 'Ingrese el Correo de la empresa'

@@ -1,12 +1,8 @@
 {% extends 'base/base_dashboard.html' %}
 {% load staticfiles %}
 
-{% block extrastatic %}
-<link rel="stylesheet" href="{% static 'tenant/css/bootstrap-table.css'%}">
-{% endblock %}
-
 {% block overview %}
-<li><i class="fa fa-laptop"></i>Clientes</li>
+<li><i class="fa fa-user-circle-o" aria-hidden="true"></i>Clientes</li>
 {% endblock%}
 
 {% block content %}
@@ -25,69 +21,90 @@
 <!-- end messages success -->
 
 <section class="panel" style="padding:5px 10px">
-<table class="table table-striped table-advance table-hover text-center"
-data-toggle="table" data-search="true" data-show-refresh="true"
-data-show-columns="true" data-sort-name="stargazers_count" data-sort-order="desc">
-  <thead>
+
+  <div id="toolbar" class="btn-group">
+    <a class="btn btn-link" href="{% url 'dashboard:cliente:cliente_new' %}">
+      <i class="fa fa-user-plus table-btn-padding-right" aria-hidden="true"></i> Nuevo Cliente
+    </a>
+
+    <a href="#" class="btn btn-link" data-toggle="modal" data-target="#modalUpload">
+      <i class="fa fa-upload table-btn-padding-right" aria-hidden="true"></i>Carga Masiva
+    </a>
+
+    <!-- download file -->
+    <a href="{% url 'dashboard:cliente:cliente_export' %}" id="download" class="btn btn-link">
+      <i class="fa fa-file-excel-o table-btn-padding-right" aria-hidden="true"></i>Excel
+    </a>
+    <!-- end download file -->
+
+    <!-- upload file -->
+
+
+
+    <!-- end upload file -->
+
+
+  </div>
+
+  <table data-toggle="table"
+       data-pagination="true"
+       data-show-export="true"
+       data-search="true"
+       data-show-refresh="true"
+       data-show-toggle="true"
+       data-show-columns="true"
+       data-toolbar="#toolbar"
+       >
+    <thead>
     <tr>
-        <th  class="text-center" data-field="nit"  data-sortable="true" >NIT</th>
-        <th  class="text-center" data-field="razon_social" data-sortable="true">Razon Social</th>
-        <th  class="text-center" data-field="telefono">Teléfono</th>
-        <th  class="text-center" data-field="correo">Correo</th>
-        <th  class="text-center" data-field="estado" data-sortable="true">Estado</th>
-        <th  class="text-center" data-field="acciones">Acciones</th>
+      <th data-field="state" data-checkbox="true"></th>
+      <th  class="text-center" data-field="nit"  data-sortable="true" >NIT</th>
+      <th  class="text-center" data-field="razon_social" data-sortable="true">Razon Social</th>
+      <th  class="text-center" data-field="telefono">Teléfono</th>
+      <th  class="text-center" data-field="correo">Correo</th>
+      <th  class="text-center" data-field="estado" data-sortable="true">Estado</th>
+      <th  class="text-center" data-field="acciones">Acciones</th>
     </tr>
-  </thead>
-<tbody>
-  {% if object_list %}
-  {% for cliente in object_list %}
-    <tr>
-        <td><a href="{% url 'cliente:cliente_edit' cliente.nit %}">{{ cliente.nit }}</a></td>
-        <td>{{ cliente.razon_social }}</td>
-        <td>{{ cliente.telefono }}</td>
-        <td>{{ cliente.correo }}</td>
-        <td>
-          {% if cliente.activo_inactivo %}
-            Activo
-          {% else %}
-            Inactivo
-          {% endif %}
-        </td>
-        <td>
-          <div class="btn-group">
-            <a class="btn btn-primary" href="{% url 'cliente:cliente_edit' cliente.nit %}">Editar</a>
-          </div>
-          <div class="btn-group">
-            <!-- <a class="btn btn-danger" href="">Cambiar estado</a> -->
-            <a onclick="get_nit({{ cliente.nit }})" class="btn btn-danger" data-toggle="modal" data-target="#modalEmergente">Cambiar estado</a>
-          </div>
-        </td>
-    </tr>
-  {% endfor %}
-  {% else %}
-    <h3 class="page-header"><i class="fa fa-laptop"></i> No hay registros</h3>
-  {% endif %}
-</tbody>
+    </thead>
+    <tbody>
+      {% if object_list %}
+      {% for cliente in object_list %}
+        <tr>
+            <td></td>
+            <td><a href="{% url 'dashboard:cliente:cliente_edit' cliente.nit %}">{{ cliente.nit }}</a></td>
+            <td>{{ cliente.razon_social }}</td>
+            <td>{{ cliente.telefono }}</td>
+            <td>{{ cliente.correo }}</td>
+            <td>
+              {% if cliente.activo_inactivo %}
+                Activo
+              {% else %}
+                Inactivo
+              {% endif %}
+            </td>
+            <td>
+              <div class="btn-group">
+                <a class="btn btn-success" href="{% url 'dashboard:cliente:cliente_edit' cliente.nit %}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+              </div>
+              <div class="btn-group">
+                <a onclick="get_nit({{ cliente.nit }})" class="btn btn-danger" data-toggle="modal" data-target="#modalEmergente"><i class="fa fa-ban" aria-hidden="true"></i></a>
+              </div>
+            </td>
+        </tr>
+      {% endfor %}
+      {% else %}
+        <h3 class="page-header"><i class="fa fa-laptop"></i> No hay registros</h3>
+      {% endif %}
+    </tbody>
 </table>
-<ul class="pager">
-	<li>
-    	{% if page_obj.has_previous %}
-       	 <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
-    	{% endif %}
-    </li>
-	<li>
-    	{% if page_obj.has_next %}
-     	 <a href="?page={{ page_obj.next_page_number }}">Next</a>
-    	{% endif %}
-    </li>
-</ul>
 </section>
 {% endblock %}
 
+<!-- modal -->
 {% block modal-title %}
 <div class="modal-header">
   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-  <h4 class="modal-title">Cambiar estado</h4>
+  <h4 class="modal-title" id="modal-title">Cambiar estado</h4>
 </div>
 {% endblock %}
 
@@ -100,25 +117,26 @@ data-show-columns="true" data-sort-name="stargazers_count" data-sort-order="desc
 
 {% block modal-body %}
 <div class="modal-body">
-  <h3>Está seguro que desea cambiar el estado del cliente?</h3>
+  <h3 id="modal-body">Está seguro que desea cambiar el estado del cliente?</h3>
 </div>
 {% endblock %}
+<!-- end modal -->
+
+<!-- modal upload-->
+
+
+
 
 
 {% block extrajs %}
-<script src="{% static 'tenant/js/bootstrap-table.js'%}"></script>
-<script>
-  $( document ).ready(function() {
-    $(".fixed-table-toolbar").append( '<div class="columns columns-left btn-group pull-left"><a class="btn btn-success" href="{% url 'cliente:cliente_new' %}">Añadir Cliente</a></div>' );
-  });
-</script>
-<script>
 
+<script>
 function get_nit(nit){
+  $('#modal-title').text('Cambiar estado');
   $('#confirmarDelete').click(function(){
     var request = $.ajax({
         type: "POST",
-        url: "{% url 'cliente:cliente_delete' %}",
+        url: "{% url 'dashboard:cliente:cliente_delete' %}",
         data: {
             "csrfmiddlewaretoken": "{{ csrf_token }}",
             "identificador_id": nit
@@ -127,11 +145,47 @@ function get_nit(nit){
     request.done(function(response) {
         if (response.delete){
           $('#modalEmergente').modal(response.class)
-          location.href ="{% url 'cliente:cliente_list' %}";
+          location.href ="{% url 'dashboard:cliente:cliente_list' %}";
         }
     });
   });
-
 }
+
+Dropzone.options.upload = {
+  // Prevents Dropzone from uploading dropped files immediately
+  autoProcessQueue : false,
+  uploadMultiple: false,
+  maxFilesize: 5,
+  maxFiles:	1,
+  addRemoveLinks: true,
+  acceptedFiles: '.xls,.xlsx',
+  dictDefaultMessage: 'Arrastra los archivos aqui para subirlos',
+
+  init : function() {
+      var submitButton = $("#upload-submit")
+      myDropzone = this;
+
+      submitButton.click(function() {
+          myDropzone.processQueue();
+
+      });
+      // You might want to show the submit button only when
+      // files are dropped here:
+      this.on("addedfile", function() {
+          $('#upload-submit').removeClass('hide')
+      });
+
+  },
+
+  success: function(request){
+    this.on("complete", function(file) {
+      myDropzone.removeFile(file);
+    });
+    // Cerrar el modal
+    $('#modalUpload').modal('hide')
+    console.log(request)
+  }
+};
+
 </script>
 {% endblock %}
