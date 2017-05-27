@@ -13,7 +13,7 @@ class Planilla(models.Model):
     hora_adicional = models.IntegerField()
     hora_inicio = models.TimeField()
     hora_fin = models.TimeField()
-    tiempo_operado = models.TimeField()
+    tiempo_operado = models.FloatField()
     entrada = models.BooleanField()
     salida = models.BooleanField()
     placa = models.OneToOneField(Vehiculo, on_delete=models.CASCADE)
