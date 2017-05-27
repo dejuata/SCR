@@ -59,7 +59,7 @@ data-show-columns="true" data-sort-name="stargazers_count" data-sort-order="desc
           </div>
           <div class="btn-group">
             <!-- <a class="btn btn-danger" href="">Cambiar estado</a> -->
-            <a onclick="get_ruta({{ ruta.codRuta }})" class="btn btn-danger" data-toggle="modal" data-target="#modalEmergente">Cambiar estado</a>
+            <a onclick="get_ruta({{ ruta.id }})" class="btn btn-danger" data-toggle="modal" data-target="#modalEmergente">Cambiar estado</a>
           </div>
         </td>
     </tr>
@@ -109,7 +109,11 @@ data-show-columns="true" data-sort-name="stargazers_count" data-sort-order="desc
 
 <script>
   $( document ).ready(function() {
+<<<<<<< HEAD
     $(".fixed-table-toolbar").append( '<div class="columns columns-left btn-group pull-left"><a class="btn btn-success" href="{% url 'dashboard:ruta:ruta_new' %}">Añadir ruta</a></div>' );
+=======
+    $(".fixed-table-toolbar").append( '<div class="columns columns-left btn-group pull-left"><a class="btn btn-success" href="{% url 'dashboard:ruta:ruta_new' %}">Añadir Ruta</a></div>' );
+>>>>>>> 3a0b277a459a867413cea4473bc04c98e49c5b5c
   });
 </script>
 <script>

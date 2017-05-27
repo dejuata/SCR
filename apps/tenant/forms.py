@@ -1,16 +1,18 @@
 # -*- encoding:utf-8 -*-
 from django import forms
 
-# from captcha.fields import ReCaptchaField
+from snowpenguin.django.recaptcha2.fields import ReCaptchaField
+from snowpenguin.django.recaptcha2.widgets import ReCaptchaWidget
+
 from .models import Tenant
+from ..cities.forms import departamento_widget, ciudad_widget
 
 
 class TenantForm(forms.ModelForm):
-    #
-    # captcha = ReCaptchaField(
-    # public_key='76wtgdfsjhsydt7r5FFGFhgsdfytd656sad75fgh',
-    # private_key='98dfg6df7g56df6gdfgdfg65JHJH656565GFGFGs',
-    # )
+
+    captcha = ReCaptchaField(widget=ReCaptchaWidget())
+    departamento = departamento_widget()
+    ciudad = ciudad_widget()
 
     class Meta:
         model = Tenant
@@ -23,6 +25,7 @@ class TenantForm(forms.ModelForm):
             'nombre_comercial',
             'telefono',
             'correo',
+            'departamento',
             'ciudad',
             'direccion',
         ]
@@ -34,6 +37,7 @@ class TenantForm(forms.ModelForm):
             'nombre_comercial': 'Nombre Comercial',
             'telefono': 'Teléfono Corporativo',
             'correo': 'Correo Corporativo',
+            'departamento': 'Departamento',
             'ciudad': 'Ciudad',
             'direccion': 'Dirección',
         }
@@ -50,9 +54,9 @@ class TenantForm(forms.ModelForm):
                                                        }),
             'telefono': forms.NumberInput(attrs={'class': 'form-control'}),
             'correo': forms.EmailInput(attrs={'class': 'form-control'}),
-            'ciudad': forms.TextInput(attrs={'class': 'form-control'}),
+            # 'departamento':  forms.TextInput(attrs={'class': 'form-control'}),
+            # 'ciudad': forms.TextInput(attrs={'class': 'form-control'}),
             'direccion': forms.TextInput(attrs={'class': 'form-control'}),
-            # 'captcha': ReCaptchaField(attrs={'theme': 'clean'}),
         }
 
     def clean_nombre_comercial(self):

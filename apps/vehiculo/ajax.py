@@ -4,7 +4,8 @@ from .models import Vehiculo
 
 
 def vehiculo_delete(request):
-    pk = request.POST.get('identificadorV_id')
+    pk = request.POST.get('identificador_id')
+
     identificador = Vehiculo.objects.get(placa=pk)
     response = {'delete': True, 'class': 'hide'}
 

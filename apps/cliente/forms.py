@@ -4,6 +4,10 @@ from django import forms
 from .models import Cliente
 
 
+class UploadFileForm(forms.Form):
+    file = forms.FileField()
+
+
 class ClienteForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):

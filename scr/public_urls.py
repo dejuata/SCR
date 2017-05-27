@@ -14,14 +14,17 @@ urlpatterns = [
     url(r'^jet/', include('jet.urls', 'jet')),
     url(r'^jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),
     url(r'^admin/', include(admin_site.urls)),
-    # url(r'^admin/', admin.site.urls),
+
 
     url(r'^login/', login, {'template_name': 'users/tenant_login.html'}, name='tenant_login'),
     url(r'^logout/', logout_then_login, name='logout'),
     url(r'^accounts/login/', login, {'template_name': 'users/tenant_login.html'}, name='tenant_login'),
 
     url(r'^', include('apps.users.urls_tenant', namespace='usuario')),
+    url(r'^', include('apps.cities.urls', namespace='ciudades')),
     url(r'^company/', include('apps.tenant.urls', namespace='tenant')),
+
+    url(r'^select2/', include('django_select2.urls')),
 
     url(r'^reset/password_reset/$', password_reset,
         {'template_name': 'users/password_reset/password_reset_form.html',

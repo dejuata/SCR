@@ -1,168 +1,425 @@
-{% extends 'base/base.html' %}
 {% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-{% block extrastatic %}
-<link rel="stylesheet" href="{% static 'css/landing.css' %}"/>
-<link rel="stylesheet" href="{% static 'css/navbar.css' %}"/>
-{% endblock %}
+  <link rel="stylesheet" href="{% static 'css/bootstrap-theme.css' %}"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" media="all">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css" rel="stylesheet" media="all">
 
-{% block title %}
-Home
-{% endblock %}
+  <link rel="stylesheet" href="{% static 'css/landing.css' %}"/>
 
+  <title>SCR</title>
 
-{% block content %}
-<!-- header -->
+</head>
+<body>
+  <!-- header -->
   <header>
-    <div class="shadow">
-      <!-- section -->
-      <section class="header">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-12">
-              <h1 class="header-title">SCR</h1>
-              <h2 class="header-subtitle">Sistema de control de rutas</h2>
-              <div class="header-section">
-                <img class="col-md-6" src="{% static 'img/landing/macbook.png' %}" alt="">
-
-                <div class="col-md-6 header-description ">
-                  <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book</p>
-                  <div class="header-call-to-action">
-                    <a href="{% url 'usuario:usuario_new' %}" class="btn btn-success btn-lg header-call-to-action-btn">
-                      Regístrate!
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
+    <!-- navbar -->
+    <nav class="navbar navbar-default navbar-fixed-top header">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <div class="navbar-brand">
+            <!-- <a class="" href="#"><img src="{% static 'img/scr.png' %}" alt="SCR" style="width:150px"></a> -->
           </div>
+
         </div>
-      </section>
-      <!-- end section -->
-    </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav navbar-right nav-btn">
+            <li><a href="/" class="navbar-option">Inicio</a></li>
+            <li><a href="#" class="navbar-option">Beneficios</a></li>
+            <li><a href="#" class="navbar-option">Clientes</a></li>
+            <li><a href="#" class="navbar-option">Planes</a></li>
+              <li><a href="#" class="navbar-option">Contáctenos</a></li>
+            {% if user.is_authenticated %}
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" style="text-transform:uppercase" data-toggle="dropdown" role="button" aria-expanded="false">
+                  {{ user.get_short_name }} <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href="{% url 'usuario:usuario_edit' user.id %}">Ver Perfil</a></li>
+                  <li><a href="{% url 'tenant:tenant_new' %}">Pagar</a></li>
+                  <li><a href="{% url 'logout' %}">Salir</a></li>
+                </ul>
+              </li>
+            {% else %}
+              <li>
+                {% block navbar-btn %}
+                <a href="{% url 'tenant_login' %}" style="">
+                  <button  class="btn btn-warning">Iniciar sesión</button>
+                </a>
+                {% endblock navbar-btn %}
+              </li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- end navbar -->
+
+    <!-- carousel -->
+    <div id="bootstrap-touch-slider" class="carousel bs-slider fade  control-round indicators-line" data-ride="carousel" data-pause="hover" data-interval="5000" >
+
+      <!-- Wrapper For Slides -->
+      <div class="carousel-inner" role="listbox">
+
+        <!-- Third Slide -->
+        <div class="item active">
+
+            <!-- Slide Background -->
+            <img src="{% static 'img/landing/1280x720/cover_1.jpg'%}" alt="autobus"/>
+            <div class="bs-slider-overlay"></div>
+            <!-- Slide Text Layer -->
+            <div class="slide-text slide_style_center">
+                <h1 data-animation="animated fadeIn">Gestiona tu cronograma de <br><strong>rutas</strong></h1>
+                <div class="divider"></div>
+                <p data-animation="animated fadeInRight">SCR es la mejor opción si necesitas llevar un control sobre los servicios que prestas</p>
+                <br>
+                <a href="{% url 'usuario:usuario_new' %}"  class="btn btn-primary" data-animation="animated fadeInDown">Crea una cuenta</a>
+            </div>
+        </div>
+        <!-- End of Slide -->
+
+        <!-- Second Slide -->
+        <div class="item">
+
+            <!-- Slide Background -->
+            <img src="{% static 'img/landing/1280x720/cover_2.jpg'%}" alt="microbus"/>
+            <div class="bs-slider-overlay"></div>
+
+            <div class="container">
+                <div class="row">
+                    <!-- Slide Text Layer -->
+                    <div class="slide-text slide_style_right">
+                        <h1 data-animation="animated zoomIn">Pruebalo Gratis!</h1>
+                        <p data-animation="animated fadeInLeft">Empieza a disfrutar desde ya sin pagar un solo peso</p>
+                        <a href="{% url 'usuario:usuario_new' %}"  class="btn btn-primary" data-animation="animated fadeInDown">Crea una cuenta</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End of Slide -->
+
+      </div>
+      <!-- End of Wrapper For Slides -->
+
+      <!-- Left Control -->
+      <a class="left carousel-control" href="#bootstrap-touch-slider" role="button" data-slide="prev">
+          <span class="fa fa-angle-left" aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
+      </a>
+
+      <!-- Right Control -->
+      <a class="right carousel-control" href="#bootstrap-touch-slider" role="button" data-slide="next">
+          <span class="fa fa-angle-right" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+      </a>
+
+  </div> <!-- End  bootstrap-touch-slider Slider -->
+  <!-- end carousel -->
   </header>
   <!-- end header -->
 
+  <section class="what">
+    <div class="container">
+      <h1 class="title">¿Qué es SCR?</h1>
+      <div class="flex-row">
+        <div class="col-md-6">
+          <img src="{% static 'img/landing/macbook.png' %}" alt="macbook" class="image">
+        </div>
+        <div class="col-md-6">
+          <p class="p">
+          Somos un sistema de información que integra las operaciones de control de flota, rutas y usuarios
+          en una sola plataforma, brindando una mayor autonomia y control sobre los movimientos diarios que realize
+          su empresa.
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
   <!-- beneficios -->
-<section id="services" class="services">
-  <div class="container text-center">
-    <div class="row">
-      <h1 class="title">What we do</h1>
-      <h2 class="subtitle">Lorem Ipsum is simply dummy text</h2>
+  <section id="services" class="services">
+    <div class="text-center">
+      <div class="row services-row">
 
-      <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-        <div class="service-item">
-          <img src="{% static 'img/landing/services/responsive.png' %}" alt="">
-          <h3>Fully Responsive</h3>
-          <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text</p>
+
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 services-one">
+          <div class="service-item">
+            <h3>Crea</h3>
+            <p>Con SCR crea todos los elementos de tu empresa, como tu flota, conductores, clientes y rutas, además puedes llevar
+            un registro diario de tu operación, dandote un mayor control y toma de decisiones.</p>
+          </div>
+        </div>
+
+
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 services-two">
+          <div class="service-item">
+            <h3>Ordena</h3>
+            <p>Ten todo en un solo lugar, no mas archivos de excel con información mezclada, con SCR podras consultar el estado de tus conductores,
+            asi como la vigencia de los documentos requeridos para operar.</p>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 services-three">
+          <div class="service-item">
+            <h3>Controla</h3>
+            <p>Desde la adquisición de un nuevo cliente, sus rutas y conductor, tengo un control del 100% sobre todos los procesos de tu empresa,
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+  <!-- end beneficios -->
+
+  <!-- clientes -->
+  <section id="clients" class="clients">
+    <div class="container">
+      <div class="row">
+
+      <h1 class="title">Clientes</h1>
+      <h2 class="subtitle">Estos son nuestro clientes</h2>
+
+      <div>
+        <img class="col-md-3 col-md-3 col-sm-3 col-xs-12" src="{% static 'img/landing/clients/img1.png' %}" alt="client-1">
+
+        <img class="col-md-3 col-md-3 col-sm-3 col-xs-12" src="{% static 'img/landing/clients/img2.png' %}" alt="client-2">
+
+        <img class="col-md-3 col-md-3 col-sm-3 col-xs-12" src="{% static 'img/landing/clients/img3.png' %}" alt="client-3">
+
+        <img class="col-md-3 col-md-3 col-sm-3 col-xs-12" src="{% static 'img/landing/clients/img4.png' %}" alt="client-4">
+
+      </div>
+      </div>
+    </div>
+  </section>
+  <!-- end clientes -->
+
+  <!-- price -->
+  <section id="price" class="price">
+    <div class="container">
+      <h1 class="title">Planes</h1>
+      <br>
+      <div class="row">
+
+        <div class="col-md-3 info-colum">
+          <div class="plan-title hide-plan"></div>
+          <div class="plan-row text-left price-row">Precio</div>
+          <div class="plan-row text-left">Almacenamiento</div>
+          <div class="plan-row text-left">Ancho de banda</div>
+          <div class="plan-row text-left">Dominios</div>
+          <div class="plan-row text-left">Panel de control</div>
+          <div class="plan-row text-left">Backup</div>
+        </div>
+
+        <div class="col-md-3">
+          <div class="plan">
+            <div class="plan-title">Bronce</div>
+            <div class="plan-row price-row">
+              <span class="hidden-info">Price</span>
+              <span class="plan-price">$3</span> USD
+            </div>
+            <div class="plan-row">1 GB</div>
+            <div class="plan-row">1 TB</div>
+            <div class="plan-row">1</div>
+            <div class="plan-row">
+              <img src="http://spyropress.com/themeforest/attraction/wp-content/themes/attraction/assets/images/icon-v.png" alt="">
+            </div>
+            <div class="plan-row">
+              <img src="http://spyropress.com/themeforest/attraction/wp-content/themes/attraction/assets/images/icon-x.png" alt="">
+            </div>
+            <div class="plan-row button-row">
+              <a href="##" class="btn btn-primary">Subscribe</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <div class="plan">
+            <div class="plan-title">Plata</div>
+            <div class="plan-row price-row">
+              <span class="hidden-info">Price</span>
+              <span class="plan-price">$6</span> USD
+            </div>
+            <div class="plan-row">100 GB</div>
+            <div class="plan-row">10 TB</div>
+            <div class="plan-row">1</div>
+            <div class="plan-row">
+              <img src="http://spyropress.com/themeforest/attraction/wp-content/themes/attraction/assets/images/icon-v.png" alt="">
+            </div>
+            <div class="plan-row">
+              <img src="http://spyropress.com/themeforest/attraction/wp-content/themes/attraction/assets/images/icon-x.png" alt="">
+            </div>
+            <div class="plan-row button-row">
+              <a href="##" class="btn btn-primary">Subscribe</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <div class="plan">
+            <div class="plan-title">Oro</div>
+            <div class="plan-row price-row">
+              <span class="hidden-info">Price</span>
+              <span class="plan-price">$9</span> USD
+            </div>
+            <div class="plan-row">500 GB</div>
+            <div class="plan-row">10 TB</div>
+            <div class="plan-row">2</div>
+            <div class="plan-row">
+              <img src="http://spyropress.com/themeforest/attraction/wp-content/themes/attraction/assets/images/icon-v.png" alt="">
+            </div>
+            <div class="plan-row">
+              <img src="http://spyropress.com/themeforest/attraction/wp-content/themes/attraction/assets/images/icon-v.png" alt="">            </div>
+            <div class="plan-row button-row">
+              <a href="##" class="btn btn-primary">Subscribe</a>
+            </div>
+          </div>
         </div>
       </div>
+    </div>
 
-      <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-        <div class="service-item">
-          <img src="{% static 'img/landing/services/bs3.png' %}" alt="">
-          <h3>Bootstrap 3</h3>
-          <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text</p>
+  </section>
+  <!-- end price -->
+
+  <!-- contact -->
+  <section id="contact" class="contact">
+    <div class="container text-center">
+      <div class="row">
+
+        <h1 class="title">Contáctenos</h1>
+        <br>
+
+        <form role="form" class="contact-form" method="post">
+          <div class="col-md-6 wow fadeInLeft" data-wow-delay=".5s">
+
+            <div class="form-group">
+              <div class="controls">
+                <input type="text" class="form-control" placeholder="Name" name="name">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="controls">
+                <input type="email" class="form-control email" placeholder="Email" name="email">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="controls">
+                <input type="text" class="form-control requiredField" placeholder="Subject" name="subject">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="controls">
+                <textarea rows="7" class="form-control" placeholder="Message" name="message"></textarea>
+              </div>
+            </div>
+
+            <button type="submit" id="submit" class="btn btn-lg btn-primary">Send</button><div id="success" style="color:#34495e;"></div>
+
+          </div>
+        </form>
+
+        <div class="col-md-6 wow fadeInRight">
+          <div class="social-links">
+            <a class="social" href="#" target="_blank"><i class="fa fa-facebook fa-2x"></i></a>
+            <a class="social" href="#" target="_blank"><i class="fa fa-twitter fa-2x"></i></a>
+            <a class="social" href="#" target="_blank"><i class="fa fa-google-plus fa-2x"></i></a>
+          </div>
+
+          <div class="contact-info">
+            <p><i class="fa fa-map-marker"></i> Universidad del Vale, Cali-Colombia</p>
+            <p><i class="fa fa-envelope"></i> info@scr.com</p>
+          </div>
         </div>
+
       </div>
+    </div>
+  </section>
+  <!-- end contact-->
 
-      <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-        <div class="service-item">
-          <img src="{% static 'img/landing/services/free.png' %}" alt="">
-          <h3>100% Free</h3>
-          <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text</p>
-        </div>
+  <!-- footer -->
+  <footer id="footer" class="footer dark-gray-background">
+    <div class="container">
+      <div class="row">
+          <div class="col-sm-6">
+              <p class="no-margin-bottom">Attraction Corp.
+                <br>
+                7 X Evo Ave Rev3 - Victoria 70913 EU
+                <br>
+                (432) 555-9876
+                <br>
+                <a href="#">register@attraction.com</a>
+              </p>
+            </div>
+          <div class="col-sm-6">
+              <ul class="social float-right">
+                <li><a href="#"><i class="fa fa-foursquare"></i></a></li>
+                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+              </ul>
+              <div class="float-right copyright">
+                  <p>Copyright © 2013 <a href="#">Attraction</a>. All rights reserved</p>
+              </div>
+          </div>
       </div>
-
     </div>
-  </div>
-</section>
-<!-- end beneficios -->
+  </footer>
+  <!-- end footer -->
 
-<!-- clientes -->
-<section id="clients" class="clients">
-  <div class="container">
-    <div class="row">
 
-    <h1 class="title">Clients</h1>
-    <h2 class="subtitle">Lorem Ipsum is simply dummy text</h2>
 
-    <div class="wow fadeInDown">
-      <img class="col-md-3 col-md-3 col-sm-3 col-xs-12" src="{% static 'img/landing/clients/img1.png' %}" alt="client-1">
+  <script src="{% static 'js/jquery-3.2.1.min.js'%}"></script>
+  <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/carousel.js' %}"></script>
+  <script>
 
-      <img class="col-md-3 col-md-3 col-sm-3 col-xs-12" src="{% static 'img/landing/clients/img2.png' %}" alt="client-2">
+  //Funcion para obtener el scroll
+  function getScrolled() {
+      try {
+        return window.pageYOffset || body.scrollTop || html.scrollTop;
+      } catch(exp) {
+        return 0;
+      }
+  }
 
-      <img class="col-md-3 col-md-3 col-sm-3 col-xs-12" src="{% static 'img/landing/clients/img3.png' %}" alt="client-3">
+  //Funcion que me muestra el menu de navegacion cuando hago scroll en la pagina
+  $(document).on("scroll", function(event){
 
-      <img class="col-md-3 col-md-3 col-sm-3 col-xs-12" src="{% static 'img/landing/clients/img4.png' %}" alt="client-4">
+      var header = $('.header')
+      //Almaceno el desplazamiento actual de la pagina
+      var desplazamientoActual = getScrolled();
+      //Accedo a la barra de navegación
+      var div = $(".header");
 
-    </div>
-    </div>
-  </div>
-</section>
-<!-- end clientes -->
+      //mostrar navegacion
+      if(desplazamientoActual >= 100){
+          div.addClass('header-scroll');
+          return;
+      }else if(desplazamientoActual < 100 && (div.hasClass('header-scroll'))){
+          div.removeClass('header-scroll');
+          return;
+      }
+      event.preventDefault();
+  });
 
-<!-- contact -->
-<section id="contact" class="contact">
-  <div class="container text-center">
-    <div class="row">
+  </script>
 
-      <h1 class="title">Contact us</h1>
-      <h2 class="subtitle">Lorem Ipsum is simply dummy text</h2>
-
-      <form role="form" class="contact-form" method="post">
-        <div class="col-md-6 wow fadeInLeft" data-wow-delay=".5s">
-
-          <div class="form-group">
-            <div class="controls">
-              <input type="text" class="form-control" placeholder="Name" name="name">
-            </div>
-          </div>
-
-          <div class="form-group">
-            <div class="controls">
-              <input type="email" class="form-control email" placeholder="Email" name="email">
-            </div>
-          </div>
-
-          <div class="form-group">
-            <div class="controls">
-              <input type="text" class="form-control requiredField" placeholder="Subject" name="subject">
-            </div>
-          </div>
-
-          <div class="form-group">
-            <div class="controls">
-              <textarea rows="7" class="form-control" placeholder="Message" name="message"></textarea>
-            </div>
-          </div>
-
-          <button type="submit" id="submit" class="btn btn-lg btn-primary">Send</button><div id="success" style="color:#34495e;"></div>
-
-        </div>
-      </form>
-
-      <div class="col-md-6 wow fadeInRight">
-        <div class="social-links">
-          <a class="social" href="#" target="_blank"><i class="fa fa-facebook fa-2x"></i></a>
-          <a class="social" href="#" target="_blank"><i class="fa fa-twitter fa-2x"></i></a>
-          <a class="social" href="#" target="_blank"><i class="fa fa-google-plus fa-2x"></i></a>
-          <a class="social" href="#" target="_blank"><i class="fa fa-linkedin fa-2x"></i></a>
-        </div>
-        <div class="contact-info">
-          <p><i class="fa fa-map-marker"></i> Seattle, WA 00000, USA</p>
-          <p><i class="fa fa-envelope"></i> info@yourwebsite.com</p>
-        </div>
-
-        <p>
-        A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque. Duis vulputate commodo lectus, ac blandit elit.<br>
-        </p>
-
-    </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- end contact-->
-{% endblock%}
+</body>
+</html>

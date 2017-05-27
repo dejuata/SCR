@@ -1,13 +1,20 @@
 {% load staticfiles %}
+{% load recaptcha2 %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  {% recaptcha_init %}
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
   <link rel="stylesheet" href="{% static 'css/bootstrap-theme.css' %}"/>
   <link rel="stylesheet" href="{% static 'css/login.css' %}"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" media="all">
+
+  <!--  recapchat-->
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
   {% block extrastatic %}
   {% endblock %}
 
@@ -27,7 +34,10 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#">SCR</a>
+        <div>
+          <a class="navbar-brand" href="#">SCR</a>
+        </div>
+
       </div>
 
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -101,8 +111,6 @@
   <script type="text/javascript" src="{% static 'js/validator.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/mailcheck.min.js' %}"></script>
 
-  <!--  recapchat-->
-  <script src='https://www.google.com/recaptcha/api.js'></script>
 
   {% block extrajs %}
   {% endblock %}
@@ -113,9 +121,13 @@
     $('[data-toggle="popover"]').popover()
   })
   $( document ).ready(function(){
-    $(".alert").fadeIn("slow").delay(2000).fadeOut("slow");
+    $(".alert").fadeIn("slow").delay(6000).fadeOut("slow");
+    // $('select').select2();
+
   });
+
   </script>
+
 
 
 
