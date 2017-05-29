@@ -62,7 +62,6 @@ class TenantForm(forms.ModelForm):
     def clean_nombre_comercial(self):
         nombre_comercial = self.cleaned_data['nombre_comercial']
         if nombre_comercial.isupper() or not(nombre_comercial.islower()) or (nombre_comercial.find(' ') > 0):
-        if nombre_comercial.isupper() or (nombre_comercial.find(" ") > 0) or not(nombre_comercial.islower()):
             self.add_error('nombre_comercial', 'El nombre comercial debe ir en minusculas y sin espacios')
         else:
             return self.cleaned_data['nombre_comercial']
