@@ -37,6 +37,9 @@ hidden{
 .navbar {
     margin-bottom: 0 !important;
 }
+.navbar-logo{
+  height: 84px;
+}
 .navbar-default {
     background-color: #2c3e50;
     border-color: transparent;
@@ -45,6 +48,7 @@ hidden{
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 84px;
 }
 .header{
   padding: 2rem 0 0;
@@ -630,6 +634,9 @@ hidden{
 }
 @media  (max-width: 768px) {
     /* Header */
+    .navbar-logo{
+      height: 60px;
+    }
     .slide-text {
         padding: 20px 50px;
     }
@@ -645,6 +652,7 @@ hidden{
     }
     .nav-btn{
       display: block;
+      height: auto;
     }
     .header {
         padding: 0;
@@ -775,8 +783,6 @@ hidden{
     .slide-text > p {
         font-size: 0.9rem;
     }
-
-
     /* Clientes*/
     .clients .col-xs-3 {
         width: 100%;

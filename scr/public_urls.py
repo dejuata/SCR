@@ -27,18 +27,18 @@ urlpatterns = [
     url(r'^select2/', include('django_select2.urls')),
 
     url(r'^reset/password_reset/$', password_reset,
-        {'template_name': 'users/password_reset/password_reset_form.html',
-         'email_template_name': 'registration/password_reset_email.html'},
+        {'template_name': 'password_reset/password_reset_form.html',
+         'html_email_template_name': 'password_reset/password_reset_email.html'},
         name='password_reset'),
     url(r'^password_reset_done/$', password_reset_done,
-        {'template_name': 'users/password_reset/password_reset_done.html'},
+        {'template_name': 'password_reset/password_reset_done.html'},
         name='password_reset_done'),
     url(r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>.+)/$', password_reset_confirm,
-        {'template_name': 'users/password_reset/password_reset_confirm.html'},
+        {'template_name': 'password_reset/password_reset_confirm.html'},
         name='password_reset_confirm'
         ),
     url(r'^reset/done', password_reset_complete,
-        {'template_name': 'users/password_reset/password_reset_complete.html'},
+        {'template_name': 'password_reset/password_reset_complete.html'},
         name='password_reset_complete'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)  # ARCHIVOS MEDIA JODA_BETA
