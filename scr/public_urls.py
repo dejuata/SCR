@@ -16,9 +16,9 @@ urlpatterns = [
     url(r'^admin/', include(admin_site.urls)),
 
 
-    url(r'^login/', login, {'template_name': 'users/tenant_login.html'}, name='tenant_login'),
+    url(r'^login/', login, {'template_name': 'users/user_login.html'}, name='tenant_login'),
     url(r'^logout/', logout_then_login, name='logout'),
-    url(r'^accounts/login/', login, {'template_name': 'users/tenant_login.html'}, name='tenant_login'),
+    url(r'^accounts/login/', login, {'template_name': 'users/user_login.html'}, name='tenant_login'),
 
     url(r'^', include('apps.users.urls_tenant', namespace='usuario')),
     url(r'^', include('apps.cities.urls', namespace='ciudades')),
