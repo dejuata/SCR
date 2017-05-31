@@ -29,20 +29,19 @@ Nuevo Cliente
   {% if object_list %}
   {% for ruta in object_list %}
     <tr>
-        <td></td>
-        <td><a href="{% url 'dashboard:ruta:ruta_edit' ruta.codRuta %}">{{ ruta.codRutaruta }}</a></td>
-        <td>{{ ruta.nit }}</td>
-        <td>{{ ruta.hora_Inicio }}</td>
-        <td>{{ ruta.hora_Fin }}</td>
-        <td>{% if ruta.activo_inactivo %}Activo{% else %}Inactivo{% endif %}</td>
-        <td>
-          <div class="btn-group">
-            <a class="btn btn-primary" href="{% url 'dashboard:ruta:ruta_edit' ruta.codRuta %}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-          </div>
-          <div class="btn-group">
-            <a onclick="get_ruta({{ ruta.id }}, '{{ csrf_token }}', '{% url 'dashboard:ruta:ruta_delete' %}', '{% url 'dashboard:ruta:ruta_list' %}')" class="btn btn-danger" data-toggle="modal" data-target="#modalEmergente"><i class="fa fa-ban" aria-hidden="true"></i></a>
-          </div>
-        </td>
+      <td><a href="{% url 'dashboard:ruta:ruta_edit' ruta.codRuta %}">{{ ruta.codRuta }}</a></td>
+      <td>{{ ruta.nit }}</td>
+      <td>{{ ruta.hora_Inicio }}</td>
+      <td>{{ ruta.hora_Fin }}</td>
+      <td>{% if ruta.activo_inactivo %}Activo{% else %}Inactivo{% endif %}</td>
+      <td>
+        <div class="btn-group">
+          <a class="btn btn-primary" href="{% url 'dashboard:ruta:ruta_edit' ruta.codRuta %}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+        </div>
+        <div class="btn-group">
+          <a onclick="get_ruta({{ ruta.id }}, '{{ csrf_token }}', '{% url 'dashboard:ruta:ruta_delete' %}', '{% url 'dashboard:ruta:ruta_list' %}')" class="btn btn-danger" data-toggle="modal" data-target="#modalEmergente"><i class="fa fa-ban" aria-hidden="true"></i></a>
+        </div>
+      </td>
     </tr>
   {% endfor %}
   {% else %}

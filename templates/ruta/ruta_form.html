@@ -124,6 +124,13 @@ Directions service
               <div class="help-block with-errors"></div>
             </div>
 
+            <div class="form-group has-feedback text-left col-md-4">
+              <strong>Link Ruta:</strong>
+              {{ form.linkRuta.erros }}
+              {{ form.linkRuta }}
+              <div class="help-block with-errors"></div>
+            </div>
+
             <div class="col-md-1"></div>
 
             <div class="form-group col-md-2">
@@ -157,6 +164,22 @@ Directions service
           </div>
 
           <div class="col-md-12">
+            <div class="form-group has-feedback text-left col-md-6">
+              <strong>Nombre Ruta:</strong>
+              {{ form.nombre_ruta.erros }}
+              {{ form.nombre_ruta }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left left-input col-md-6">
+              <strong>Tipo de ruta:</strong>
+              {{ form.tipo_viaje.erros }}
+              {{ form.tipo_viaje }}
+              <div class="help-block with-errors"></div>
+            </div>
+          </div>
+
+          <div class="col-md-12">
             <div class="form-group has-feedback  col-md-6">
               <strong>Tipo de ruta:</strong>
               {{ form.tipo_Ruta.erros }}
@@ -176,14 +199,16 @@ Directions service
             <div class="form-group has-feedback text-left col-md-6">
               <strong>Hora Inicio</strong>
               {{ form.hora_Inicio.erros }}
-              <input type="Time" class="form-control" name="hora_Inicio" data-error="Ingrese la hora de inicio de la ruta" required>
+              {{ form.hora_Inicio }}
+              <!--<input type="Time" class="form-control" name="hora_Inicio" data-error="Ingrese la hora de inicio de la ruta" required>-->
               <div class="help-block with-errors"></div>
             </div>
 
             <div class="form-group has-feedback text-left left-input col-md-6">
               <strong>Hora Fin</strong>
               {{ form.hora_Fin.erros }}
-              <input type="Time" class="form-control" name="hora_Fin" data-error="Ingrese la hora de finalizacion de la ruta" required>
+              {{ form.hora_Fin }}
+              <!--<input type="Time" class="form-control" name="hora_Fin" data-error="Ingrese la hora de finalizacion de la ruta" required>-->
               <div class="help-block with-errors"></div>
             </div>
           </div>
@@ -220,14 +245,14 @@ Directions service
             </div>
           </div>
 
-          <!-- <div class="col-md-12">
+          <div class="col-md-12">
             <div class="form-group has-feedback text-left col-md-6">
               <strong>Kilometros(Km):</strong>
               {{ form.kilometros.erros }}
               {{ form.kilometros }}
               <div class="help-block with-errors"></div>
             </div>
-          </div> -->
+          </div>
 
           <div class="form-group text-right col-md-12">
             <button class="btn btn-primary " type="submit">Guardar</button>
@@ -242,31 +267,50 @@ Directions service
 
 <script>
   function initMap() {
-    var map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 6,
-      center: {lat: 4.159746996685188, lng: -72.93036419999999}//Colombia
-    });
+		var ruta = new Array();
+		var map = new google.maps.Map(document.getElementById('map'), {
+			zoom: 6,
+			center: {lat: 4.159746996685188, lng: -72.93036419999999}//Colombia
+		});
+		var directionsService = new google.maps.DirectionsService;
+		var directionsDisplay = new google.maps.DirectionsRenderer({
+			draggable: true,
+			map: map,
+			panel: document.getElementById('right-panel')
+		});
 
-    var directionsService = new google.maps.DirectionsService;
-    var directionsDisplay = new google.maps.DirectionsRenderer({
-      draggable: true,
-      map: map,
-      panel: document.getElementById('right-panel')
-    });
+		directionsDisplay.addListener('directions_changed', function() {
+			  document.getElementById('linkRuta').value = '';
+			  computeTotalDistance(directionsDisplay.getDirections());
+			  computeGeocode(directionsDisplay.getDirections(),ruta);
+		});
 
-    directionsDisplay.addListener('directions_changed', function() {
-      computeTotalDistance(directionsDisplay.getDirections());
-    });
-if(document.getElementById('origen').value !="" && document.getElementById('destino').value !="")
-{
-	var origen = document.getElementById('origen').value;
-	var destino = document.getElementById('destino').value;
-	console.log(origen);
-	displayRoute(origen, destino, directionsService,
-		directionsDisplay);
-}
-  }
+		if(document.getElementById('origen').value !="" && document.getElementById('destino').value !="" && document.getElementById('linkRuta').value =="")
+		{
+      var origen = document.getElementById('origen').value;
+    	var destino = document.getElementById('destino').value;
+			displayRoute(origen, destino, directionsService,
+				directionsDisplay);
+		}
+    if(document.getElementById('origen').value !="" && document.getElementById('destino').value !="" && document.getElementById('linkRuta').value !="")
+    {
+      var routeTxt = document.getElementById('linkRuta').value;
+			ruta = routeTxt.split(";");
+			var origen = ruta[0];
+			var destino = ruta[ruta.length-1]
+			var waypts = [];
+			for (var i = 1; i < ruta.length-1; i++) {
+				waypts.push({
+				stopover: true,
+				location:{'placeId':ruta[i]}
+				});
+			}
+			displayRouteWaypts(origen, destino, directionsService,
+				directionsDisplay, waypts);
+    }
+	}
 
+  //SE DEFINEN FUNCIONES
   function displayRoute(origin, destination, service, display) {
     service.route({
       origin: origin,
@@ -274,24 +318,59 @@ if(document.getElementById('origen').value !="" && document.getElementById('dest
       //waypoints: [{location: origin},{location: origin}],
       travelMode: 'DRIVING',
       avoidTolls: true
-    }, function(response, status) {
+    },function(response, status) {
       if (status === 'OK') {
         display.setDirections(response);
       } else {
         alert('Could not display directions due to: ' + status);
       }
-    });
+      });
   }
 
+
+  function displayRouteWaypts(origin, destination, service, display, waypts) {
+		service.route({
+			origin: {'placeId':origin},//PARA CONSULTAR
+			destination: {'placeId':destination},//PARA CONSULTAR
+			waypoints: waypts,//PLACE_ID
+			travelMode: 'DRIVING',
+			avoidTolls: true
+		},function(response, status) {
+			if (status === 'OK') {
+				display.setDirections(response);
+			} else {
+				alert('Could not display directions due to: ' + status);
+			}
+		  });
+	}
+
+
   function computeTotalDistance(result) {
-    var total = 0;
-    var myroute = result.routes[0];
-    for (var i = 0; i < myroute.legs.length; i++) {
-      total += myroute.legs[i].distance.value;
-    }
-    total = total / 1000;
-    document.getElementById('Kilometros').value = total;
-  }
+		var total = 0;
+		var myroute = result.routes[0];
+		for (var i = 0; i < myroute.legs.length; i++) {
+			total += myroute.legs[i].distance.value;
+		}
+		total = total / 1000;
+		document.getElementById('kilometros').value = total;
+	}
+
+
+  function computeGeocode(result,ruta) {
+		var address;
+		var geocoder = new google.maps.Geocoder;
+		for (var i = 0; i < result.geocoded_waypoints.length; i++) {
+			ruta[i]=result.geocoded_waypoints[i].place_id;
+			if(i==result.geocoded_waypoints.length-1)
+			{
+				document.getElementById('linkRuta').value += result.geocoded_waypoints[i].place_id;
+			}
+			else
+			{
+				document.getElementById('linkRuta').value += result.geocoded_waypoints[i].place_id+';';
+			}
+		}
+	}
 </script>
 <script async defer
 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBaIKmsLcBbdoH2hvM_Xc2tJ9UpTmXRZe0&callback=initMap">
