@@ -40,7 +40,8 @@ data-show-columns="true" data-sort-name="stargazers_count" data-sort-order="desc
   {% if object_list %}
   {% for ruta in object_list %}
     <tr>
-        <td><a href="{% url 'dashboard:ruta:ruta_edit' ruta.codRuta %}">{{ ruta.codRutaruta }}</a></td>
+        <td><a href="{% url 'dashboard:ruta:ruta_edit' ruta.codRuta %}">{{ ruta.codRuta }}</a></td>
+        <!--<td>{{ ruta.codRuta }}</td>-->
         <td>{{ ruta.nit }}</td>
         <td>{{ ruta.tipo_Ruta }}</td>
         <td>{{ ruta.tipo_Vehiculo_Requerido }}</td>

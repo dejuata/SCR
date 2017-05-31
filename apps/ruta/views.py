@@ -12,7 +12,7 @@ class RutaList(SortMixin, ListView):
     template_name = 'ruta/ruta_list.html'
     paginate_by = 10
     default_sort_params = ('id', 'asc')
-    
+
     def sort_queryset(self, qs, sort_by, order):
         if sort_by == 'nit':
             qs = qs.order_by('nit')
