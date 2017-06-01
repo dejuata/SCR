@@ -10,6 +10,10 @@
 Nuevo Cliente
 {% endblock %}
 
+{% block url %}
+{% url 'dashboard:cliente:cliente_new' %}
+{% endblock %}
+
 {% block table-head %}
 <thead>
   <tr>

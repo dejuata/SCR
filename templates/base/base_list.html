@@ -24,7 +24,7 @@
 
       <!-- toolbar -->
       <div id="toolbar" class="btn-group">
-        <a class="btn btn-link" href="{% url 'dashboard:cliente:cliente_new' %}">
+        <a class="btn btn-link" href="{% block url %}{% endblock %}">
           {% block btn-new %}
           {% endblock %}
         </a>
