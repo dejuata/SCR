@@ -2,7 +2,7 @@
 {% load recaptcha2 %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head>  
   {% recaptcha_init %}
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,35 +18,34 @@
   {% block extrastatic %}
   {% endblock %}
 
-
   <title>{% block title %} Document {% endblock %}| SCR</title>
 
 </head>
 <body>
+
   {% block navbar %}
   <!-- navbar -->
-  <nav class="navbar navbar-default " style="margin-bottom: 0;">
+  <nav class="navbar navbar-default navbar-fixed-top header cl-effect-21">
     <div class="container">
       <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
           <span class="sr-only">Toggle navigation</span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <div>
-          <a class="navbar-brand" href="#">SCR</a>
-        </div>
-
+        <a href="/">
+          <img src="{% static 'img/scr.png' %}" alt="SCR" class="navbar-logo">
+        </a>
       </div>
 
-      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <div class="collapse navbar-collapse text-center" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav navbar-right nav-btn">
-          <li><a href="/">Inicio</a></li>
-          <li><a href="#">Beneficios</a></li>
-          <li><a href="#">Clientes</a></li>
-          <li><a href="#">Planes</a></li>
-            <li><a href="#">Contactenos</a></li>
+          <li><a href="#inicio" class="navbar-option">Inicio</a></li>
+          <li><a href="#services" class="navbar-option">Beneficios</a></li>
+          <li><a href="#clients" class="navbar-option">Clientes</a></li>
+          <li><a href="#price" class="navbar-option">Planes</a></li>
+            <li><a href="#contact" class="navbar-option">Contáctenos</a></li>
           {% if user.is_authenticated %}
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" style="text-transform:uppercase" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -78,7 +77,36 @@
   {% block content %}
   {% endblock%}
 
-
+  {% block footer%}
+    <!-- footer -->
+    <footer id="footer" class="footer">
+      <div class="container">
+        <div class="row">
+            <div class="col-sm-6 col-xs-6">
+                <p class="no-margin-bottom"><strong>SCR | Sistema de control de rutas.</strong>
+                  <br>
+                  Universidad del Valle, Cali-Colombia
+                  <br>
+                  (432) 555-9876
+                  <br>
+                  <a href="#">info@scr.com</a>
+                </p>
+              </div>
+            <div class="col-sm-6 col-xs-6">
+                <ul class="footer-social">
+                  <li><a href="#" class="footer-social-facebook"><i class="fa fa-facebook"></i></a></li>
+                  <li><a href="#" class="footer-social-twitter"><i class="fa fa-twitter"></i></a></li>
+                  <li><a href="#" class="footer-social-google"><i class="fa fa-google-plus"></i></a></li>
+                </ul>
+                <div class="copyright">
+                    <p>Copyright © 2017 <a href="#">SCR</a>. Todos los derechos reservados</p>
+                </div>
+            </div>
+        </div>
+      </div>
+    </footer>
+    <!-- end footer -->
+  {% endblock %}
 
   <!-- modal -->
   <div class="modal fade" id="modalEmergente">
@@ -109,7 +137,8 @@
   <script src="{% static 'js/jquery-3.2.1.min.js'%}"></script>
   <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/validator.js' %}"></script>
-  <script type="text/javascript" src="{% static 'js/mailcheck.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/uploadPreview.min.js'%}"></script>
+  <script type="text/javascript" src="{% static 'js/main.js'%}"></script>
 
 
   {% block extrajs %}
@@ -122,15 +151,8 @@
   })
   $( document ).ready(function(){
     $(".alert").fadeIn("slow").delay(6000).fadeOut("slow");
-    // $('select').select2();
-
   });
 
   </script>
-
-
-
-
-
 </body>
 </html>

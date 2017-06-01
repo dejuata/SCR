@@ -1,0 +1,76 @@
+{% extends 'base/base_tenant.html' %}
+{% load staticfiles %}
+
+{% block title %}
+Login
+{% endblock %}
+
+{% block extrastatic %}
+<style media="screen">
+  body{
+    background-color: #2c3e50;
+  }
+  .container-fluid{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  .login{
+      background: #FFFFFF;
+      padding: 30px;
+      border-radius: 3px;
+      box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.1);
+  }
+  .login-img{
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  .login__btn{
+      width: 100%;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid text-center">
+
+  <!-- messages erros -->
+  {% if form.errors %}
+      <div class="alert alert-danger col-lg-4 col-md-5 col-sm-6 col-xs-10" style="margin-bottom:16px;">
+      {% for error in form.non_field_errors %}
+        <p>{{ error|escape }}</p>
+      {% endfor %}
+      </div>
+  {% endif %}
+  <!-- end messages erros -->
+  <div class="col-lg-4 col-md-5 col-sm-6 col-xs-10 login">
+
+    <figure>
+      <img class="login-img" src="{% static 'img/scr.png' %}" alt="scr">
+    </figure>
+
+    <form method="post" class="form" data-toggle="validator" action="{% url 'index' %}?next={% url 'dashboard:index' %}">
+    	{% csrf_token %}
+
+      <div class="form-group has-feedback text-left">
+        <input type="email" id="email" pattern="^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$" name="username" class="form-control" id="inputTwitter" placeholder="Correo Electronico" required>
+        <div class="help-block with-errors"></div>
+      </div>
+
+      <div class="form-group has-feedback text-left">
+        <input class="form-control" type="password" name="password" placeholder="Contraseña" data-minlength="8" data-error="Minimo 8 caracteres" required>
+        <div class="help-block with-errors"></div>
+      </div>
+
+      <div class="form-group">
+        <input class="btn btn-primary login__btn" type="submit" value="Ingresar">
+      </div>
+
+      <a href="{% url 'password_reset' %}">Olvidé mi contraseña</a>
+    </form>
+  </div>
+
+</div>
+{% endblock %}

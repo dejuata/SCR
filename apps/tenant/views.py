@@ -60,7 +60,8 @@ class TenantCreateView(SuccessMessageMixin, CreateView):
                 tenant = tenant_registrado.nombre_comercial
                 create_admin_tenant(tenant, user_id, password, url)
 
-                return redirect('http://localhost:8000/company/new/')
+                #  return redirect('http://localhost:8000/company/new/')
+                return redirect(url)
 
             else:
                 return self.render_to_response(self.get_context_data(form=form))

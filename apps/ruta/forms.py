@@ -9,47 +9,42 @@ class RutaForm(forms.ModelForm):
     class Meta:
         model = Ruta
 
+        TIPO_VIAJE = (
+            ('entrada', 'ENTRADA'),
+            ('salida', 'SALIDA')
+        )
+
         fields = [
-            'codRuta',
+            'codigo_ruta',
             'nit',
-            'tipo_Ruta',
-            'tipo_Vehiculo_Requerido',
+            'nombre_ruta',
+            'tipo_viaje',
+            'tipo_ruta',
+            'tipo_vehiculo_requerido',
             'origen',
             'destino',
-            'hora_Inicio',
-            'hora_Fin',
-            'valor_Hora_Add',
-            'valor_Ruta',
-            'valor_Tercero',
-            'comision_Conductor',
+            'hora_inicio',
+            'hora_fin',
+            'valor_hora_adicional',
+            'valor_ruta',
+            'valor_tercero',
+            'comision_conductor',
             'kilometros',
-            # 'linkRuta',
+            'link_ruta',
         ]
-        labels = {
-            'codRuta': 'Codigo Ruta',
-            'nit': 'NIT',
-            'tipo_Ruta': 'Tipo Ruta',
-            'tipo_Vehiculo_Requerido': 'Tipo Vehiculo Requerido',
-            'origen': 'Origen',
-            'destino': 'destino',
-            'hora_Inicio': 'Hora inicio',
-            'hora_Fin': 'Hora Fin',
-            'valor_Hora_Add': 'Valor Hora Adicional',
-            'valor_Ruta': 'Valor Ruta',
-            'valor_Tercero': 'Valor Tercero',
-            'comision_Conductor': 'Comision Conductor',
-            'kilometros': 'Kilometros',
-            # 'linkRuta': 'link Ruta',
-        }
+
         widgets = {
-            'nit': forms.NumberInput(attrs={'class': 'form-control',
-                                            'data-error': "Seleccione el N° NIT del Cliente de la Ruta"}),
+            'nit': forms.Select(attrs={'class': 'form-control', 'data-error': "Seleccione el N° NIT del Cliente de la Ruta"}),
 
-            'codRuta': forms.NumberInput(attrs={'class': 'form-control', 'data-error': "Ingrese el codigo de la Ruta"}),
+            'codigo_ruta': forms.NumberInput(attrs={'class': 'form-control', 'data-error': "Ingrese el codigo de la Ruta"}),
 
-            'tipo_Ruta': forms.TextInput(attrs={'class': 'form-control', 'data-error': "Ingrese el tipo de ruta"}),
+            'nombre_ruta': forms.TextInput(attrs={'class': 'form-control', 'data-error': "Ingrese el nombre de ruta"}),
 
-            'tipo_Vehiculo_Requerido': forms.TextInput(attrs={'class': 'form-control', 'data-error': "Ingrese el tipo de vehiculo requerido para la ruta"}),
+            'tipo_viaje': forms.Select(choices=TIPO_VIAJE, attrs={'class': 'form-control', 'data-error': "Ingrese el tipo de viaje (Entrada o Salida)"}),
+
+            'tipo_ruta': forms.TextInput(attrs={'class': 'form-control', 'data-error': "Ingrese el tipo de ruta"}),
+
+            'tipo_vehiculo_requerido': forms.TextInput(attrs={'class': 'form-control', 'data-error': "Ingrese el tipo de vehiculo requerido para la ruta"}),
 
             'origen': forms.TextInput(attrs={'class': 'form-control',
                                              'id': "origen",
@@ -61,19 +56,12 @@ class RutaForm(forms.ModelForm):
                                               'value': "",
                                               'data-error': "Seleccione el destino de la Ruta"}),
 
-            'hora_Inicio': forms.DateTimeInput(attrs={'class': 'form-control', 'data-error': "Ingrese la hora de inicio de la ruta"}),
-
-            'hora_Fin': forms.DateTimeInput(attrs={'class': 'form-control', 'data-error': "Ingrese la hora de finalizacion de la ruta"}),
-
-            'valor_Hora_Add': forms.NumberInput(attrs={'class': 'form-control', 'data-error': "Ingrese el valor adicional/hora para la ruta"}),
-
-            'valor_Ruta': forms.NumberInput(attrs={'class': 'form-control', 'data-error': "Ingrese el valor que tiene la ruta"}),
-
-            'valor_Tercero': forms.NumberInput(attrs={'class': 'form-control', 'data-error': "Ingrese el valor para el Tercero que realiza la ruta"}),
-
-            'comision_Conductor': forms.NumberInput(attrs={'class': 'form-control', 'data-error': "Ingrese la comision para el conductor de la ruta"}),
-
-            'kilometros': forms.NumberInput(attrs={'class': 'form-control', 'data-error': "Ingrese los Km de la ruta"}),
-
-            # 'linkRuta': forms.TextInput(attrs={'class': 'form-control'}),
+            'hora_inicio': forms.TimeInput(attrs={'type': 'time', 'class': 'form-control', 'data-error': "Ingrese la hora de inicio de la ruta"}),
+            'hora_fin': forms.TimeInput(attrs={'type': 'time', 'class': 'form-control', 'data-error': "Ingrese la hora de finalizacion de la ruta"}),
+            'valor_hora_adicional': forms.NumberInput(attrs={'class': 'form-control', 'data-error': "Ingrese el valor adicional/hora para la ruta"}),
+            'valor_ruta': forms.NumberInput(attrs={'class': 'form-control', 'data-error': "Ingrese el valor que tiene la ruta"}),
+            'valor_tercero': forms.NumberInput(attrs={'class': 'form-control', 'data-error': "Ingrese el valor para el Tercero que realiza la ruta"}),
+            'comision_conductor': forms.NumberInput(attrs={'class': 'form-control', 'data-error': "Ingrese la comision para el conductor de la ruta"}),
+            'kilometros': forms.NumberInput(attrs={'class': 'form-control', 'id': "kilometros", 'value': "", 'data-error': "Ingrese los Km de la ruta"}),
+            'link_ruta': forms.HiddenInput(attrs={'class': 'form-control', 'id': "linkRuta", 'data-error': "Ingrese el link de la ruta"})
         }

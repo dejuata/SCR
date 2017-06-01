@@ -6,6 +6,7 @@ from .tenant import TenantAdmin
 from .users import MyCustomEmailUserAdmin
 from ..tenant.models import Tenant, Domain
 from ..users.models import MyCustomEmailUser
+from ..cities.models import DepartmentColombia, CitiesColombia
 
 
 class MyAdminSite(AdminSite):
@@ -20,3 +21,5 @@ admin_site.register(Tenant, TenantAdmin)
 admin_site.register(Domain)
 admin_site.register(MyCustomEmailUser, MyCustomEmailUserAdmin)
 admin_site.register(Group, GroupAdmin)
+admin_site.register(DepartmentColombia)
+admin_site.register(CitiesColombia)
