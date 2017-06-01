@@ -12,7 +12,7 @@
     <link href="{% static 'tenant/css/bootstrap.min.css' %}" rel="stylesheet">
 
     <!-- bootstrap theme -->
-    <link href="{% static 'css/bootstrap-theme.css' %}" rel="stylesheet">
+    <link href="{% static 'tenant/css/bootstrap-theme.css' %}" rel="stylesheet">
 
     <!-- style -->
     <link href="{% static 'tenant/css/style.css' %}" rel="stylesheet">
@@ -143,8 +143,23 @@
   <section id="main-content">
     <section id="wrapper" class="wrapper animated">
 
+    {% block message %}
+    <!-- messages success -->
+    {% if messages %}
+      <div class="alert alert-dismissible alert-info">
+        <button type="button" class="close text-center" data-dismiss="alert">&times;</button>
+        {% for message in messages %}
+        <strong>
+          <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+        </strong>
+        {% endfor %}
+      </div>
+    {% endif %}
+    <!-- end messages success -->
+    {% endblock %}
+
       <!--overview start-->
-    <div class="row">
+    <div class="row" style="padding-bottom: 10px;">
 			<div class="col-lg-12">
 				<ol class="breadcrumb">
 					<li><i class="fa fa-home"></i><a href="{% url 'dashboard:index' %}">Home</a></li>
@@ -256,19 +271,17 @@
     <script type="text/javascript" src="{% static 'js/uploadPreview.min.js'%}"></script>
 
     <!-- Bootstrap table -->
-    <script src="{% static 'tenant/js/bootstrap-table.min.js'%}"></script>
-    <script src="{% static 'tenant/js/bootstrap-table-es-ES.min.js'%}"></script>
-    <script src="{% static 'tenant/js/bootstrap-table-export.min.js'%}"></script>
-    <script src="{% static 'tenant/js/FileSaver.min.js'%}"></script>
-    <script src="{% static 'tenant/js/xlsx.core.min.js'%}"></script>
-    <script src="{% static 'tenant/js/tableExport.min.js'%}"></script>
-    <script src="{% static 'tenant/js/bootstrap-table-sticky-header.js'%}"></script>
+    <script src="{% static 'tenant/js/bootstrap-table/bootstrap-table.min.js'%}"></script>
+    <script src="{% static 'tenant/js/bootstrap-table/bootstrap-table-es-ES.min.js'%}"></script>
+    <script src="{% static 'tenant/js/bootstrap-table/bootstrap-table-export.min.js'%}"></script>
+    <script src="{% static 'tenant/js/bootstrap-table/FileSaver.min.js'%}"></script>
+    <script src="{% static 'tenant/js/bootstrap-table/xlsx.core.min.js'%}"></script>
+    <script src="{% static 'tenant/js/bootstrap-table/tableExport.min.js'%}"></script>
+    <script src="{% static 'tenant/js/bootstrap-table/bootstrap-table-sticky-header.js'%}"></script>
+    <script src="{% static 'tenant/js/bootstrap-table/bootstrap-table-cookie.js'%}"></script>
 
     <!-- dropzone.js -->
     <script src="{% static 'tenant/js/dropzone.min.js'%}"></script>
-
-    <!-- main.js -->
-    <script src="{% static 'tenant/js/main.js'%}"></script>
 
     <!-- Pikaday -->
     <script src="{% static 'js/moment.js' %}"></script>
@@ -290,25 +303,6 @@
       //         bgColor:"#34495e",
       //         spinner:"spinner3"
       //     });
-      // });
-      // Animacion para turbolinks
-      $(document).on('turbolinks:request-start', function(){
-        $('#content').addClass('fadeOut');
-
-        // console.log($('.wrapper'))
-      })
-      $(document).on('turbolinks:render', function(){
-        $('#content').addClass('fadeOut');
-        $('#content').removeClass();
-        $('#content').addClass('fadeIn');
-        // console.log($('.wrapper'))
-      })
-      // document.addEventListener('turbolinks:request-start', function(){
-      //   document.querySelector('.wrapper').classList.add('fadeOut')
-      // });
-      //
-      // document.addEventListener('turbolinks:render', function(){
-      //   document.querySelector('.wrapper').classList.add('fadeIn');
       // });
 
     </script>

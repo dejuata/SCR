@@ -3,38 +3,23 @@
 
 {% block content %}
 
-  {% block message %}
-    <!-- messages success -->
-    {% if messages %}
-      <div class="alert alert-dismissible alert-info">
-        <button type="button" class="close text-center" data-dismiss="alert">&times;</button>
-        {% for message in messages %}
-        <strong>
-          <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
-        </strong>
-        {% endfor %}
-      </div>
-    {% endif %}
-    <!-- end messages success -->
-  {% endblock %}
-
   {% block section %}
     <!-- section -->
     <section class="panel" style="padding:5px 10px">
 
       <!-- toolbar -->
       <div id="toolbar" class="btn-group">
-        <a class="btn btn-link" href="{% block url %}{% endblock %}">
+        <a class="btn btn-default" href="{% block url %}{% endblock %}">
           {% block btn-new %}
           {% endblock %}
         </a>
         <!-- upload file -->
-        <a href="#" class="btn btn-link" data-toggle="modal" data-target="#modalUpload">
+        <a href="#" class="btn btn-default" data-toggle="modal" data-target="#modalUpload">
           <i class="fa fa-upload table-btn-padding-right" aria-hidden="true"></i>Carga Masiva
         </a>
         <!-- end upload file -->
         <!-- download file -->
-        <a href="{% url 'dashboard:cliente:cliente_export' %}" id="download" class="btn btn-link">
+        <a href="{% url 'dashboard:cliente:cliente_export' %}" id="download" class="btn btn-default">
           <i class="fa fa-file-excel-o table-btn-padding-right" aria-hidden="true"></i>Excel
         </a>
         <!-- end download file -->
@@ -43,7 +28,7 @@
 
       <!-- table -->
       {% block table%}
-        <table class="table table-striped table-advance table-hover align"
+        <table class="table table-hover"
               data-toggle="table"
               data-search="true"
               data-pagination="true"
@@ -94,24 +79,26 @@
 
 {% block extrajs %}
 <script type="text/javascript">
-function change_status(id, token, url, redirect){
-  console.log(url)
-  $('#confirmarDelete').click(function(){
-    var request = $.ajax({
-        type: "POST",
-        url: url,
-        data: {
-            "csrfmiddlewaretoken": token,
-            "identificador_id": id
-        },
+  function change_status(id, token, url, redirect){
+    console.log(url)
+    $('#confirmarDelete').click(function(){
+      var request = $.ajax({
+          type: "POST",
+          url: url,
+          data: {
+              "csrfmiddlewaretoken": token,
+              "identificador_id": id
+          },
+      });
+      request.done(function(response) {
+          if (response.delete){
+            $('#modalEmergente').modal(response.class)
+            location.href = redirect;
+          }
+      });
     });
-    request.done(function(response) {
-        if (response.delete){
-          $('#modalEmergente').modal(response.class)
-          location.href = redirect;
-        }
-    });
-  });
-}
+  }
+  
+
 </script>
 {% endblock %}

@@ -73,8 +73,8 @@ class RutaForm(forms.ModelForm):
                                             'value': "",
                                             'data-error': "Ingrese los Km de la ruta"}),
 
-            'link_ruta': forms.TextInput(attrs={'class': 'form-control',
+            'link_ruta': forms.HiddenInput(attrs={'class': 'form-control',
                                         'id': "linkRuta",
                                         'value': "",
-                                        'data-error': "Ingrese el link de la ruta", 'disabled':'True'})
+                                        'data-error': "Ingrese el link de la ruta"})
         }

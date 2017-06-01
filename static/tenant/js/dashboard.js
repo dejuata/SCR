@@ -1,3 +1,14 @@
+// Animacion para turbolinks
+$(document).on('turbolinks:request-start', function(){
+  $('#content').addClass('fadeOut');
+})
+$(document).on('turbolinks:render', function(){
+  $('#content').addClass('fadeOut');
+  $('#content').removeClass();
+  $('#content').addClass('fadeIn');
+})
+
+// Cuando el DOM esta cargado
 $(document).ready(function() {
 
   // Visualizar imagen al momento de cargarla
@@ -11,31 +22,17 @@ $(document).ready(function() {
     no_label: false
   });
 
-  // Cambia el estado de los objetos en las tables-list
-  // puede pasar de un estado activo a inactivo
-  // function change_status(id, token, url, redirect){
-  //   console.log(url)
-  //   $('#confirmarDelete').click(function(){
-  //     var request = $.ajax({
-  //         type: "POST",
-  //         url: url,
-  //         data: {
-  //             "csrfmiddlewaretoken": token,
-  //             "identificador_id": id
-  //         },
-  //     });
-  //     request.done(function(response) {
-  //         if (response.delete){
-  //           $('#modalEmergente').modal(response.class)
-  //           location.href = redirect;
-  //         }
-  //     });
-  //   });
-  // }
+  $(".alert").fadeIn("slow").delay(2000).fadeOut("slow");
+  $('.datepicker').pikaday({ firstDay: 1 });
+  $('#id_file').addClass('inputfile');
 
-  // Inicializacion de la libreria dropzone.js para
-  // drag and drog de archivos, este codigo es especifico para
-  // la carga masiva de informacion en archivos de excel
+  function tabActive(id){
+    $('.active').removeClass('active');
+    $(id).addClass('active')
+  }
+
+  // Configuracion de la libreria dropzone.js
+  // para subir archivos drap and drop
   Dropzone.options.upload = {
     // Prevents Dropzone from uploading dropped files immediately
     autoProcessQueue : false,
@@ -71,6 +68,5 @@ $(document).ready(function() {
       console.log(request)
     }
   };
-
 
 });
