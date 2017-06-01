@@ -1,0 +1,132 @@
+{% extends 'base/base_dashboard.html' %}
+{% load staticfiles %}
+
+
+{% block overview %}
+<li><i class="fa fa-laptop"></i>Planilla</li>
+{% endblock%}
+
+{% block content %}
+
+<!-- messages success -->
+{% if messages %}
+<div class="alert alert-dismissible alert-info">
+  <button type="button" class="close text-center" data-dismiss="alert">&times;</button>
+  {% for message in messages %}
+  <strong>
+    <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+  </strong>
+  {% endfor %}
+</div>
+{% endif %}
+<!-- end messages success -->
+
+<section class="panel" style="padding:5px 10px">
+<table class="table table-striped table-advance table-hover text-center"
+data-toggle="table" data-search="true" data-show-refresh="true"
+data-show-columns="true" data-sort-name="stargazers_count" data-sort-order="desc">
+  <thead>
+    <tr>
+        <th  class="text-center" data-field="id"  data-sortable="true" >ID</th>
+        <th  class="text-center" data-field="fecha"  data-sortable="true" >Fecha</th>
+        <th  class="text-center" data-field="ruta" data-sortable="true">Ruta</th>
+        <th  class="text-center" data-field="hora_inicio" data-sortable="true">Hora inicio</th>
+        <th  class="text-center" data-field="hora_fin" data-sortable="true">Hora fin</th>
+        <th  class="text-center" data-field="placa" data-sortable="true">Placa</th>
+        <th  class="text-center" data-field="conductor" data-sortable="true">Conductor</th>
+        <th  class="text-center" data-field="acciones">Acciones</th>
+    </tr>
+  </thead>
+<tbody>
+  {% if object_list %}
+  {% for planilla in object_list %}
+    <tr>
+        <td><a href="{% url 'dashboard:planilla:planilla_edit' planilla.id %}">{{ planilla.id }}</a></td>
+        <td>{{ planilla.fecha }}</td>
+        <td>{{ planilla.ruta }}</td>
+        <td>{{ planilla.hora_inicio }}</td>
+        <td>{{ planilla.hora_fin }}</td>
+        <td>{{ planilla.placa }}</td>
+        <td>{{ planilla.conductor }}</td>
+        <td>
+          <div class="btn-group">
+            <a class="btn btn-primary" href="{% url 'dashboard:planilla:planilla_edit' planilla.id %}">Editar</a>
+          </div>
+          <div class="btn-group">
+            <!-- <a class="btn btn-danger" href="">Cambiar estado</a> -->
+            <a onclick="get_id({{ planilla.id }})" class="btn btn-danger" data-toggle="modal" data-target="#modalEmergente">Eliminar</a>
+          </div>
+        </td>
+    </tr>
+  {% endfor %}
+  {% else %}
+    <h3 class="page-header"><i class="fa fa-laptop"></i> No hay registros</h3>
+  {% endif %}
+</tbody>
+</table>
+<ul class="pager">
+	<li>
+    	{% if page_obj.has_previous %}
+       	 <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+    	{% endif %}
+    </li>
+	<li>
+    	{% if page_obj.has_next %}
+     	 <a href="?page={{ page_obj.next_page_number }}">Next</a>
+    	{% endif %}
+    </li>
+</ul>
+</section>
+{% endblock %}
+
+{% block modal-title %}
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+  <h4 class="modal-title">Eliminar</h4>
+</div>
+{% endblock %}
+
+{% block modal-footer %}
+<div class="modal-footer">
+  <button class="btn btn-danger" id="confirmarDelete">Confirmar</button>
+  <a class="btn btn-default" href="">Cancelar</a>
+</div>
+{% endblock %}
+
+{% block modal-body %}
+<div class="modal-body">
+  <h3>Está seguro que desea eliminar el registro?</h3>
+</div>
+{% endblock %}
+
+
+{% block extrajs %}
+<script src="{% static 'tenant/js/bootstrap-table.js'%}"></script>
+<script>
+  $( document ).ready(function() {
+    $(".fixed-table-toolbar").append( '<div class="columns columns-left btn-group pull-left"><a class="btn btn-success" href="{% url 'dashboard:planilla:planilla_new' %}">Crear planilla</a></div>' );
+  });
+</script>
+<script>
+
+  function get_id(id){
+    $('#confirmarDelete').click(function(){
+      var request = $.ajax({
+          type: "POST",
+          url: "{% url 'dashboard:planilla:planilla_delete' %}",
+          data: {
+              "csrfmiddlewaretoken": "{{ csrf_token }}",
+              "identificadorP_id": id
+          },
+      });
+      request.done(function(response) {
+          if (response.delete){
+            $('#modalEmergente').modal(response.class)
+            location.href ="{% url 'dashboard:planilla:planilla_list' %}";
+          }
+      });
+    });
+
+  }
+</script>
+{% endblock %}

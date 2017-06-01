@@ -1,7 +1,14 @@
 from django.db import models
+from django.core.validators import RegexValidator
 
 
 class Conductor(models.Model):
+    only_images = RegexValidator(
+            regex='^[a-zA-Z0-9]*$',
+            message='Username must be Alphanumeric',
+            code='invalid_username'
+        )
+
     cedula = models.IntegerField(primary_key=True)
     nombres = models.CharField(max_length=50)
     apellidos = models.CharField(max_length=50)

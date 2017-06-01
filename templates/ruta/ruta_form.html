@@ -199,6 +199,7 @@ Directions service
               <strong>Kilometros(Km):</strong>
               {{ form.kilometros.erros }}
               {{ form.kilometros }}
+
               <div class="help-block with-errors"></div>
             </div>
           </div>
@@ -295,6 +296,7 @@ Directions service
 
 
   function computeTotalDistance(result) {
+<<<<<<< HEAD
 		var total = 0;
 		var myroute = result.routes[0];
 		for (var i = 0; i < myroute.legs.length; i++) {
@@ -320,6 +322,16 @@ Directions service
 			}
 		}
 	}
+=======
+    var total = 0;
+    var myroute = result.routes[0];
+    for (var i = 0; i < myroute.legs.length; i++) {
+      total += myroute.legs[i].distance.value;
+    }
+    total = total / 1000;
+    document.getElementById('id_kilometros').value = total;
+  }
+>>>>>>> planilla
 </script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBaIKmsLcBbdoH2hvM_Xc2tJ9UpTmXRZe0&callback=initMap">
 </script>

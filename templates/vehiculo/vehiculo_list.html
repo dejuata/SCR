@@ -35,8 +35,8 @@ Nuevo Vehiculo
     <tr>
         <td></td>
         <td><a href="{% url 'dashboard:vehiculo:vehiculo_edit' vehiculo.placa %}">{{ vehiculo.placa }}</a></td>
-        <td>{{ vehiculo.conductorDefault }}</td>
-        <td>{{ vehiculo.numeroInterno }}</td>
+        <td>{{ vehiculo.conductor_default }}</td>
+        <td>{{ vehiculo.numero_interno }}</td>
         <td>{{ vehiculo.marca }}</td>
         <td>{% if vehiculo.activo_inactivo %}Activo{% else %}Inactivo{% endif %}</td>
         <td>

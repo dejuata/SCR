@@ -1,7 +1,7 @@
 from django.conf.urls import url
 from django.contrib.auth.decorators import login_required
 
-from .views import ConductorList, ConductorCreate, ConductorUpdate, import_data, export_data
+from .views import ConductorList, ConductorCreate, ConductorUpdate#, import_data, export_data
 from .ajax import conductor_delete
 
 urlpatterns = [
