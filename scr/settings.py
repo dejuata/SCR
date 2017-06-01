@@ -41,6 +41,7 @@ SHARED_APPS = (
     'anymail',
     'apps.cities',
     'django_select2',
+    'turbolinks',
 )
 
 TENANT_APPS = (
@@ -66,6 +67,7 @@ MIDDLEWARE = [
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'turbolinks.middleware.TurbolinksMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
