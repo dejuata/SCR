@@ -1,8 +1,6 @@
 # -*- encoding:utf-8 -*-
 from django import forms
-
 from .models import Planilla
-from apps import cliente, ruta
 
 
 class PlanillaForm(forms.ModelForm):
@@ -31,13 +29,12 @@ class PlanillaForm(forms.ModelForm):
             'hora_inicio',
             'hora_fin',
             'tiempo_operado',
-            'entrada',
-            'salida',
             'placa',
             'conductor',
             'observaciones',
             'novedades',
             'flota',
+            'valor_ruta',
             'valor_tercero',
             'viaticos',
             'descuentos_conductor',
@@ -48,21 +45,18 @@ class PlanillaForm(forms.ModelForm):
 
         widgets = {
             'fecha': forms.DateInput(attrs={'class': 'form-control datepicker'}),
-            'cliente': forms.TextInput(),
             'ruta': forms.Select(attrs={'class': 'form-control', 'data-error': 'Seleccione la ruta'}),
             'kilometros': forms.NumberInput(attrs={'class': 'form-control'}),
             'hora_adicional': forms.NumberInput(attrs={'class': 'form-control', 'maxlength': '2', 'id': 'hora_adicional'}),
             'hora_inicio': forms.TimeInput(attrs={'class': 'form-control',  'type': 'Time', 'id': 'hora_inicio', 'onkeyup': 'timeop(); return false'}),
             'hora_fin': forms.TimeInput(attrs={'class': 'form-control', 'type': 'Time', 'id': 'hora_fin', 'onkeyup': 'timeop(); return false'}),
             'tiempo_operado': forms.NumberInput(attrs={'class': 'form-control', 'id': 'tiempo_operado'}),
-            'entrada': forms.CheckboxInput(attrs={'id': 'entrada'}),
-            'salida': forms.CheckboxInput(attrs={'id': 'salida'}),
             'placa': forms.Select(attrs={'class': 'form-control', 'data-error': 'Seleccione el vehiculo'}),
             'conductor': forms.Select(attrs={'class': 'form-control', 'data-error': 'Seleccione el conductor'}),
             'observaciones': forms.TextInput(attrs={'class': 'form-control'}),
             'novedades': forms.TextInput(attrs={'class': 'form-control'}),
             'flota': forms.Select(choices=FLOTA, attrs={'class': 'form-control', 'data-error': 'Selecione la flota', 'id': 'flota'}),
-            'valor_ruta': forms.NumberInput(attrs={'class': 'form-control', 'value': '100000', 'onkeyup': 'total(); return false'}),
+            'valor_ruta': forms.NumberInput(attrs={'class': 'form-control', 'value': '0',  'id': 'valor_ruta', 'onkeyup': 'total(); return false'}),
             'valor_tercero': forms.NumberInput(attrs={'class': 'form-control', 'value': '0', 'id': 'valor_tercero', 'onkeyup': 'total(); return false'}),
             'viaticos': forms.NumberInput(attrs={'class': 'form-control', 'value': '0', 'id': 'viaticos', 'onkeyup': 'total(); return false'}),
             'descuentos_conductor': forms.NumberInput(attrs={'class': 'form-control', 'value': '0', 'id': 'descuentos_conductor', 'onkeyup': 'total(); return false'}),

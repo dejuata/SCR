@@ -30,8 +30,8 @@ data-show-columns="true" data-sort-name="stargazers_count" data-sort-order="desc
         <th  class="text-center" data-field="id"  data-sortable="true" >ID</th>
         <th  class="text-center" data-field="fecha"  data-sortable="true" >Fecha</th>
         <th  class="text-center" data-field="ruta" data-sortable="true">Ruta</th>
-        <th  class="text-center" data-field="entrada" data-sortable="true">Entrada</th>
-        <th  class="text-center" data-field="salida" data-sortable="true">Salida</th>
+        <th  class="text-center" data-field="hora_inicio" data-sortable="true">Hora inicio</th>
+        <th  class="text-center" data-field="hora_fin" data-sortable="true">Hora fin</th>
         <th  class="text-center" data-field="placa" data-sortable="true">Placa</th>
         <th  class="text-center" data-field="conductor" data-sortable="true">Conductor</th>
         <th  class="text-center" data-field="acciones">Acciones</th>
@@ -44,8 +44,8 @@ data-show-columns="true" data-sort-name="stargazers_count" data-sort-order="desc
         <td><a href="{% url 'dashboard:planilla:planilla_edit' planilla.id %}">{{ planilla.id }}</a></td>
         <td>{{ planilla.fecha }}</td>
         <td>{{ planilla.ruta }}</td>
-        <td>{{ planilla.entrada }}</td>
-        <td>{{ planilla.salida }}</td>
+        <td>{{ planilla.hora_inicio }}</td>
+        <td>{{ planilla.hora_fin }}</td>
         <td>{{ planilla.placa }}</td>
         <td>{{ planilla.conductor }}</td>
         <td>

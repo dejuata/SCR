@@ -65,13 +65,6 @@
             </div>
 
             <div class="form-group has-feedback text-left col-md-12">
-              <strong>cliente</strong>
-
-                <input type="text" value="" class="form-control" name="cliente" required>
-              <div class="help-block with-errors"></div>
-            </div>
-
-            <div class="form-group has-feedback text-left col-md-12">
               <strong>Ruta</strong>
               {{ form.ruta.erros }}
               {{ form.ruta }}
@@ -115,19 +108,6 @@
               <div class="help-block with-errors"></div>
             </div>
 
-            <div class="form-group has-feedback text-left col-md-12">
-              <strong>entrada</strong>
-              {{ form.entrada.erros }}
-              {{ form.entrada }}
-              <div class="help-block with-errors"></div>
-            </div>
-
-            <div class="form-group has-feedback text-left col-md-12">
-              <strong>salida</strong>
-              {{ form.salida.erros }}
-              {{ form.salida }}
-              <div class="help-block with-errors"></div>
-            </div>
 
             <div class="form-group has-feedback text-left col-md-12">
               <strong>placa</strong>
@@ -167,8 +147,8 @@
 
             <div class="form-group has-feedback text-left col-md-12">
               <strong>valor ruta</strong>
+                {{ form.valor_ruta.erros }}
                 {{ form.valor_ruta }}
-                <input type="number" value="" id="valor_ruta" class="form-control" name="valor_ruta" required>
               <div class="help-block with-errors"></div>
             </div>
 
@@ -253,6 +233,7 @@
     var time = hf - hi;
     document.getElementById('tiempo_operado').value = time.toFixed(2);
   }
+
   </script>
 
   <script type="text/javascript" src="{% static 'js/uploadPreview.min.js'%}"></script>

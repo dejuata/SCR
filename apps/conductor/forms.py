@@ -111,11 +111,11 @@ class ConductorForm(forms.ModelForm):
         elif fecha_vencimiento <= fecha_expedicion:
             self.add_error('fecha_vencimiento', 'la fecha de vencimiento no puede ser menor a la de expedicion')
         else:
-            pass
+            return self.cleaned_data['fecha_expedicion'] and self.cleaned_data['fecha_vencimiento']
 
     def clean_fecha_nacimiento(self):
         fecha_nacimiento = self.cleaned_data["fecha_nacimiento"]
-        if fecha_nacimiento > date.today():
+        if fecha_nacimiento >= date.today():
             self.add_error('fecha_nacimiento', 'La fecha de nacimiento no puede superar la fecha actual')
         else:
             return self.cleaned_data['fecha_nacimiento']
@@ -143,7 +143,6 @@ class ConductorForm(forms.ModelForm):
         # tam = os.path.getsize(logo.name)
         # print(tam)
         if not(logo is None):
-            print("ENTRE")
             if logo.name.count(".png") == 0 and logo.name.count(".jpeg") == 0 and logo.name.count(".jpg") == 0:
                 self.add_error('logo', 'La foto debe ser una imagen')
         else:
