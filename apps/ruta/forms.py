@@ -64,4 +64,5 @@ class RutaForm(forms.ModelForm):
             'comision_conductor': forms.NumberInput(attrs={'class': 'form-control', 'data-error': "Ingrese la comision para el conductor de la ruta"}),
             'kilometros': forms.NumberInput(attrs={'class': 'form-control', 'id': "kilometros", 'value': "", 'data-error': "Ingrese los Km de la ruta"}),
             'link_ruta': forms.HiddenInput(attrs={'class': 'form-control', 'id': "linkRuta", 'data-error': "Ingrese el link de la ruta"})
+
         }
