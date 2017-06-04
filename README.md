@@ -12,4 +12,4 @@
     * 02_relacionar_dominio.sql
     * 00_users_schema_public.sql
 
-   6. levantar servidor.
+   6. levantar servidor
