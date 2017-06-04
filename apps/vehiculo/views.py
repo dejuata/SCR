@@ -9,8 +9,7 @@ from .sorting import SortMixin
 
 class VehiculoList(SortMixin, ListView):
     model = Vehiculo
-    template_name = 'vehiculo/vehiculo_list.html'
-    paginate_by = 10
+    template_name = 'vehiculo/vehiculo_list.html'    
     default_sort_params = ('placa', 'asc')
 
     def sort_queryset(self, qs, sort_by, order):

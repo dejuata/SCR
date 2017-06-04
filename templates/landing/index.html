@@ -1,168 +1,384 @@
-{% extends 'base/base.html' %}
 {% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-{% block extrastatic %}
-<link rel="stylesheet" href="{% static 'css/landing.css' %}"/>
-<link rel="stylesheet" href="{% static 'css/navbar.css' %}"/>
-{% endblock %}
+  <link rel="stylesheet" href="{% static 'css/bootstrap-theme.css' %}"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" media="all">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css" rel="stylesheet" media="all">
 
-{% block title %}
-Home
-{% endblock %}
+  <link rel="stylesheet" href="{% static 'css/landing.css' %}"/>
 
+  <title>SCR</title>
 
-{% block content %}
-<!-- header -->
-  <header>
-    <div class="shadow">
-      <!-- section -->
-      <section class="header">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-12">
-              <h1 class="header-title">SCR</h1>
-              <h2 class="header-subtitle">Sistema de control de rutas</h2>
-              <div class="header-section">
-                <img class="col-md-6" src="{% static 'img/landing/macbook.png' %}" alt="">
+</head>
+<body>
 
-                <div class="col-md-6 header-description ">
-                  <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book</p>
-                  <div class="header-call-to-action">
-                    <a href="{% url 'usuario:usuario_new' %}" class="btn btn-success btn-lg header-call-to-action-btn">
-                      Regístrate!
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+  <!-- header -->
+  <header id="inicio">
+    <!-- navbar -->
+    <nav class="navbar navbar-default navbar-fixed-top header cl-effect-21">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="" href="#">
+            <img src="{% static 'img/scr.png' %}" alt="SCR" class="navbar-logo">
+          </a>
         </div>
-      </section>
-      <!-- end section -->
-    </div>
+
+        <div class="collapse navbar-collapse text-center" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav navbar-right nav-btn">
+            <li><a href="#inicio" class="navbar-option">Inicio</a></li>
+            <li><a href="#services" class="navbar-option">Beneficios</a></li>
+            <li><a href="#clients" class="navbar-option">Clientes</a></li>
+            <li><a href="#price" class="navbar-option">Planes</a></li>
+              <li><a href="#contact" class="navbar-option">Contáctenos</a></li>
+            {% if user.is_authenticated %}
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" style="text-transform:uppercase" data-toggle="dropdown" role="button" aria-expanded="false">
+                  {{ user.get_short_name }} <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href="{% url 'usuario:usuario_edit' user.id %}">Ver Perfil</a></li>
+                  <li><a href="{% url 'tenant:tenant_new' %}">Pagar</a></li>
+                  <li><a href="{% url 'logout' %}">Salir</a></li>
+                </ul>
+              </li>
+            {% else %}
+              <li>
+                {% block navbar-btn %}
+                <a href="{% url 'tenant_login' %}" style="">
+                  <button  class="btn btn-warning">Iniciar sesión</button>
+                </a>
+                {% endblock navbar-btn %}
+              </li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- end navbar -->
+
+    <!-- carousel -->
+    <div id="bootstrap-touch-slider" class="carousel bs-slider fade  control-round indicators-line" data-ride="carousel" data-pause="hover" data-interval="5000" >
+
+      <!-- Wrapper For Slides -->
+      <div class="carousel-inner" role="listbox">
+
+        <!-- Third Slide -->
+        <div class="item active">
+
+            <!-- Slide Background -->
+            <div class="slider-image-one"></div>
+
+            <div class="bs-slider-overlay"></div>
+            <!-- Slide Text Layer -->
+            <div class="slide-text slide_style_center">
+                <h1 data-animation="animated fadeIn">Gestiona tu cronograma de <strong>rutas</strong></h1>
+                <div class="divider"></div>
+                <p data-animation="animated fadeInRight">SCR es la mejor opción si necesitas llevar un control sobre los servicios que prestas</p>
+                <br>
+                <a href="{% url 'usuario:usuario_new' %}"  class="btn btn-primary" data-animation="animated fadeInDown">Crea una cuenta</a>
+            </div>
+        </div>
+        <!-- End of Slide -->
+
+        <!-- Second Slide -->
+        <div class="item">
+
+            <!-- Slide Background -->
+            <div class="slider-image-two"></div>
+
+            <div class="bs-slider-overlay"></div>
+
+            <div class="container">
+                <div class="row">
+                    <!-- Slide Text Layer -->
+                    <div class="slide-text slide_style_right">
+                        <h1 data-animation="animated zoomIn">Pruebalo Gratis!</h1>
+                        <p data-animation="animated fadeInLeft">Empieza a disfrutar desde ya sin pagar un solo peso</p>
+                        <br>
+                        <a href="{% url 'usuario:usuario_new' %}"  class="btn btn-primary" data-animation="animated fadeInDown">Crea una cuenta</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End of Slide -->
+
+      </div>
+      <!-- End of Wrapper For Slides -->
+
+      <!-- Left Control -->
+      <a class="left carousel-control" href="#bootstrap-touch-slider" role="button" data-slide="prev">
+          <span class="fa fa-angle-left" aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
+      </a>
+
+      <!-- Right Control -->
+      <a class="right carousel-control" href="#bootstrap-touch-slider" role="button" data-slide="next">
+          <span class="fa fa-angle-right" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+      </a>
+
+  </div> <!-- End  bootstrap-touch-slider Slider -->
+  <!-- end carousel -->
   </header>
   <!-- end header -->
 
+
+
+  <section class="what">
+    <div class="container text-center">
+      <h2>¿Qué es SCR?</h2>
+        <div class="col-xs-6 animated animated-left">
+          <img src="{% static 'img/landing/macbook.png' %}" alt="macbook" class="what-image">
+        </div>
+        <div class="col-xs-6 text-left animated animated-right">
+          <p>
+          Somos un sistema de información que integra las operaciones de control de flota, rutas y usuarios
+          en una sola plataforma, brindando una mayor autonomia y control sobre los movimientos diarios que realize
+          su empresa.
+          </p>
+        </div>
+    </div>
+  </section>
+
+
   <!-- beneficios -->
-<section id="services" class="services">
-  <div class="container text-center">
-    <div class="row">
-      <h1 class="title">What we do</h1>
-      <h2 class="subtitle">Lorem Ipsum is simply dummy text</h2>
+  <section id="services" class="services">
+    <div class="container-fluid text-center services-row">
 
-      <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+      <div class="col-md-4 col-xs-6 services-one animated">
         <div class="service-item">
-          <img src="{% static 'img/landing/services/responsive.png' %}" alt="">
-          <h3>Fully Responsive</h3>
-          <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text</p>
+          <h2>Crea</h2>
+          <p>Con SCR crea todos los elementos de tu empresa, como tu flota, conductores, clientes y rutas, además puedes llevar
+          un registro diario de tu operación, dandote un mayor control y toma de decisiones.</p>
         </div>
       </div>
 
-      <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+      <div class="col-md-4 col-xs-6 services-two animated">
         <div class="service-item">
-          <img src="{% static 'img/landing/services/bs3.png' %}" alt="">
-          <h3>Bootstrap 3</h3>
-          <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text</p>
+          <h2>Ordena</h2>
+          <p>Ten todo en un solo lugar, no mas archivos de excel con información mezclada, con SCR podras consultar el estado de tus conductores,
+          asi como la vigencia de los documentos requeridos para operar.</p>
         </div>
       </div>
 
-      <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+      <div class="col-md-4 col-xs-12 services-three animated">
         <div class="service-item">
-          <img src="{% static 'img/landing/services/free.png' %}" alt="">
-          <h3>100% Free</h3>
-          <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text</p>
+          <h2>Controla</h2>
+          <p>Desde la adquisición de un nuevo cliente, sus rutas y conductor, tengo un control del 100% sobre todos los procesos de tu empresa,
+          </p>
         </div>
       </div>
 
     </div>
-  </div>
-</section>
-<!-- end beneficios -->
+  </section>
+  <!-- end beneficios -->
 
-<!-- clientes -->
-<section id="clients" class="clients">
-  <div class="container">
-    <div class="row">
+  <!-- clientes -->
+  <section id="clients" class="clients text-center">
+    <div class="container">
+      <div class="row">
 
-    <h1 class="title">Clients</h1>
-    <h2 class="subtitle">Lorem Ipsum is simply dummy text</h2>
+      <h2>Clientes</h2>
+      <h3>Estos son nuestro clientes</h3>
+      <div>
+        <img class="col-xs-3" src="{% static 'img/landing/clients/img1.png' %}" alt="client-1">
 
-    <div class="wow fadeInDown">
-      <img class="col-md-3 col-md-3 col-sm-3 col-xs-12" src="{% static 'img/landing/clients/img1.png' %}" alt="client-1">
+        <img class="col-xs-3" src="{% static 'img/landing/clients/img2.png' %}" alt="client-2">
 
-      <img class="col-md-3 col-md-3 col-sm-3 col-xs-12" src="{% static 'img/landing/clients/img2.png' %}" alt="client-2">
+        <img class="col-xs-3" src="{% static 'img/landing/clients/img3.png' %}" alt="client-3">
 
-      <img class="col-md-3 col-md-3 col-sm-3 col-xs-12" src="{% static 'img/landing/clients/img3.png' %}" alt="client-3">
+        <img class="col-xs-3" src="{% static 'img/landing/clients/img4.png' %}" alt="client-4">
 
-      <img class="col-md-3 col-md-3 col-sm-3 col-xs-12" src="{% static 'img/landing/clients/img4.png' %}" alt="client-4">
-
+      </div>
+      </div>
     </div>
-    </div>
-  </div>
-</section>
-<!-- end clientes -->
+  </section>
+  <!-- end clientes -->
 
-<!-- contact -->
-<section id="contact" class="contact">
-  <div class="container text-center">
-    <div class="row">
+  <!-- price -->
+  <section id="price" class="price text-center">
+    <div class="container">
+      <h2>Planes</h2>
+      <div class="row">
 
-      <h1 class="title">Contact us</h1>
-      <h2 class="subtitle">Lorem Ipsum is simply dummy text</h2>
-
-      <form role="form" class="contact-form" method="post">
-        <div class="col-md-6 wow fadeInLeft" data-wow-delay=".5s">
-
-          <div class="form-group">
-            <div class="controls">
-              <input type="text" class="form-control" placeholder="Name" name="name">
-            </div>
-          </div>
-
-          <div class="form-group">
-            <div class="controls">
-              <input type="email" class="form-control email" placeholder="Email" name="email">
-            </div>
-          </div>
-
-          <div class="form-group">
-            <div class="controls">
-              <input type="text" class="form-control requiredField" placeholder="Subject" name="subject">
-            </div>
-          </div>
-
-          <div class="form-group">
-            <div class="controls">
-              <textarea rows="7" class="form-control" placeholder="Message" name="message"></textarea>
-            </div>
-          </div>
-
-          <button type="submit" id="submit" class="btn btn-lg btn-primary">Send</button><div id="success" style="color:#34495e;"></div>
-
-        </div>
-      </form>
-
-      <div class="col-md-6 wow fadeInRight">
-        <div class="social-links">
-          <a class="social" href="#" target="_blank"><i class="fa fa-facebook fa-2x"></i></a>
-          <a class="social" href="#" target="_blank"><i class="fa fa-twitter fa-2x"></i></a>
-          <a class="social" href="#" target="_blank"><i class="fa fa-google-plus fa-2x"></i></a>
-          <a class="social" href="#" target="_blank"><i class="fa fa-linkedin fa-2x"></i></a>
-        </div>
-        <div class="contact-info">
-          <p><i class="fa fa-map-marker"></i> Seattle, WA 00000, USA</p>
-          <p><i class="fa fa-envelope"></i> info@yourwebsite.com</p>
+        <div class="col-xs-3 info-colum text-show">
+          <div class=" plan-title hide-plan"></div>
+          <div class="plan-row text-left price-row">Precio</div>
+          <div class="plan-row text-left">Almacenamiento</div>
+          <div class="plan-row text-left">Ancho de banda</div>
+          <div class="plan-row text-left">Dominios</div>
+          <div class="plan-row text-left">Panel de control</div>
+          <div class="plan-row text-left">Backup</div>
         </div>
 
-        <p>
-        A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque. Duis vulputate commodo lectus, ac blandit elit.<br>
-        </p>
+        <div class="col-xs-3">
+          <div class="plan">
+            <p class="plan-title">Bronce</p>
+            <div class="plan-row price-row">
+              <span class="hidden-info">Price</span>
+              <span class="plan-price">$3</span> USD
+            </div>
+            <div class="plan-row"><strong>1 GB</strong><hidden>de Almacenamiento</hidden></div>
+            <div class="plan-row"><strong>1 TB</strong><hidden>de Ancho de banda</hidden></div>
+            <div class="plan-row"><strong>1</strong><hidden>Dominio</hidden></div>
+            <div class="plan-row"><i class="fa fa-check" aria-hidden="true"></i><hidden>Panel de control</hidden></div>
+            <div class="plan-row"><i class="fa fa-times" aria-hidden="true"></i><hidden>Backup</hidden></div>
+            <div class="plan-row button-row">
+              <a href="##" class="btn btn-primary">Suscribete</a>
+            </div>
+          </div>
+        </div>
 
+        <div class="col-xs-3">
+          <div class="plan">
+            <p class="plan-title">Plata</p>
+            <div class="plan-row price-row">
+              <span class="hidden-info">Price</span>
+              <span class="plan-price">$6</span> USD
+            </div>
+            <div class="plan-row"><strong>100 GB</strong><hidden>de Almacenamiento</hidden></div>
+            <div class="plan-row"><strong>10 TB</strong><hidden>de Ancho de banda</hidden></div>
+            <div class="plan-row"><strong>1</strong><hidden>Dominio</hidden></div>
+            <div class="plan-row"><i class="fa fa-check" aria-hidden="true"></i><hidden>Panel de control</hidden></div>
+            <div class="plan-row"><i class="fa fa-times" aria-hidden="true"></i><hidden>Backup</hidden></div>
+            <div class="plan-row button-row">
+              <a href="##" class="btn btn-primary">Suscribete</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xs-3">
+          <div class="plan">
+            <p class="plan-title">Oro</p>
+            <div class="plan-row price-row">
+              <span class="hidden-info">Price</span>
+              <span class="plan-price">$9</span> USD
+            </div>
+            <div class="plan-row"><strong>500 GB</strong> <hidden>de Almacenamiento</hidden></div>
+            <div class="plan-row"><strong>10 TB</strong><hidden>de Ancho de banda</hidden></div>
+            <div class="plan-row"><strong>2</strong><hidden>Dominio</hidden></div>
+            <div class="plan-row"><i class="fa fa-check" aria-hidden="true"></i><hidden>Panel de control</hidden></div>
+            <div class="plan-row"><i class="fa fa-times" aria-hidden="true"></i><hidden>Backup</hidden></div>
+            <div class="plan-row button-row">
+              <a href="##" class="btn btn-primary">Suscribete</a>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </section>
+  <!-- end price -->
 
+  <!-- contact -->
+  <section id="contact" class="contact">
+    <div class="container text-center">
+      <div class="row">
+
+        <h2>Contáctenos</h2>
+
+        <form role="form" class="contact-form" method="post">
+          {% csrf_token %}
+          <div class="col-md-6 col-sm-12 wow fadeInLeft" data-wow-delay=".5s">
+
+            <div class="form-group">
+              <div class="controls">
+                <input type="text" class="form-control" placeholder="Nombre" name="name">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="controls">
+                <input type="email" class="form-control email" placeholder="Correo Electrónico" name="email">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="controls">
+                <input type="text" class="form-control requiredField" placeholder="Asunto" name="subject">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="controls">
+                <textarea rows="7" class="form-control" placeholder="Mensaje" name="message"></textarea>
+              </div>
+            </div>
+
+            <button type="submit" id="submit" class="btn btn-lg btn-primary">Enviar</button>
+            <div id="success" style="color:#34495e;"></div>
+
+          </div>
+        </form>
+
+        <div class="col-md-6 col-sm-12 fadeInRight">
+          <div class="social-links">
+            <a class="social" href="#" target="_blank"><i class="fa fa-facebook fa-2x"></i></a>
+            <a class="social" href="#" target="_blank"><i class="fa fa-twitter fa-2x"></i></a>
+            <a class="social" href="#" target="_blank"><i class="fa fa-google-plus fa-2x"></i></a>
+          </div>
+
+          <div class="contact-info">
+            <p><i class="fa fa-map-marker"></i> Universidad del Vale, Cali-Colombia</p>
+            <p><i class="fa fa-envelope"></i> info@scr.com</p>
+          </div>
+        </div>
+
+      </div>
     </div>
-  </div>
-</section>
+  </section>
+  <!-- end contact-->
 
-<!-- end contact-->
-{% endblock%}
+  <!-- footer -->
+  <footer id="footer" class="footer">
+    <div class="container">
+      <div class="row">
+          <div class="col-sm-6 col-xs-6">
+              <p class="no-margin-bottom"><strong>SCR | Sistema de control de rutas.</strong>
+                <br>
+                Universidad del Valle, Cali-Colombia
+                <br>
+                (432) 555-9876
+                <br>
+                <a href="#">info@scr.com</a>
+              </p>
+            </div>
+          <div class="col-sm-6 col-xs-6">
+              <ul class="footer-social">
+                <li><a href="#" class="footer-social-facebook"><i class="fa fa-facebook"></i></a></li>
+                <li><a href="#" class="footer-social-twitter"><i class="fa fa-twitter"></i></a></li>
+                <li><a href="#" class="footer-social-google"><i class="fa fa-google-plus"></i></a></li>
+              </ul>
+              <div class="copyright">
+                  <p>Copyright © 2017 <a href="#">SCR</a>. Todos los derechos reservados</p>
+              </div>
+          </div>
+      </div>
+    </div>
+  </footer>
+  <!-- end footer -->
+
+
+
+  <script src="{% static 'js/jquery-3.2.1.min.js'%}"></script>
+  <script
+  src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"
+  integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E="
+  crossorigin="anonymous"></script>
+  <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/carousel.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/landing.js' %}"></script>
+
+
+</body>
+</html>

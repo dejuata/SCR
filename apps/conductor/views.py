@@ -9,8 +9,7 @@ from .sorting import SortMixin
 
 class ConductorList(SortMixin, ListView):
     model = Conductor
-    template_name = 'conductor/conductor_list.html'
-    paginate_by = 10
+    template_name = 'conductor/conductor_list.html'    
     default_sort_params = ('nombres', 'asc')
 
     def sort_queryset(self, qs, sort_by, order):

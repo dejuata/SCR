@@ -6,16 +6,11 @@ Registrar
 {% endblock %}
 
 {% block title_panel %}
-Registrate
+<p>Regístrate</p>
 {% endblock %}
 
 {% block color_panel %}
 panel-success
-{% endblock %}
-
-{% block extrastatic %}
-<!-- <link rel="stylesheet" href="{% static 'css/navbar.css' %}"/> -->
-<link rel="stylesheet" href="{% static 'css/login.css' %}"/>
 {% endblock %}
 
 {% block colum_one %}
@@ -25,13 +20,11 @@ panel-success
 <form method="post" data-toggle="validator">
 	{% csrf_token %}
 
-	<div class="form-group has-feedback text-left">
+	<div class="form-group has-feedback text-left" id="correo">
 		{{ form.email }}
 		<div class="help-block with-errors">
 			{% if form.email.errors %}
-			<ul class="list-unstyled">
-				<li>{{ form.email.errors }}</li>
-			</ul>
+				<p class="errors">{{ form.email.errors|striptags }}</p>
 			{% endif %}
 		</div>
 	</div>
@@ -43,16 +36,29 @@ panel-success
 
 	<div class="form-group has-feedback text-left">
 		<input class="form-control" type="password" name="password2" placeholder="Confirmar contraseña" data-match-error="Complete este campo" required>
-		<div class="help-block with-errors">{{ form.password2.help_text|safe }}</div>
+		<div class="help-block with-errors">
+			{% if form.password2.errors%}
+				<p class="errors">{{ form.password2.errors|striptags }}</p>
+			{% else %}
+				{{ form.password2.help_text|safe }}
+			{% endif %}
+		</div>
 	</div>
 
-	<div class="g-recaptcha" data-sitekey="6Lc_RB4UAAAAAIjVIJgONuqnMd3sVRZwLEVC_rvH"></div>
+	<div class="form-group has-feedback text-left">
+		{{ form.captcha }}
+		<div class="help-block with-errors">
+			<pcaptcha class="errors">{{ form.captcha.errors|striptags }}</pcaptcha>
+		</div>
+	</div>
+
 	<br>
 
 	<div class="form-group form-input">
 		<button class="btn btn-primary login-btn" type="submit">Registrar</button>
 	</div>
 </form>
+
 <!-- end form user_new -->
 {% endblock %}
 
@@ -60,12 +66,23 @@ panel-success
 <h4>Con tus Redes sociales:</h4>
 <br>
 <div class="form-group">
-	<a href="#" class="btn btn-info btn-signup login-btn btn-face">Facebook</a>
+	<a href="#" class="btn btn-info btn-signup login-btn btn-face"><i class="fa fa-facebook fa-2x"></i></a>
 </div>
 <div class="form-group">
-	<a href="#" class="btn btn-info btn-signup login-btn btn-twitter">Twitter</a>
+	<a href="#" class="btn btn-info btn-signup login-btn btn-twitter"><i class="fa fa-twitter fa-2x"></i></a>
 </div>
 <div class="form-group">
-	<a href="#" class="btn btn-danger btn-signup login-btn btn-google">Google +</a>
+	<a href="#" class="btn btn-danger btn-signup login-btn btn-google"><i class="fa fa-google-plus fa-2x"></i></a>
 </div>
 {% endblock %}
+
+{% block row %}
+<div>¿Ya tienes cuenta? <a href="{% url 'tenant_login' %}">Inicia sesión aquí</a></div>
+{% endblock %}
+
+<!-- si el campo email tiene errores -->
+{% if form.email.errors %}
+<script>
+	$('#correo').addClass('has-error')
+</script>
+{% endif %}

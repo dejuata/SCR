@@ -5,10 +5,10 @@ from django.core.validators import RegexValidator
 # Create your models here.
 class Cliente(models.Model):
 
-    only_letters = RegexValidator(r'^[a-z A-Z]*$', 'Only letters are allowed.')
+    # only_letters = RegexValidator(r'^[a-z A-Z]*$', 'Only letters are allowed.') # validators=[only_letters]
 
     nit = models.IntegerField(primary_key=True)
-    razon_social = models.CharField(max_length=50, validators=[only_letters])
+    razon_social = models.CharField(max_length=50)
     logo = models.ImageField(blank=True, null=True, upload_to="logo_media", default='')
     telefono = models.IntegerField(null=True)
     correo = models.EmailField()

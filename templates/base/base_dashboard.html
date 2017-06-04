@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="img/favicon.png">
+    <!-- <link rel="shortcut icon" href="img/favicon.png"> -->
 
     <title>{% block title %} Dashboard {% endblock %} | SCR</title>
 
@@ -12,7 +12,7 @@
     <link href="{% static 'tenant/css/bootstrap.min.css' %}" rel="stylesheet">
 
     <!-- bootstrap theme -->
-    <link href="{% static 'css/bootstrap-theme.css' %}" rel="stylesheet">
+    <link href="{% static 'tenant/css/bootstrap-theme.css' %}" rel="stylesheet">
 
     <!--external css-->
     <!-- font icon -->
@@ -21,30 +21,35 @@
 
     <!-- easy pie chart-->
     <link href="{% static 'tenant/assets/jquery-easy-pie-chart/jquery.easy-pie-chart.css' %}" rel="stylesheet" type="text/css" media="screen"/>
+
+    <!-- style -->
     <link href="{% static 'tenant/css/style.css' %}" rel="stylesheet">
     <link href="{% static 'tenant/css/style-responsive.css' %}" rel="stylesheet" />
-	  <link href="{% static 'tenant/css/jquery-ui-1.10.4.min.css' %}" rel="stylesheet">
-
-    <!-- login -->
-    <link rel="stylesheet" href="{% static 'css/login.css' %}"/>
 
     <!-- Boostrap table -->
-    <link rel="stylesheet" href="{% static 'tenant/css/bootstrap-table.css'%}">
+    <link rel="stylesheet" href="{% static 'tenant/css/bootstrap-table.min.css'%}">
+    <link rel="stylesheet" href="{% static 'tenant/css/bootstrap-table-sticky-header.css'%}">
 
     <!-- pikaday -->
     <link rel="stylesheet" href="{% static 'css/pikaday.min.css' %}">
 
-    <style>
-    footer{
-      position: absolute;
-      bottom: 0;
-      padding-top: 20px;
-    }
-    #main-content{
-      display: flex;
-      justify-content: center;
-    }
-    </style>
+    <!-- custom style -->
+    <link rel="stylesheet" href="{% static 'tenant/css/custom-style.css'%}">
+
+    <!-- hoja de calculo -->
+    <script src="{% static 'tenant/js/handsontable.full.js' %}"></script>
+    <link rel="stylesheet" media="screen" href="{% static 'tenant/css/handsontable.full.css' %}">
+
+    <!-- Dropzone.js -->
+    <link rel="stylesheet" href="{% static 'tenant/css/dropzone.min.css'%}">
+
+    <!-- animated css -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css" rel="stylesheet" media="all">
+    <!--<link rel="stylesheet" href="{% static 'tenant/css/fakeLoader.css'%}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="{% static 'tenant/js/fakeLoader.js'%}"></script>-->
+    <!-- fontawesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" media="all">
 
     {% block extrastatic %}
     {% endblock %}
@@ -58,157 +63,211 @@
   </head>
 
   <body>
+
+    <div id="fakeLoader"></div>
+
   {% block navbar %}
-  <!-- container section start -->
-  <section id="container" class="">
-
-
-      <header class="header dark-bg">
-            <div class="toggle-nav">
-                <div class="icon-reorder tooltips" data-original-title="Toggle Navigation" data-placement="bottom"><i class="icon_menu"></i></div>
-            </div>
-
-            <!--logo start-->
-            <a href="{% url 'dashboard:index' %}" class="logo"><span class="lite">SCR</span></a>
-            <!--logo end-->
-
-            <div class="top-nav notification-row">
-                <!-- notificatoin dropdown start-->
-                <ul class="nav pull-right top-menu">
-                    <!-- user login dropdown start-->
-                    <li class="dropdown">
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                            <span class="profile-ava">
-                                <!-- <img alt="" src="img/avatar1_small.jpg"> -->
-                            </span>
-                            <span class="username">{{ user.get_short_name }}</span>
-                            <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu extended logout">
-                            <div class="log-arrow-up"></div>
-                            <li class="eborder-top">
-                                <a href="{% url 'usuario_tenant:usuario_profile' %}">
-                                  <i class="icon_profile"></i> My Profile
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{% url 'usuario_logout' %}"><i class="icon_key_alt"></i> Log Out</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <!-- user login dropdown end -->
-                </ul>
-                <!-- notificatoin dropdown end-->
-            </div>
-      </header>
-      <!--header end-->
-      {% endblock %}
-
-      {% block sidenav %}
-      <!--sidebar start-->
-      <aside>
-          <div id="sidebar"  class="nav-collapse ">
-              <!-- sidebar menu start-->
-              <ul class="sidebar-menu">
-                  <li class="active">
-                      <a class="" href="{% url 'dashboard:cliente:cliente_list' %}">
-                          <i class="icon_house_alt"></i>
-                          <span>Clientes</span>
-                      </a>
-                  </li>
-                  <li class="active">
-                      <a class="" href="{% url 'dashboard:conductor:conductor_list' %}">
-                          <i class="icon_genius"></i>
-                          <span>Conductores</span>
-                      </a>
-                  </li>
-                  <li class="active">
-                      <a class="" href="{% url 'dashboard:vehiculo:vehiculo_list' %}">
-                          <i class="icon_desktop"></i>
-                          <span>Vehiculos</span>
-                      </a>
-                  </li>
-                  <li>
-                      <a class="" href="{% url 'dashboard:ruta:ruta_list' %}">
-                          <i class="icon_genius"></i>
-                          <span>Rutas</span>
-                      </a>
-                  </li>
-                  <li class="active">
-                      <a class="" href="{% url 'dashboard:planilla:planilla_list' %}">
-                          <i class="icon_desktop"></i>
-                          <span>Planilla</span>
-                      </a>
-                  </li>
-              </ul>
-              <!-- sidebar menu end-->
+    <header class="header dark-bg" >
+      <div class="toggle-nav">
+          <div class="icon-reorder tooltips" data-original-title="Toggle Navigation" data-placement="bottom">
+            <i class="fa fa-bars" aria-hidden="true"></i>
           </div>
-      </aside>
-      <!--sidebar end-->
-      {% endblock %}
-
-      <!-- content -->
-      <section id="main-content">
-        <section class="wrapper">
-          <!--overview start-->
-          <div class="row">
-  				<div class="col-lg-12">
-  					<ol class="breadcrumb">
-  						<li><i class="fa fa-home"></i><a href="{% url 'dashboard:index' %}">Home</a></li>
-              {% block overview %}
-              {% endblock%}
-  					</ol>
-  				</div>
-  			</div>
-        <!--end overview start-->
-        {% block content %}
-        {% endblock %}
-        </section>
-        <footer  class="text-center">
-          <div class="credits">
-            <!--
-                All the links in the footer should remain intact.
-                You can delete the links only if you purchased the pro version.
-                Licensing information: https://bootstrapmade.com/license/
-                Purchase the pro version form: https://bootstrapmade.com/buy/?theme=NiceAdmin
-            -->
-            <!-- <a href="https://bootstrapmade.com/free-business-bootstrap-themes-website-templates/">Business Bootstrap Themes</a> by <a href="https://bootstrapmade.com/">BootstrapMade</a> -->
-          </div>
-        </footer>
-      </section>
-      <!-- end content -->
-
-      <!-- modal -->
-      <div class="modal fade" id="modalEmergente">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            {% block modal-title %}
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-              <h4 class="modal-title"></h4>
-            </div>
-            {% endblock %}
-            {% block modal-body %}
-            <div class="modal-body">
-            </div>
-            {% endblock %}
-            {% block modal-footer %}
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-            {% endblock %}
-          </div>
-        </div>
       </div>
-      <!-- end modal -->
+
+      <!--logo start-->
+      <a href="{% url 'dashboard:index' %}" class="logo"><span class="lite">SCR</span></a>
+      <!--logo end-->
+
+      <div class="top-nav notification-row">
+          <!-- notificatoin dropdown start-->
+          <ul class="nav pull-right top-menu">
+              <!-- user login dropdown start-->
+              <li class="dropdown">
+                  <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                      <span class="profile-ava">
+                          <!-- <img alt="" src="img/avatar1_small.jpg"> -->
+                      </span>
+                      <span class="username">{{ user.get_short_name }}</span>
+                      <b class="caret"></b>
+                  </a>
+                  <ul class="dropdown-menu extended logout">
+                      <div class="log-arrow-up"></div>
+                      <li class="eborder-top">
+                          <a href="{% url 'usuario_tenant:usuario_profile' %}">
+                            <i class="icon_profile"></i> My Profile
+                          </a>
+                      </li>
+                      <li>
+                          <a href="{% url 'usuario_logout' %}"><i class="icon_key_alt"></i> Log Out</a>
+                      </li>
+                  </ul>
+              </li>
+              <!-- user login dropdown end -->
+          </ul>
+          <!-- notificatoin dropdown end-->
+      </div>
+    </header>
+    <!--header end-->
+  {% endblock %}
+
+  {% block sidenav %}
+  <!--sidebar start-->
+  <aside>
+    <div id="sidebar"  class="nav-collapse ">
+        <!-- sidebar menu start-->
+        <ul class="sidebar-menu" >
+            <li class="active">
+                <a class="" href="{% url 'dashboard:cliente:cliente_list' %}">
+                    <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+                    <span>Clientes</span>
+                </a>
+            </li>
+            <li class="active">
+                <a class="" href="{% url 'dashboard:conductor:conductor_list' %}">
+                    <i class="fa fa-id-card-o" aria-hidden="true"></i>
+                    <span>Conductores</span>
+                </a>
+            </li>
+            <li class="active">
+                <a class="" href="{% url 'dashboard:vehiculo:vehiculo_list' %}">
+                    <i class="fa fa-bus" aria-hidden="true"></i>
+                    <span>Vehiculos</span>
+                </a>
+            </li>
+            <li>
+                <a class="" href="{% url 'dashboard:ruta:ruta_list' %}">
+                    <i class="fa fa-arrows-h" aria-hidden="true"></i>
+                    <span>Rutas</span>
+                </a>
+            </li>
+            <li class="active">
+                <a class="" href="{% url 'dashboard:planilla:planilla_list' %}">
+                    <i class="icon_desktop"></i>
+                    <span>Planilla</span>
+                </a>
+            </li>
+        </ul>
+        <!-- sidebar menu end-->
+    </div>
+  </aside>
+  <!--sidebar end-->
+  {% endblock %}
+
+  <!-- content -->
+  <section id="main-content">
+    <section id="wrapper" class="wrapper animated">
+
+    {% block message %}
+    <!-- messages success -->
+    {% if messages %}
+      <div class="alert alert-dismissible alert-info">
+        <button type="button" class="close text-center" data-dismiss="alert">&times;</button>
+        {% for message in messages %}
+        <strong>
+          <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+        </strong>
+        {% endfor %}
+      </div>
+    {% endif %}
+    <!-- end messages success -->
+    {% endblock %}
+
+      <!--overview start-->
+    <div class="row" style="padding-bottom: 10px;">
+			<div class="col-lg-12">
+				<ol class="breadcrumb">
+					<li><i class="fa fa-home"></i><a href="{% url 'dashboard:index' %}">Home</a></li>
+          {% block overview %}
+          {% endblock%}
+				</ol>
+			</div>
+		</div>
+
+    <!--end overview start-->
+    <div id="content" class="">
+      {% block content %}
+
+      {% endblock %}
+    </div>
+    </section>
+    <footer  class="text-center">
+      <div class="credits">
+        <!--
+            All the links in the footer should remain intact.
+            You can delete the links only if you purchased the pro version.
+            Licensing information: https://bootstrapmade.com/license/
+            Purchase the pro version form: https://bootstrapmade.com/buy/?theme=NiceAdmin
+        -->
+        <!-- <a href="https://bootstrapmade.com/free-business-bootstrap-themes-website-templates/">Business Bootstrap Themes</a> by <a href="https://bootstrapmade.com/">BootstrapMade</a> -->
+      </div>
+    </footer>
+  </section>
+  <!-- end content -->
+
+  <!-- modal state-->
+  <div class="modal fade" id="modalEmergente">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        {% block modal-title %}
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title"></h4>
+        </div>
+        {% endblock %}
+        {% block modal-body %}
+        <div class="modal-body">
+        </div>
+        {% endblock %}
+        {% block modal-footer %}
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+        {% endblock %}
+      </div>
+    </div>
+  </div>
+  <!-- end modal -->
+
+  <!-- modal upload-->
+  <div class="modal fade" id="modalUpload">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        {% block modal-upload-title %}
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">Carga Masiva</h4>
+        </div>
+        {% endblock %}
+        {% block modal-upload-body %}
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+              <form action="{% url 'dashboard:cliente:cliente_import' %}" id="upload" class="dropzone" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+              </form>
+            </div>
+        </div>
+        {% endblock %}
+        {% block modal-upload-footer %}
+        <div class="modal-footer">
+          <button id="upload-submit" class="btn btn-danger hide">Enviar</button>
+          <a class="btn btn-default" href="" data-dismiss="modal">Cancelar</a>
+        </div>
+        {% endblock %}
+      </div>
+    </div>
+  </div>
+  <!-- end modal -->
 
 
     <!-- javascripts -->
     <script src="{% static 'tenant/js/jquery.js' %}"></script>
-	  <script src="{% static 'tenant/js/jquery-ui-1.10.4.min.js' %}"></script>
+	  <!-- <script src="{% static 'tenant/js/jquery-ui-1.10.4.min.js' %}"></script> -->
     <script src="{% static 'tenant/js/jquery-1.8.3.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'tenant/js/jquery-ui-1.9.2.custom.min.js' %}"></script>
+
+
+    <!-- <script type="text/javascript" src="{% static 'tenant/js/jquery-ui-1.9.2.custom.min.js' %}"></script> -->
 
     <!-- bootstrap -->
     <script src="{% static 'tenant/js/bootstrap.min.js' %}"></script>
@@ -225,26 +284,33 @@
 
     <!--  Upload Preview -->
     <script type="text/javascript" src="{% static 'js/uploadPreview.min.js'%}"></script>
-    <script type="text/javascript" src="{% static 'js/main.js'%}"></script>
 
     <!-- Bootstrap table -->
-    <script src="{% static 'tenant/js/bootstrap-table.js'%}"></script>
+    <script src="{% static 'tenant/js/bootstrap-table/bootstrap-table.min.js'%}"></script>
+    <script src="{% static 'tenant/js/bootstrap-table/bootstrap-table-es-ES.min.js'%}"></script>
+    <script src="{% static 'tenant/js/bootstrap-table/bootstrap-table-export.min.js'%}"></script>
+    <script src="{% static 'tenant/js/bootstrap-table/FileSaver.min.js'%}"></script>
+    <script src="{% static 'tenant/js/bootstrap-table/xlsx.core.min.js'%}"></script>
+    <script src="{% static 'tenant/js/bootstrap-table/tableExport.min.js'%}"></script>
+    <script src="{% static 'tenant/js/bootstrap-table/bootstrap-table-sticky-header.js'%}"></script>
+    <script src="{% static 'tenant/js/bootstrap-table/bootstrap-table-cookie.js'%}"></script>
+
+    <!-- dropzone.js -->
+    <script src="{% static 'tenant/js/dropzone.min.js'%}"></script>
 
     <!-- Pikaday -->
     <script src="{% static 'js/moment.js' %}"></script>
     <script src="{% static 'js/pikaday.min.js' %}"></script>
     <script src="{% static 'js/pikaday.jquery.js' %}"></script>
 
-    <script>
-      $( document ).ready(function(){
-        // $(".alert").fadeIn("slow").delay(2000).fadeOut("slow");
-        $('.datepicker').pikaday({ firstDay: 1 });
-      });
-      function tabActive(id){
-        $('.active').removeClass('active');
-        $(id).addClass('active')
-      }
-    </script>
+    <!-- dashboard js -->
+    <script src="{% static 'tenant/js/dashboard.js' %}"></script>
+
+    <!-- turbolinks -->
+    <script src="{% static 'tenant/js/turbolinks.js' %}"></script>
+
+    <!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> -->
+
 
     {% block extrajs %}
     {% endblock %}
