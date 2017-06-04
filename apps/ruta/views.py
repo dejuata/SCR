@@ -9,12 +9,12 @@ from .sorting import SortMixin
 
 class RutaList(SortMixin, ListView):
     model = Ruta
-    template_name = 'ruta/ruta_list.html'    
-    default_sort_params = ('id', 'asc')
+    template_name = 'ruta/ruta_list.html'
+    default_sort_params = ('codigo_ruta', 'asc')
 
     def sort_queryset(self, qs, sort_by, order):
-        if sort_by == 'nit':
-            qs = qs.order_by('nit')
+        if sort_by == 'codigo_ruta':
+            qs = qs.order_by('codigo_ruta')
         if order == 'desc':
             qs = qs.reverse()
         return qs

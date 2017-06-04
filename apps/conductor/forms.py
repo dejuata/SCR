@@ -7,6 +7,10 @@ from datetime import date
 from .models import Conductor
 
 
+class UploadFileForm(forms.Form):
+    file = forms.FileField()
+
+
 class ConductorForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
@@ -24,6 +28,12 @@ class ConductorForm(forms.ModelForm):
 
     class Meta:
         model = Conductor
+
+        ESTADO_LICENCIA = (
+            ('', '---'),
+            ('1', 'ACTIVO'),
+            ('0', 'INACTIVO')
+        )
 
         NIVEL_ESCOLARIDAD = (
             ('----', '----'),
@@ -88,16 +98,16 @@ class ConductorForm(forms.ModelForm):
             'correo': forms.TextInput(attrs={'class': 'form-control',
                                              'pattern': '^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$',
                                              }),
-            'fecha_nacimiento': forms.TextInput(attrs={'class': 'form-control datepicker', }),
+            'fecha_nacimiento': forms.DateInput(attrs={'class': 'form-control datepicker', }),
             'nivel_estudio': forms.Select(choices=NIVEL_ESCOLARIDAD, attrs={'class': 'form-control', 'data-error': 'Ingrese el nivel de escolaridad del conductor'}),
-            'num_licencia_conduccion': forms.NumberInput(attrs={'class': 'form-control', 'data-error': 'Ingrese el N° de licencia de conducción'}),
-            'doc_licencia_conduccion': forms.FileInput(attrs={'accept': '.pdf'}),
+            'numero_licencia_conduccion': forms.NumberInput(attrs={'class': 'form-control', 'data-error': 'Ingrese el N° de licencia de conducción'}),
+            'documento_licencia_conduccion': forms.FileInput(attrs={'class': '', 'accept': '.pdf'}),
             'categoria_licencia': forms.Select(choices=CATEGORIA_LICENCIA, attrs={'class': 'form-control', 'maxlength': '2', 'data-error': 'Ingrese la categoria de la licencia'}),
-            'estado_licencia': forms.CheckboxInput(),
+            'estado_licencia': forms.Select(choices=ESTADO_LICENCIA, attrs={'class': 'form-control'}),
             'organismo_transito': forms.TextInput(attrs={'class': 'form-control', 'data-error': 'Ingrese organismo de transito de la licencia'}),
-            'fecha_expedicion': forms.TextInput(attrs={'class': 'form-control datepicker', }),
-            'fecha_vencimiento': forms.TextInput(attrs={'class': 'form-control datepicker', }),
-            'restricciones': forms.TextInput(attrs={'class': 'form-control', }),
+            'fecha_expedicion': forms.DateInput(attrs={'class': 'form-control datepicker', }),
+            'fecha_vencimiento': forms.DateInput(attrs={'class': 'form-control datepicker', }),
+            'restricciones': forms.Textarea(attrs={'class': 'form-control', 'rows': '3' }),
             'experiencia': forms.NumberInput(attrs={'class': 'form-control', 'maxlength': '2'}),
         }
 
@@ -129,14 +139,14 @@ class ConductorForm(forms.ModelForm):
             return self.cleaned_data['rh']
 
     def clean_doc_licencia_conduccion(self):
-        doc_licencia_conduccion = self.cleaned_data["doc_licencia_conduccion"]
+        doc_licencia_conduccion = self.cleaned_data["documento_licencia_conduccion"]
         # tam = os.path.getsize(doc_licencia_conduccion.name)
         # print(tam)
         if not(doc_licencia_conduccion is None):
             if doc_licencia_conduccion.name.count(".pdf") == 0:
-                self.add_error('doc_licencia_conduccion', 'El archivo licencia de transito debe ser PDF')
+                self.add_error('documento_licencia_conduccion', 'El archivo licencia de transito debe ser PDF')
         else:
-            return self.cleaned_data['doc_licencia_conduccion']
+            return self.cleaned_data['documento_licencia_conduccion']
 
     def clean_logo(self):
         logo = self.cleaned_data["logo"]

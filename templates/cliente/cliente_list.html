@@ -18,6 +18,10 @@ Nuevo Cliente
 {% url 'dashboard:cliente:cliente_import' %}
 {% endblock%}
 
+{% block url_download %}
+{% url 'dashboard:cliente:cliente_export' %}
+{% endblock%}
+
 {% block table-head %}
 <thead>
   <tr>
@@ -46,8 +50,6 @@ Nuevo Cliente
         <td>
           <div class="btn-group">
             <a class="btn btn-primary" href="{% url 'dashboard:cliente:cliente_edit' cliente.nit %}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-          </div>
-          <div class="btn-group">
             <a onclick="change_status({{ cliente.nit }}, '{{ csrf_token }}', '{% url 'dashboard:cliente:cliente_delete' %}', '{% url 'dashboard:cliente:cliente_list' %}' )" class="btn btn-danger" data-toggle="modal" data-target="#modalEmergente"><i class="fa fa-ban" aria-hidden="true"></i></a>
           </div>
         </td>

@@ -14,21 +14,21 @@ class Conductor(models.Model):
     apellidos = models.CharField(max_length=50)
     logo = models.ImageField(blank=True, null=True, upload_to="Conductor_media", validators='')
     direccion = models.TextField()
-    rh = models.CharField(max_length=2)
+    rh = models.CharField(max_length=2, blank=True, null=True)  # lo puse null
     telefono = models.CharField(max_length=7, blank=True, null=True)
-    celular = models.CharField(max_length=10)
+    celular = models.CharField(max_length=10, blank=True, null=True)  # lo puse null
     correo = models.EmailField(blank=True, null=True)
-    fecha_nacimiento = models.DateField()
-    nivel_estudio = models.TextField()
-    numero_licencia_conduccion = models.IntegerField()
+    fecha_nacimiento = models.DateField(null=True, blank=True)  # lo puse null en bd para pruebas
+    nivel_estudio = models.TextField(blank=True, null=True) # lo puse null
+    numero_licencia_conduccion = models.IntegerField(blank=True, null=True)  #lo puse null
     documento_licencia_conduccion = models.FileField(blank=True, null=True, upload_to="licenciaConduccion_media")
-    categoria_licencia = models.CharField(max_length=2)
-    estado_licencia = models.BooleanField(blank=True, default=True)
-    organismo_transito = models.TextField()
-    fecha_expedicion = models.DateField()
-    fecha_vencimiento = models.DateField()
+    categoria_licencia = models.CharField(max_length=2, blank=True, null=True) #lo puse null
+    estado_licencia = models.BooleanField(blank=True, default=True) #lo puse null
+    organismo_transito = models.TextField(blank=True, null=True) #lo puse null
+    fecha_expedicion = models.DateField(null=True, blank=True)  # lo puse null en bd para pruebas
+    fecha_vencimiento = models.DateField(null=True, blank=True)  # lo puse null en bd para pruebas
     restricciones = models.TextField(blank=True, null=True)
-    experiencia = models.CharField(max_length=2)  # IntegerField
+    experiencia = models.CharField(max_length=2, blank=True, null=True)  # lo puse null IntegerField
     activo_inactivo = models.BooleanField(blank=True, default=True)
 
     def __str__(self):

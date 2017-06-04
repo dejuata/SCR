@@ -3,6 +3,43 @@
 .table-btn-padding-right{
   padding-right: 8px;
 }
+/*navbar*/
+.navbar-logo{
+  height: 84px;
+}
+/* iconos del sidenav*/
+.sub-icon{
+  font-size: 14px !important;
+}
+.sub-menu-icon{
+  font-size: 14px !important;
+  position: absolute;
+  right: 15px;
+}
+/* para las vistas form new*/
+.row {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+/* Cuadrado para las imagenes*/
+.cuadrado,  .rectangulo{
+  background: #f2f2f2;
+  margin: 20px auto;
+}
+.cuadrado {
+   width: 200px;
+   height: 200px;
+}
+.rectangulo{
+  width: 100%;
+  height: 350px;
+}
+.rectangulo img{
+  width: 100%
+  background-size: cover;
+  overflow: hidden;
+}
 
 /*mostrar btn cuando archivos son subidos*/
 .hide{

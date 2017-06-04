@@ -44,7 +44,7 @@ Nueva Ruta
           <a class="btn btn-primary" href="{% url 'dashboard:ruta:ruta_edit' ruta.codigo_ruta %}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
         </div>
         <div class="btn-group">
-          <a onclick="get_ruta({{ ruta.id }}, '{{ csrf_token }}', '{% url 'dashboard:ruta:ruta_delete' %}', '{% url 'dashboard:ruta:ruta_list' %}')" class="btn btn-danger" data-toggle="modal" data-target="#modalEmergente"><i class="fa fa-ban" aria-hidden="true"></i></a>
+          <a onclick="change_status({{ ruta.codigo_ruta }}, '{{ csrf_token }}', '{% url 'dashboard:ruta:ruta_delete' %}', '{% url 'dashboard:ruta:ruta_list' %}')" class="btn btn-danger" data-toggle="modal" data-target="#modalEmergente"><i class="fa fa-ban" aria-hidden="true"></i></a>
         </div>
       </td>
     </tr>
