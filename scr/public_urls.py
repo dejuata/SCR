@@ -21,8 +21,10 @@ urlpatterns = [
     url(r'^accounts/login/', login, {'template_name': 'users/user_login.html'}, name='tenant_login'),
 
     url(r'^', include('apps.users.urls_tenant', namespace='usuario')),
-    url(r'^', include('apps.cities.urls', namespace='ciudades')),
     url(r'^company/', include('apps.tenant.urls', namespace='tenant')),
+
+    # Hacer esta url accesible solo para el superusuario
+    url(r'^cities/', include('apps.cities.urls', namespace='ciudades')),
 
     url(r'^select2/', include('django_select2.urls')),
 
