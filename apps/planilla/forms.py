@@ -6,7 +6,7 @@ from .models import Planilla
 class UploadFileForm(forms.Form):
     file = forms.FileField()
 
-    
+
 class PlanillaForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
@@ -48,7 +48,7 @@ class PlanillaForm(forms.ModelForm):
         ]
 
         widgets = {
-            'fecha': forms.DateInput(attrs={'class': 'form-control datepicker'}),
+            'fecha': forms.TextInput(attrs={'class': 'form-control datepicker'}),
             'ruta': forms.Select(attrs={'class': 'form-control', 'data-error': 'Seleccione la ruta'}),
             'kilometros': forms.NumberInput(attrs={'class': 'form-control'}),
             'hora_adicional': forms.NumberInput(attrs={'class': 'form-control', 'maxlength': '2', 'id': 'hora_adicional'}),

@@ -23,6 +23,7 @@ Nueva Planilla
 {% endblock%}
 
 {% block table-head %}
+
 <thead>
   <tr>
     <th data-field="state" data-checkbox="true"></th>
@@ -35,18 +36,22 @@ Nueva Planilla
 {% block table-body %}
 <tbody>
   {% if object_list %}
+
   {% for planilla in object_list %}
     <tr>
         <td></td>
         <td>{{ planilla.fecha }}</td>
         <td>
           <div class="btn-group">
+            <a class="btn btn-primary" href="{% url 'dashboard:planilla:planilla_edit' planilla.id %}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+
+            <!-- <a class="btn btn-primary" id="planilla" onclick="planilla_get()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> -->
           </div>
         </td>
     </tr>
   {% endfor %}
   {% else %}
-    <h3 class="page-header"><i class="fa fa-laptop"></i> No hay registros</h3>
+    <!-- <h3 class="page-header"><i class="fa fa-laptop"></i> No hay registros</h3> -->
   {% endif %}
 </tbody>
 {% endblock %}
