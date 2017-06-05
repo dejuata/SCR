@@ -1,8 +1,11 @@
+from django.shortcuts import render
 from django.views.generic import ListView, CreateView, UpdateView
 from django.core.urlresolvers import reverse_lazy
 from django.contrib.messages.views import SuccessMessageMixin
 from django.http import HttpResponseBadRequest, HttpResponseRedirect, HttpResponse
 from django.views.generic.edit import FormMixin
+from django.core.serializers import serialize
+from django.http import HttpResponse
 
 from .forms import PlanillaForm, UploadFileForm
 from .models import Planilla
@@ -11,18 +14,23 @@ from .sorting import SortMixin
 import django_excel as excel
 
 
-class PlanillaList(FormMixin, SortMixin, ListView):
-    model = Planilla
+class PlanillaList(FormMixin, ListView):
+    # model = Planilla
+    queryset = Planilla.objects.order_by('fecha').distinct('fecha')
     template_name = 'planilla/planilla_list.html'
     form_class = UploadFileForm
-    default_sort_params = ('fecha', 'asc')
+    # default_sort_params = ('fecha', 'asc')
 
-    def sort_queryset(self, qs, sort_by, order):
-        if sort_by == 'fecha':
-            qs = qs.order_by('fecha')
-        if order == 'desc':
-            qs = qs.reverse()
-        return qs
+    # def sort_queryset(self, qs, sort_by, order):
+    #     if sort_by == 'fecha':
+    #         qs = qs.order_by('fecha')
+    #     if order == 'desc':
+    #         qs = qs.reverse()
+    #     return qs
+
+    # def get(self, request, *args, **kwargs):
+    #     fecha = Planilla.objects.all()
+    #     return render(request, 'planilla/planilla_list.html', {'data': fecha})
 
 
 class PlanillaCreate(SuccessMessageMixin, CreateView):
@@ -40,6 +48,18 @@ class PlanillaUpdate(SuccessMessageMixin, UpdateView):
     success_url = reverse_lazy('dashboard:planilla:planilla_list')
     success_message = "La planilla fue editada exitosamente"
 
+    def get(self, request, *args, **kwargs):
+        id_planilla = kwargs['pk']
+        fecha = Planilla.objects.get(pk=id_planilla).fecha
+        data = serialize('json', Planilla.objects.filter(fecha=fecha))
+        return render(request, 'planilla/planilla_form.html', {'data': data})
+        # return HttpResponse(data, content_type='application/json')
+
+    # def get_context_data(self, **kwargs):
+    #     context = super(PlanillaUpdate, self).get_context_data(**kwargs)
+    #     data = serialize('json', Planilla.objects.all())
+    #     context['data'] = data
+    #     return context
 
 def import_data(request):
     if request.method == 'POST':

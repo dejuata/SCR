@@ -1,241 +1,105 @@
 {% extends 'base/base_dashboard.html' %}
 {% load staticfiles %}
 
-
-{% block extrastatic %}
-<link rel="stylesheet" href="{% static 'css/login.css' %}"/>
-{% endblock %}
-
 {% block overview %}
-<li><i class="fa fa-laptop"></i><a href="{% url 'dashboard:planilla:planilla_list'%}">Planilla</a></li>
-<li><i class="fa fa-laptop"></i>Nuevo</li>
+<li><i class="fa fa-th" aria-hidden="true"></i><a href="{% url 'dashboard:planilla:planilla_list'%}">Planilla</a></li>
+<li><i class="fa fa-plus"></i>Nuevo</li>
+<a href="" class="">Guardar</a>
 {% endblock %}
-
-
 
 {% block content %}
-<!-- messages success -->
-{% if messages %}
-<div class="alert alert-dismissible alert-info">
-  <button type="button" class="close text-center" data-dismiss="alert">&times;</button>
-  {% for message in messages %}
-  <strong>
-    <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
-  </strong>
-  {% endfor %}
-</div>
-{% endif %}
-<!-- end messages success -->
+  <input type="hidden" name="" value="{{data}}" id="json">
 
-<!-- messages erros -->
-{% if form.errors %}
-    <div class="alert alert-danger">
-    {% for field in form %}
-        {% for error in field.errors %}
-          <strong><div>{{field}}{{ error|escape }}</div></strong>
-        {% endfor %}
-    {% endfor %}
+  <!-- <div class="container">
+    <div class="col-md-4">
+      {{ form.fecha }}
     </div>
+    <div class="col-md-4">
 
-    {% for error in form.non_field_errors %}
-      <div class="alert alert-danger">
-        <strong>{{ error|escape }}</strong>
-      </div>
-    {% endfor %}
-
-{% endif %}
-<!-- end messages erros -->
-
-<section class="panel">
-  <header class="panel-heading">
-    Nueva Planilla
-  </header>
-  <div class="panel-body">
-
-    <form enctype="multipart/form-data" method="post" class="form-horizontal" data-toggle="validator">
-        {% csrf_token %}
-
-          <div class="col-md-8">
-
-            <div class="form-group has-feedback text-left col-md-12">
-              <strong>fecha</strong>
-              {{ form.fecha.erros }}
-              {{ form.fecha }}
-              <div class="help-block with-errors"></div>
-            </div>
-
-            <div class="form-group has-feedback text-left col-md-12">
-              <strong>Ruta</strong>
-              {{ form.ruta.erros }}
-              {{ form.ruta }}
-              <div class="help-block with-errors"></div>
-            </div>
-
-            <div class="form-group has-feedback text-left col-md-12">
-              <strong>Kilometros</strong>
-              {{ form.kilometros.erros }}
-              {{ form.kilometros }}
-              <div class="help-block with-errors"></div>
-            </div>
-
-
-            <div class="form-group has-feedback text-left col-md-12">
-              <strong>hora_adicional</strong>
-              {{ form.hora_adicional.erros }}
-              {{ form.hora_adicional }}
-              <div class="help-block with-errors"></div>
-            </div>
-
-            <div class="form-group has-feedback text-left col-md-12">
-              <strong>hora_Inicio</strong>
-              {{ form.hora_inicio.erros }}
-              {{ form.hora_inicio }}
-              <div class="help-block with-errors"></div>
-            </div>
-
-
-            <div class="form-group has-feedback text-left col-md-12">
-              <strong>hora_Fin</strong>
-              {{ form.hora_fin.erros }}
-              {{ form.hora_fin }}
-              <div class="help-block with-errors"></div>
-            </div>
-
-            <div class="form-group has-feedback text-left col-md-12">
-              <strong>tiempo_operado</strong>
-              {{ form.tiempo_operado.erros }}
-              {{ form.tiempo_operado }}
-              <div class="help-block with-errors"></div>
-            </div>
-
-
-            <div class="form-group has-feedback text-left col-md-12">
-              <strong>placa</strong>
-              {{ form.placa.erros }}
-              {{ form.placa }}
-              <div class="help-block with-errors"></div>
-            </div>
-
-            <div class="form-group has-feedback text-left col-md-12">
-              <strong>conductor</strong>
-              {{ form.conductor.erros }}
-              {{ form.conductor }}
-              <div class="help-block with-errors"></div>
-            </div>
-
-
-            <div class="form-group has-feedback text-left col-md-12">
-              <strong>observaciones</strong>
-                {{ form.observaciones.erros }}
-                {{ form.observaciones }}
-              <div class="help-block with-errors"></div>
-            </div>
-
-            <div class="form-group has-feedback text-left col-md-12">
-              <strong>novedades</strong>
-                {{ form.novedades.erros }}
-                {{ form.novedades }}
-              <div class="help-block with-errors"></div>
-            </div>
-
-            <div class="form-group has-feedback text-left col-md-12">
-              <strong>flota</strong>
-                {{ form.flota.erros }}
-                {{ form.flota }}
-              <div class="help-block with-errors"></div>
-            </div>
-
-            <div class="form-group has-feedback text-left col-md-12">
-              <strong>valor ruta</strong>
-                {{ form.valor_ruta.erros }}
-                {{ form.valor_ruta }}
-              <div class="help-block with-errors"></div>
-            </div>
-
-
-            <div class="form-group has-feedback text-left col-md-12">
-              <strong>valor_tercero</strong>
-                {{ form.valor_tercero.erros }}
-                {{ form.valor_tercero }}
-              <div class="help-block with-errors"></div>
-            </div>
-
-            <div class="form-group has-feedback text-left col-md-12">
-              <strong>viaticos</strong>
-              {{ form.viaticos.erros }}
-              {{ form.viaticos }}
-              <div class="help-block with-errors"></div>
-            </div>
-
-            <div class="form-group has-feedback text-left col-md-12">
-              <strong>descuentos_conductor</strong>
-              {{ form.descuentos_conductor.erros }}
-              {{ form.descuentos_conductor }}
-              <div class="help-block with-errors"></div>
-            </div>
-
-            <div class="form-group has-feedback text-left col-md-12">
-              <strong>valor_hora_adicional</strong>
-              {{ form.valor_hora_adicional.erros }}
-              {{ form.valor_hora_adicional }}
-              <div class="help-block with-errors"></div>
-            </div>
-
-            <div class="form-group has-feedback text-left col-md-12">
-              <strong>adicional_conductor</strong>
-              {{ form.adicional_conductor.erros }}
-              {{ form.adicional_conductor }}
-              <div class="help-block with-errors"></div>
-            </div>
-
-            <div class="form-group has-feedback text-left col-md-12">
-              <strong>total_ingreso</strong>
-              {{ form.total_ingreso.erros }}
-              {{ form.total_ingreso }}
-              <div class="help-block with-errors"></div>
-            </div>
-
-                <div class="form-group text-right col-md-12">
-                  <button class="btn btn-primary " type="submit">Guardar</button>
-                </div>
-
-              </div>
-
-            </div>
-
-
-
-    </form>
+    </div>
+    <div class="col-md-4">
+      <a class="btn btn-primary" id="planilla_btn" onclick="planilla_get()">Load</a>
+    </div>
   </div>
-</section>
+  <br> -->
+
+  <div id="planilla"></div>
 
 {% endblock %}
 
 {% block extrajs %}
-  <script>
-  function total(){
-    //console.log("me activaron");
-    var valor_ruta = parseInt(document.getElementById('valor_ruta').value);
-    var valor_tercero = parseInt(document.getElementById('valor_tercero').value);
-    var viaticos = parseInt(document.getElementById('viaticos').value);
-    var descuentos_conductor = parseInt(document.getElementById('descuentos_conductor').value);
-    var valor_hora_adicional = parseInt(document.getElementById('valor_hora_adicional').value);
-    var adicional_conductor = parseInt(document.getElementById('adicional_conductor').value);
-    var total = valor_ruta - valor_tercero - viaticos + descuentos_conductor + valor_hora_adicional - adicional_conductor;
-    document.getElementById('total_ingreso').value = total;
-  }
+<script type="text/javascript">
+var container = document.getElementById('planilla');
+var json = document.getElementById('json').value
 
-  function timeop(){
-    var hora_inicio = document.getElementById('hora_inicio').value;
-    var hi = parseFloat(hora_inicio.substring(0,2)) + parseFloat(hora_inicio.substring(3))/60;
-    var hora_fin = document.getElementById('hora_fin').value;
-    var hf = parseFloat(hora_fin.substring(0,2)) + parseFloat(hora_fin.substring(3))/60;
-    var time = hf - hi;
-    document.getElementById('tiempo_operado').value = time.toFixed(2);
-  }
+var hot = new Handsontable(container, {
+      // data: objectData
+      // dataSchema: {id: null, name: {first: null, last: null}, address: null},
+      width: 1150,
+      height: 700,
+      startRows: 20,
+      startCols: 19,
+      colHeaders: ['fecha',
+                  'kilometros',
+                  'hora_adicional',
+                  'hora_inicio',
+                  'hora_fin',
+                  'tiempo_operado',
+                  'observaciones',
+                  'novedades',
+                  'flota',
+                  'valor_ruta',
+                  'valor_tercero',
+                  'viaticos',
+                  'descuentos_conductor',
+                  'valor_hora_adicional',
+                  'adicional_conductor',
+                  'total_ingreso',
+                  'conductor_id',
+                  'placa_id',
+                  'ruta_id'],
+      columns: [
+        {data: 'fields.fecha'},
+        {data: 'fields.kilometros'},
+        {data: 'fields.hora_adicional'},
+        {data: 'fields.hora_inicio'},
+        {data: 'fields.hora_fin'},
+        {data: 'fields.tiempo_operado'},
+        {data: 'fields.observaciones'},
+        {data: 'fields.novedades'},
+        {data: 'fields.flota'},
+        {data: 'fields.valor_ruta'},
+        {data: 'fields.valor_tercero'},
+        {data: 'fields.viaticos'},
+        {data: 'fields.descuentos_conductor'},
+        {data: 'fields.valor_hora_adicional'},
+        {data: 'fields.adicional_conductor'},
+        {data: 'fields.total_ingreso'},
+        {data: 'fields.conductor_id'},
+        {data: 'fields.placa_id'},
+        {data: 'fields.ruta_id'},
+      ],
+      minSpareRows: 3
+    });
 
-  </script>
+  hot.loadData(JSON.parse(json));
 
-  <script type="text/javascript" src="{% static 'js/uploadPreview.min.js'%}"></script>
-  <script type="text/javascript" src="{% static 'js/main.js'%}"></script>
+    function planilla_get(){
+      $('#planilla_btn').click(function(){
+        var request = $.ajax({
+            type: "POST",
+            url: "{% url 'dashboard:planilla:planilla_get'%}",
+            data: {
+                "csrfmiddlewaretoken": '{{ csrf_token }}',
+                "fecha": '2017-06-04',
+            },
+        });
+        request.done(function(response) {
+          var data = response;
+          console.log(data)
+          hot.loadData(data);
+        });
+      });
+    }
+</script>
 {% endblock %}
