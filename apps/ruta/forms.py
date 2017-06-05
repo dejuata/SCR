@@ -4,14 +4,19 @@ from django import forms
 from .models import Ruta
 
 
+class UploadFileForm(forms.Form):
+    file = forms.FileField()
+
+
 class RutaForm(forms.ModelForm):
 
     class Meta:
         model = Ruta
 
         TIPO_VIAJE = (
-            ('entrada', 'ENTRADA'),
-            ('salida', 'SALIDA')
+            ('', '--------'),
+            ('ENTRADA', 'ENTRADA'),
+            ('SALIDA', 'SALIDA')
         )
 
         fields = [

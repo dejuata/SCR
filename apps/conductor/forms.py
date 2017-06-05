@@ -37,11 +37,11 @@ class ConductorForm(forms.ModelForm):
 
         NIVEL_ESCOLARIDAD = (
             ('----', '----'),
-            ('primaria', 'Primaria'),
-            ('bachiller', 'Bachiller'),
-            ('tecnico', 'Técnico'),
-            ('tecnologo', 'Tecnólogo'),
-            ('profesional', 'Profesional'),
+            ('PRIMARIA', 'PRIMARIA'),
+            ('BACHILLER', 'BACHILLER'),
+            ('TÉCNICO', 'TÉCNICO'),
+            ('TECNÓLOGO', 'TECNÓLOGO'),
+            ('PROFESIONAL', 'PROFESIONAL'),
         )
 
         CATEGORIA_LICENCIA = (
@@ -93,9 +93,9 @@ class ConductorForm(forms.ModelForm):
             'logo': forms.FileInput(attrs={'accept': 'png, .jpeg, .jpg'}),
             'direccion': forms.TextInput(attrs={'class': 'form-control', 'data-error': 'Ingrese la dirección del conductor'}),
             'rh': forms.Select(choices=TIPO_SANGRE, attrs={'class': 'form-control', 'maxlength': '2', 'data-error': 'Ingrese el tipo de sangre del conductor'}),
-            'telefono': forms.TextInput(attrs={'class': 'form-control', 'maxlength': '7'}),
-            'celular': forms.TextInput(attrs={'class': 'form-control', 'maxlength': '10', 'data-error': 'Ingrese el Teléfono del conductor'}),
-            'correo': forms.TextInput(attrs={'class': 'form-control',
+            'telefono': forms.NumberInput(attrs={'class': 'form-control', 'maxlength': '7'}),
+            'celular': forms.NumberInput(attrs={'class': 'form-control', 'maxlength': '10', 'data-error': 'Ingrese el Teléfono del conductor'}),
+            'correo': forms.EmailInput(attrs={'class': 'form-control',
                                              'pattern': '^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$',
                                              }),
             'fecha_nacimiento': forms.DateInput(attrs={'class': 'form-control datepicker', }),
@@ -116,15 +116,19 @@ class ConductorForm(forms.ModelForm):
         cleaned_data = self.cleaned_data
         fecha_expedicion = cleaned_data["fecha_expedicion"]
         fecha_vencimiento = cleaned_data["fecha_vencimiento"]
+        print(fecha_expedicion)
+        print(fecha_vencimiento)
+        print(date.today())
         if fecha_expedicion > date.today():
             self.add_error('fecha_expedicion', 'La fecha de expedicion no puede superar la fecha actual')
         elif fecha_vencimiento <= fecha_expedicion:
             self.add_error('fecha_vencimiento', 'la fecha de vencimiento no puede ser menor a la de expedicion')
-        else:
-            return self.cleaned_data['fecha_expedicion'] and self.cleaned_data['fecha_vencimiento']
+        # else:
+        #     return self.cleaned_data['fecha_expedicion'] and self.cleaned_data['fecha_vencimiento']
 
     def clean_fecha_nacimiento(self):
         fecha_nacimiento = self.cleaned_data["fecha_nacimiento"]
+
         if fecha_nacimiento >= date.today():
             self.add_error('fecha_nacimiento', 'La fecha de nacimiento no puede superar la fecha actual')
         else:
@@ -132,7 +136,6 @@ class ConductorForm(forms.ModelForm):
 
     def clean_rh(self):
         rh = self.cleaned_data["rh"]
-        print(rh)
         if rh == "--":
             self.add_error('rh', 'Seleccione un tipo de sangre')
         else:

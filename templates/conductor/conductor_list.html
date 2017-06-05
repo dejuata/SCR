@@ -50,8 +50,6 @@ Nuevo Conductor
         <td>
           <div class="btn-group">
             <a class="btn btn-primary" href="{% url 'dashboard:conductor:conductor_edit' conductor.cedula %}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-          </div>
-          <div class="btn-group">
             <a onclick="change_status({{ conductor.cedula }}, '{{ csrf_token }}', '{% url 'dashboard:conductor:conductor_delete' %}', '{% url 'dashboard:conductor:conductor_list' %}')" class="btn btn-danger" data-toggle="modal" data-target="#modalEmergente"><i class="fa fa-ban" aria-hidden="true"></i></a>
           </div>
         </td>

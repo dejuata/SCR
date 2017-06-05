@@ -1,16 +1,20 @@
 from django.views.generic import ListView, CreateView, UpdateView
 from django.core.urlresolvers import reverse_lazy
 from django.contrib.messages.views import SuccessMessageMixin
+from django.http import HttpResponseBadRequest, HttpResponseRedirect, HttpResponse
+from django.views.generic.edit import FormMixin
 
-from .forms import PlanillaForm
+from .forms import PlanillaForm, UploadFileForm
 from .models import Planilla
 from .sorting import SortMixin
 
+import django_excel as excel
 
-class PlanillaList(SortMixin, ListView):
+
+class PlanillaList(FormMixin, SortMixin, ListView):
     model = Planilla
     template_name = 'planilla/planilla_list.html'
-    paginate_by = 10
+    form_class = UploadFileForm
     default_sort_params = ('fecha', 'asc')
 
     def sort_queryset(self, qs, sort_by, order):
@@ -35,3 +39,78 @@ class PlanillaUpdate(SuccessMessageMixin, UpdateView):
     template_name = 'planilla/planilla_form.html'
     success_url = reverse_lazy('dashboard:planilla:planilla_list')
     success_message = "La planilla fue editada exitosamente"
+
+
+def import_data(request):
+    if request.method == 'POST':
+        form = UploadFileForm(data=request.POST, files=request.FILES)
+        if form.is_valid():
+            print('valid form')
+            request.FILES['file'].save_to_database(
+                model=Planilla,
+                # initializer=None,
+                mapdict={'fecha': 'fecha',
+                        'kilometros': 'kilometros',
+                        'hora_adicional': 'hora_adicional',
+                        'hora_inicio': 'hora_inicio',
+                        'hora_fin': 'hora_fin',
+                        'tiempo_operado': 'tiempo_operado',
+                        'observaciones': 'observaciones',
+                        'novedades': 'novedades',
+                        'flota': 'flota',
+                        'valor_ruta': 'valor_ruta',
+                        'valor_tercero': 'valor_tercero',
+                        'viaticos': 'viaticos',
+                        'descuentos_conductor': 'descuentos_conductor',
+                        'valor_hora_adicional': 'valor_hora_adicional',
+                        'adicional_conductor': 'adicional_conductor',
+                        'total_ingreso': 'total_ingreso',
+                        'conductor_id': 'conductor_id',
+                        'placa_id': 'placa_id',
+                        'ruta_id': 'ruta_id'
+                        }
+            )
+
+            return HttpResponseRedirect(reverse_lazy('dashboard:planilla:planilla_list'))
+        else:
+            return HttpResponseBadRequest()
+    else:
+        form = UploadFileForm()
+    return render(
+        request,
+        '404.html',
+        {
+            'form': form,
+            'title': 'Import excel data into database example',
+            'header': 'Please upload sample-data.xls:'
+        })
+
+
+def export_data(request):
+    # return excel.make_response_from_a_table(Ruta, 'xls', file_name="rutas")
+    query_sets = Planilla.objects.all()
+    column_names = ['fecha',
+                    'kilometros',
+                    'hora_adicional',
+                    'hora_inicio',
+                    'hora_fin',
+                    'tiempo_operado',
+                    'observaciones',
+                    'novedades',
+                    'flota',
+                    'valor_ruta',
+                    'valor_tercero',
+                    'viaticos',
+                    'descuentos_conductor',
+                    'valor_hora_adicional',
+                    'adicional_conductor',
+                    'total_ingreso',
+                    'conductor_id',
+                    'placa_id',
+                    'ruta_id']
+    return excel.make_response_from_query_sets(
+        query_sets,
+        column_names,
+        'xls',
+        file_name="planilla"
+    )

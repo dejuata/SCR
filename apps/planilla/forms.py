@@ -3,6 +3,10 @@ from django import forms
 from .models import Planilla
 
 
+class UploadFileForm(forms.Form):
+    file = forms.FileField()
+
+    
 class PlanillaForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):

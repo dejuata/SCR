@@ -112,25 +112,31 @@
     <div id="sidebar"  class="nav-collapse ">
         <!-- sidebar menu start-->
         <ul class="sidebar-menu" >
-            <li class="sub-menu">
-                <a class="" href="javascript:;">
-                    <i class="fa fa-user-circle-o" aria-hidden="true"></i>
-                    <span>Clientes</span>
-                    <i class="fa fa-sort-desc sub-menu-icon" aria-hidden="true"></i>
-                </a>
-                <ul class="sub">
-                    <li>
-                      <a class="" href="{% url 'dashboard:cliente:cliente_new' %}">
-                        <i class="fa fa-plus sub-icon" aria-hidden="true"></i>Nuevo Cliente
-                      </a>
-                    </li>
-                    <li>
-                      <a class="" href="{% url 'dashboard:cliente:cliente_list' %}">
-                        <i class="fa fa-list sub-icon" aria-hidden="true"></i>Listar Cliente
-                      </a>
-                    </li>
-                </ul>
-            </li>
+          <li class="sub-menu">
+            <a class="" href="{% url 'dashboard:planilla:planilla_list' %}">
+                <i class="fa fa-th" aria-hidden="true"></i>
+                <span>Planilla</span>
+            </a>
+          </li>
+          <li class="sub-menu">
+              <a class="" href="javascript:;">
+                  <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+                  <span>Clientes</span>
+                  <i class="fa fa-sort-desc sub-menu-icon" aria-hidden="true"></i>
+              </a>
+              <ul class="sub">
+                  <li>
+                    <a class="" href="{% url 'dashboard:cliente:cliente_new' %}">
+                      <i class="fa fa-plus sub-icon" aria-hidden="true"></i>Nuevo Cliente
+                    </a>
+                  </li>
+                  <li>
+                    <a class="" href="{% url 'dashboard:cliente:cliente_list' %}">
+                      <i class="fa fa-list sub-icon" aria-hidden="true"></i>Listar Cliente
+                    </a>
+                  </li>
+              </ul>
+          </li>
             <li class="sub-menu">
                 <a class="" href="javascript:;">
                     <i class="fa fa-id-card-o" aria-hidden="true"></i>
