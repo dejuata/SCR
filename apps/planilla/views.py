@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import ListView, CreateView, UpdateView
+from django.views.generic import ListView, CreateView, UpdateView, TemplateView
 from django.core.urlresolvers import reverse_lazy
 from django.contrib.messages.views import SuccessMessageMixin
 from django.http import HttpResponseBadRequest, HttpResponseRedirect, HttpResponse
@@ -8,15 +8,17 @@ from django.core.serializers import serialize
 from django.http import HttpResponse
 
 from .forms import PlanillaForm, UploadFileForm
-from .models import Planilla
+from .models import Planilla, Header
 from .sorting import SortMixin
 
 import django_excel as excel
 
+NEW_PAGE_ID = 0
 
-class PlanillaList(FormMixin, ListView):
-    # model = Planilla
-    queryset = Planilla.objects.order_by('fecha').distinct('fecha')
+
+class PlanillaList(ListView):
+    model = Header
+    # queryset = Planilla.objects.order_by('fecha').distinct('fecha')
     template_name = 'planilla/planilla_list.html'
     form_class = UploadFileForm
     # default_sort_params = ('fecha', 'asc')
@@ -33,12 +35,8 @@ class PlanillaList(FormMixin, ListView):
     #     return render(request, 'planilla/planilla_list.html', {'data': fecha})
 
 
-class PlanillaCreate(SuccessMessageMixin, CreateView):
-    model = Planilla
-    form_class = PlanillaForm
+class PlanillaView(TemplateView):
     template_name = 'planilla/planilla_form.html'
-    success_url = reverse_lazy('dashboard:planilla:planilla_list')
-    success_message = "la planilla fue creada exitosamente"
 
 
 class PlanillaUpdate(SuccessMessageMixin, UpdateView):
@@ -69,7 +67,8 @@ def import_data(request):
             request.FILES['file'].save_to_database(
                 model=Planilla,
                 # initializer=None,
-                mapdict={'fecha': 'fecha',
+                mapdict={
+                # 'header': 'header',
                         'kilometros': 'kilometros',
                         'hora_adicional': 'hora_adicional',
                         'hora_inicio': 'hora_inicio',
@@ -109,7 +108,8 @@ def import_data(request):
 def export_data(request):
     # return excel.make_response_from_a_table(Ruta, 'xls', file_name="rutas")
     query_sets = Planilla.objects.all()
-    column_names = ['fecha',
+    column_names = [
+    # 'fecha',
                     'kilometros',
                     'hora_adicional',
                     'hora_inicio',

@@ -8,12 +8,12 @@ class UploadFileForm(forms.Form):
 
 
 class PlanillaForm(forms.ModelForm):
-
-    def __init__(self, *args, **kwargs):
-        super(PlanillaForm, self).__init__(*args, **kwargs)
-        instance = getattr(self, 'instance', None)
-        if instance and instance.pk:
-            self.fields['fecha'].widget.attrs['readonly'] = True
+    #
+    # def __init__(self, *args, **kwargs):
+    #     super(PlanillaForm, self).__init__(*args, **kwargs)
+    #     instance = getattr(self, 'instance', None)
+    #     if instance and instance.pk:
+    #         self.fields['fecha'].widget.attrs['readonly'] = True
 
     class Meta:
         model = Planilla
@@ -26,7 +26,7 @@ class PlanillaForm(forms.ModelForm):
         )
 
         fields = [
-            'fecha',
+            # 'fecha',
             'ruta',
             'kilometros',
             'hora_adicional',
@@ -48,7 +48,7 @@ class PlanillaForm(forms.ModelForm):
         ]
 
         widgets = {
-            'fecha': forms.TextInput(attrs={'class': 'form-control datepicker'}),
+            # 'fecha': forms.TextInput(attrs={'class': 'form-control datepicker'}),
             'ruta': forms.Select(attrs={'class': 'form-control', 'data-error': 'Seleccione la ruta'}),
             'kilometros': forms.NumberInput(attrs={'class': 'form-control'}),
             'hora_adicional': forms.NumberInput(attrs={'class': 'form-control', 'maxlength': '2', 'id': 'hora_adicional'}),

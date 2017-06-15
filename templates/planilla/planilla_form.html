@@ -8,6 +8,7 @@
 {% endblock %}
 
 {% block content %}
+<h1>hola</h1>
   <input type="hidden" name="" value="{{data}}" id="json">
 
   <!-- <div class="container">
@@ -30,15 +31,25 @@
 {% block extrajs %}
 <script type="text/javascript">
 var container = document.getElementById('planilla');
+var data = [];
 var json = document.getElementById('json').value
 
+var id = (() => {
+    // https://syncer.jp/javascript-reference/location
+    var found = location.pathname.match(/\/myapp\/records\/(.*?)\/edit$/);
+    console.log(found)
+    // 新規作成の時は、便宜上id=0とみなして処理する
+    return found ? found[1] : NEW_PAGE_ID;
+})();
+
 var hot = new Handsontable(container, {
-      // data: objectData
+      data: data,
       // dataSchema: {id: null, name: {first: null, last: null}, address: null},
       width: 1150,
       height: 700,
       startRows: 20,
       startCols: 19,
+      // stretchH: 'all',
       colHeaders: ['fecha',
                   'kilometros',
                   'hora_adicional',

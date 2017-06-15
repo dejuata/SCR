@@ -5,9 +5,12 @@ from ..vehiculo.models import Vehiculo
 from ..conductor.models import Conductor
 
 
-class Planilla(models.Model):
-
+class Header(models.Model):
     fecha = models.DateField()
+
+
+class Planilla(models.Model):
+    header = models.ForeignKey(Header, blank=True, null=True)    
     ruta = models.ForeignKey(Ruta, on_delete=models.CASCADE)
     kilometros = models.FloatField()
     hora_adicional = models.IntegerField(blank=True, null=True)
