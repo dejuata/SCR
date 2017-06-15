@@ -1,0 +1,251 @@
+{% extends 'base/base_dashboard.html' %}
+{% load staticfiles %}
+
+{% block overview %}
+<li><i class="fa fa-id-card-o" aria-hidden="true"></i><a href="{% url 'dashboard:conductor:conductor_list'%}">Conductores</a></li>
+<li><i class="fa fa-plus"></i>Nuevo</li>
+{% endblock %}
+
+{% block content %}
+<!-- messages success -->
+{% if messages %}
+<div class="alert alert-dismissible alert-info">
+  <button type="button" class="close text-center" data-dismiss="alert">&times;</button>
+  {% for message in messages %}
+  <strong>
+    <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+  </strong>
+  {% endfor %}
+</div>
+{% endif %}
+<!-- end messages success -->
+
+<!-- messages erros -->
+{% if form.errors %}
+    <div class="alert alert-danger">
+    {% for field in form %}
+        {% for error in field.errors %}
+          <strong><div>{{field}}{{ error|escape }}</div></strong>
+        {% endfor %}
+    {% endfor %}
+    </div>
+
+    {% for error in form.non_field_errors %}
+      <div class="alert alert-danger">
+        <strong>{{ error|escape }}</strong>
+      </div>
+    {% endfor %}
+
+{% endif %}
+<!-- end messages erros -->
+
+<section class="panel">
+  <header class="panel-heading">Nuevo Conductor</header>
+
+  <div class="panel-body">
+    <form enctype="multipart/form-data" method="post" data-toggle="validator">
+    {% csrf_token %}
+
+      <div class="col-md-4">
+        <strong>Foto</strong>
+        <div class="cuadrado" id="image-preview">
+          {% if conductor.logo.url != ''%}
+            <img src="{{ conductor.logo.url }}" alt="perfil" style="width:100%">
+          {% endif %}
+        </div>
+
+        <div class="form-group has-feedback text-left col-md-12">
+          {{ form.logo.erros }}
+          <label for="image-upload" id="image-label">Elige una imagen</label>
+          {{ form.logo }}
+        </div>
+      </div>
+
+      <div class="col-md-8">
+        <!-- menu tabs -->
+        <ul class="nav nav-tabs">
+          <li class="active"><a href="#info" data-toggle="tab" aria-expanded="true">Datos Personales</a></li>
+          <li class="" id="licenciaConduccion"><a href="#license" data-toggle="tab" aria-expanded="false">Licencia de conducción</a></li>
+        </ul>
+        <!-- end menu tabs -->
+
+        <!-- tabs -->
+        <div id="myTabContent" class="tab-content">
+          <!-- info -->
+          <div class="tab-pane fade active in" id="info">
+            <br>
+
+            <div class="form-group has-feedback text-left col-lg-12">
+              <strong>Cedula</strong>
+                {{ form.cedula.erros }}
+                {{ form.cedula }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="row">
+              <div class="form-group has-feedback text-left col-lg-6">
+                <strong>Nombres</strong>
+                {{ form.nombres.erros }}
+                {{ form.nombres }}
+                <div class="help-block with-errors"></div>
+              </div>
+
+              <div class="form-group has-feedback text-left col-lg-6">
+                <strong>Apellidos</strong>
+                {{ form.apellidos.erros }}
+                {{ form.apellidos }}
+                <div class="help-block with-errors"></div>
+              </div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-lg-12">
+              <strong>Dirección</strong>
+              {{ form.direccion.erros }}
+              {{ form.direccion }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback col-lg-12">
+              <strong>Tipo de sangre:</strong>
+              {{ form.rh.erros }}
+              {{ form.rh }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="row">
+              <div class="form-group has-feedback col-lg-6">
+                <strong>Teléfono:</strong>
+                {{ form.telefono.erros }}
+                {{ form.telefono }}
+                <div class="help-block with-errors"></div>
+              </div>
+
+              <div class="form-group has-feedback col-lg-6">
+                <strong>Celular:</strong>
+                {{ form.celular.erros }}
+                {{ form.celular }}
+                <div class="help-block with-errors"></div>
+              </div>
+            </div>
+
+            <div class="form-group has-feedback col-lg-12">
+              <strong>Correo</strong>
+              {{ form.correo.erros }}
+              {{ form.correo }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="row">
+              <div class="form-group has-feedback text-left col-lg-6">
+                <strong>Fecha de Nacimiento</strong>
+                {{ form.fecha_nacimiento.erros }}
+                {{ form.fecha_nacimiento }}
+                <div class="help-block with-errors"></div>
+              </div>
+
+              <div class="form-group has-feedback text-left col-lg-6">
+                <strong>Nivel de Escolaridad</strong>
+                {{ form.nivel_estudio.erros }}
+                {{ form.nivel_estudio }}
+                <div class="help-block with-errors"></div>
+              </div>
+            </div>
+
+            <div class="form-group text-right col-lg-12">
+              <a class="btn btn-primary " href="#license" data-toggle="tab" aria-expanded="false" onclick="tabActive('#licenciaConduccion')">Siguiente</a>
+            </div>
+
+          </div>
+          <!-- end info -->
+
+          <!-- license -->
+          <div class="tab-pane fade" id="license">
+          <br>
+
+            <div class="row">
+              <div class="form-group has-feedback text-left col-lg-6">
+                <strong>Numero Licencia</strong>
+                  {{ form.numero_licencia_conduccion.erros }}
+                  {{ form.numero_licencia_conduccion }}
+                <div class="help-block with-errors"></div>
+              </div>
+
+              <div class="form-group has-feedback text-left col-lg-6">
+                <strong>Documento Licencia</strong>
+                  {{ form.documento_licencia_conduccion.erros }}
+                  {{ form.documento_licencia_conduccion }}
+                <div class="help-block with-errors"></div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group has-feedback text-left col-lg-6">
+                <strong>Categoria Licencia</strong>
+                  {{ form.categoria_licencia.erros }}
+                  {{ form.categoria_licencia }}
+                <div class="help-block with-errors"></div>
+              </div>
+
+              <div class="form-group has-feedback text-left col-lg-6">
+                <strong>Estado Licencia</strong>
+                  {{ form.estado_licencia.erros }}
+                  {{ form.estado_licencia }}
+                <div class="help-block with-errors"></div>
+              </div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-lg-12">
+              <strong>Organismo de trasito</strong>
+                {{ form.organismo_transito.erros }}
+                {{ form.organismo_transito }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="row">
+              <div class="form-group has-feedback text-left col-lg-6">
+                <strong>Fecha de expedición licencia</strong>
+                {{ form.fecha_expedicion.erros }}
+                {{ form.fecha_expedicion }}
+                <div class="help-block with-errors"></div>
+              </div>
+
+              <div class="form-group has-feedback text-left col-lg-6">
+                <strong>Fecha de vencimiento licencia</strong>
+                {{ form.fecha_vencimiento.erros }}
+                {{ form.fecha_vencimiento }}
+                <div class="help-block with-errors"></div>
+              </div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-lg-12">
+              <strong>Experiencia</strong>
+              {{ form.experiencia.erros }}
+              {{ form.experiencia }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-lg-12">
+              <strong>Restriciones de conduccion</strong>
+              {{ form.restricciones.erros }}
+              {{ form.restricciones }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+
+                <!-- end license -->
+
+
+              <br>
+              <div class="form-group text-right col-md-12">
+                <button class="btn btn-primary " type="submit">Guardar</button>
+              </div>
+
+            </div>
+            <!-- end license -->
+        </div>
+        <!-- end tabs -->
+      </div>
+    </form>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends 'base/base_list.html' %}
+{% load staticfiles %}
+
+{% block overview %}
+<li><i class="fa fa-user-circle-o" aria-hidden="true"></i>Clientes</li>
+{% endblock%}
+
+{% block btn-new %}
+<i class="fa fa-user-plus table-btn-padding-right" aria-hidden="true"></i>
+Nuevo Cliente
+{% endblock %}
+
+{% block url %}
+{% url 'dashboard:cliente:cliente_new' %}
+{% endblock %}
+
+{% block url_upload %}
+{% url 'dashboard:cliente:cliente_import' %}
+{% endblock%}
+
+{% block url_download %}
+{% url 'dashboard:cliente:cliente_export' %}
+{% endblock%}
+
+{% block table-head %}
+<thead>
+  <tr>
+    <th data-field="state" data-checkbox="true"></th>
+    <th data-halign="center" data-align="center" data-field="nit"  data-sortable="true" >NIT</th>
+    <th data-halign="center" data-align="center" data-field="razon_social" data-sortable="true">Razon Social</th>
+    <th data-halign="center" data-align="center" data-field="telefono">Teléfono</th>
+    <th data-halign="center" data-align="center" data-field="correo">Correo</th>
+    <th data-halign="center" data-align="center" data-field="estado" data-sortable="true">Estado</th>
+    <th data-halign="center" data-align="center" data-field="acciones">Acciones</th>
+  </tr>
+</thead>
+{% endblock %}
+
+{% block table-body %}
+<tbody>
+  {% if object_list %}
+  {% for cliente in object_list %}
+    <tr>
+        <td></td>
+        <td><a href="{% url 'dashboard:cliente:cliente_edit' cliente.nit %}">{{ cliente.nit }}</a></td>
+        <td>{{ cliente.razon_social }}</td>
+        <td>{{ cliente.telefono }}</td>
+        <td>{{ cliente.correo }}</td>
+        <td>{% if cliente.activo_inactivo %}Activo{% else %}Inactivo{% endif %}</td>
+        <td>
+          <div class="btn-group">
+            <a class="btn btn-primary" href="{% url 'dashboard:cliente:cliente_edit' cliente.nit %}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+            <a onclick="change_status({{ cliente.nit }}, '{{ csrf_token }}', '{% url 'dashboard:cliente:cliente_delete' %}', '{% url 'dashboard:cliente:cliente_list' %}' )" class="btn btn-danger" data-toggle="modal" data-target="#modalEmergente"><i class="fa fa-ban" aria-hidden="true"></i></a>
+          </div>
+        </td>
+    </tr>
+  {% endfor %}
+  {% else %}
+    <h3 class="page-header"><i class="fa fa-laptop"></i> No hay registros</h3>
+  {% endif %}
+</tbody>
+{% endblock %}

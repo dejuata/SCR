@@ -2,9 +2,15 @@
 
 
   1. Crear base de datos (revisar settings.py) 
-  2. python manage.py makemigrations
-  3. python manage.py migrate_schemas
-  4. ejecutar el siguiente codigo sql (para crear el tenant publico):
+  2. Ejecutar el archivo requirements.txt
+  3. python manage.py makemigrations
+  4. python manage.py migrate_schemas
+  5. ejecutar los archivos sql que están en la carpeta querys en el siguiente orden:
   
-    `insert into tenant_tenant("schema_name", "nit", "correo", "ciudad", "direccion") 
-              values ('public', 1143859996, 'uncorreo@hotmail.com', 'una ciudad', 'una dirección');`
+    * 00_insertar_superusuario.sql
+    * 01_insertar_tenant.sql
+    * 02_relacionar_dominio.sql
+    * 00_users_schema_public.sql
+    
+   6. levantar servidor
+  

@@ -1,0 +1,126 @@
+{% extends 'base/base_dashboard.html' %}
+{% load staticfiles %}
+
+{% block overview %}
+<li><i class="fa fa-user-circle-o" aria-hidden="true"></i><a href="{% url 'dashboard:cliente:cliente_list'%}">Clientes</a></li>
+<li><i class="fa fa-user-plus margin-right" aria-hidden="true"></i>Nuevo</li>
+{% endblock %}
+
+{% block content %}
+<!-- messages success -->
+{% if messages %}
+<div class="alert alert-dismissible alert-info">
+  <button type="button" class="close text-center" data-dismiss="alert">&times;</button>
+  {% for message in messages %}
+  <strong>
+    <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+  </strong>
+  {% endfor %}
+</div>
+{% endif %}
+<!-- end messages success -->
+
+<!-- messages erros -->
+{% if form.errors %}
+    <div class="alert alert-danger">
+    {% for field in form %}
+        {% for error in field.errors %}
+          <strong><div>{{ error|escape }}</div></strong>
+        {% endfor %}
+    {% endfor %}
+    </div>
+
+    {% for error in form.non_field_errors %}
+      <div class="alert alert-danger">
+        <strong>{{ error|escape }}</strong>
+      </div>
+    {% endfor %}
+
+{% endif %}
+<!-- end messages erros -->
+
+<section class="panel">
+  <header class="panel-heading">
+    Nuevo Cliente
+  </header>
+  <div class="panel-body">
+    <form enctype="multipart/form-data" method="post" class="form-horizontal" data-toggle="validator">
+        {% csrf_token %}
+        <div class="row">
+          <div class="col-md-4">
+            <strong>Logo</strong>
+
+            <div class="cuadrado" id="image-preview">
+              {% if cliente.logo.url != ''%}
+                <img src="{{ cliente.logo.url }}" style="width:100%">
+              {% endif %}
+            </div>
+
+            <div class="form-group has-feedback text-left col-md-12">
+              {{ form.logo.erros }}
+              <label for="image-upload" id="image-label">Elige una imagen</label>
+              {{ form.logo }}
+            </div>
+          </div>
+
+          <div class="col-md-8">
+
+            <div class="form-group has-feedback text-left col-md-12">
+              <strong>NIT</strong>
+                {{ form.nit.erros }}
+                {{ form.nit }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-md-12">
+              <strong>Razón social</strong>
+              {{ form.razon_social.erros }}
+              {{ form.razon_social }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback  col-md-12">
+              <strong>Teléfono:</strong>
+              {{ form.telefono.erros }}
+              {{ form.telefono }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback  col-md-12">
+              <strong>Correo</strong>
+              {{ form.correo.erros }}
+              {{ form.correo }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+
+            <div class="form-group has-feedback text-left col-md-12">
+              <strong>Ciudad</strong>
+              {{ form.ciudad.erros }}
+              {{ form.ciudad }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-md-12">
+              <strong>Dirección</strong>
+              {{ form.direccion.erros }}
+              {{ form.direccion }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group text-right col-md-12">
+              <button class="btn btn-primary " type="submit">Guardar</button>
+            </div>
+          </div>
+        </div>
+
+    </form>
+  </div>
+</section>
+
+{% endblock %}
+
+{% block extrajs %}
+  <script type="text/javascript" src="{% static 'js/uploadPreview.min.js'%}"></script>
+  <script type="text/javascript" src="{% static 'js/main.js'%}"></script>
+{% endblock %}

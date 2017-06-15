@@ -1,0 +1,57 @@
+{% extends 'base/base_list.html' %}
+{% load staticfiles %}
+
+{% block overview %}
+<li><i class="fa fa-th" aria-hidden="true"></i>Planilla</li>
+{% endblock%}
+
+{% block btn-new %}
+<i class="fa fa-user-plus table-btn-padding-right" aria-hidden="true"></i>
+Nueva Planilla
+{% endblock %}
+
+{% block url %}
+{% url 'dashboard:planilla:planilla_new' %}
+{% endblock %}
+
+{% block url_upload %}
+{% url 'dashboard:planilla:planilla_import' %}
+{% endblock%}
+
+{% block url_download %}
+{% url 'dashboard:planilla:planilla_export' %}
+{% endblock%}
+
+{% block table-head %}
+
+<thead>
+  <tr>
+    <th data-field="state" data-checkbox="true"></th>
+    <th data-halign="center" data-align="center" data-field="fecha"  data-sortable="true" >Fecha de creación</th>
+    <th data-halign="center" data-align="center" data-field="acciones">Acciones</th>
+  </tr>
+</thead>
+{% endblock %}
+
+{% block table-body %}
+<tbody>
+  {% if object_list %}
+
+  {% for planilla in object_list %}
+    <tr>
+        <td></td>
+        <td>{{ planilla.fecha }}</td>
+        <td>
+          <div class="btn-group">
+            <a class="btn btn-primary" href="{% url 'dashboard:planilla:planilla_edit' planilla.id %}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+
+            <!-- <a class="btn btn-primary" id="planilla" onclick="planilla_get()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> -->
+          </div>
+        </td>
+    </tr>
+  {% endfor %}
+  {% else %}
+    <!-- <h3 class="page-header"><i class="fa fa-laptop"></i> No hay registros</h3> -->
+  {% endif %}
+</tbody>
+{% endblock %}

@@ -1,0 +1,220 @@
+{% extends 'base/base_dashboard.html' %}
+{% load staticfiles %}
+
+{% block title %}
+Directions service
+{% endblock %}
+
+{% block overview %}
+<li><i class="fa fa-arrows-h" aria-hidden="true"></i><a href="{% url 'dashboard:ruta:ruta_list'%}">Rutas</a></li>
+<li><i class="fa fa-plus"></i>Nuevo</li>
+{% endblock%}
+
+{% block content %}
+
+<!-- messages erros -->
+{% if form.errors %}
+    <div class="alert alert-danger">
+    {% for field in form %}
+        {% for error in field.errors %}
+          <strong><div>{{field}}{{ error|escape }}</div></strong>
+        {% endfor %}
+    {% endfor %}
+    </div>
+
+    {% for error in form.non_field_errors %}
+      <div class="alert alert-danger">
+        <strong>{{ error|escape }}</strong>
+      </div>
+    {% endfor %}
+
+{% endif %}
+<!-- end messages erros -->
+
+<section class="panel">
+  {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+  {% endif %}
+
+  <header class="panel-heading">
+    Nueva Ruta
+  </header>
+
+  <div class="panel-body">
+
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#ruta" data-toggle="tab">Ruta</a></li>
+      <li><a href="#info" data-toggle="tab">Info Ruta</a></li>
+    </ul>
+
+    <form enctype="multipart/form-data" method="post" data-toggle="validator">
+    {% csrf_token %}
+
+      <div id="myTabContent" class="tab-content">
+
+        <!-- ruta -->
+        <div class="tab-pane fade active in" id="ruta">
+        <br>
+
+          <div class="row">
+            <div class="form-group has-feedback text-left col-lg-5">
+              <strong>Origen:</strong>
+              {{ form.origen.erros }}
+              {{ form.origen }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left  col-lg-5">
+              <strong>Destino:</strong>
+              {{ form.destino.erros }}
+              {{ form.destino }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            {{ form.link_ruta.erros }}
+            {{ form.link_ruta }}
+
+            <div class="form-group col-lg-2">
+              <br>
+              <button class="btn btn-primary " onclick="initMap(); return false">Calcular ruta</button>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <div id="map"></div>
+            </div>
+          </div>
+
+        </div>
+        <!-- end ruta -->
+
+        <!-- info ruta -->
+        <div class="tab-pane fade" id="info">
+          <br>
+          <div class="row">
+            <div class="form-group has-feedback text-left col-lg-6">
+              <strong>Cliente:</strong>
+              {{ form.nit.erros }}
+              {{ form.nit }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-lg-6">
+              <strong>Codigo de ruta:</strong>
+              {{ form.codigo_ruta.erros }}
+              {{ form.codigo_ruta }}
+              <div class="help-block with-errors"></div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group has-feedback text-left col-lg-6">
+              <strong>Nombre Ruta:</strong>
+              {{ form.nombre_ruta.erros }}
+              {{ form.nombre_ruta }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-lg-6">
+              <strong>Tipo de viaje:</strong>
+              {{ form.tipo_viaje.erros }}
+              {{ form.tipo_viaje }}
+              <div class="help-block with-errors"></div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group has-feedback col-md-6">
+              <strong>Tipo de ruta:</strong>
+              {{ form.tipo_ruta.erros }}
+              {{ form.tipo_ruta }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-lg-6">
+              <strong>Tipo de vehiculo:</strong>
+              {{ form.tipo_vehiculo_requerido.erros }}
+              {{ form.tipo_vehiculo_requerido }}
+              <div class="help-block with-errors"></div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group has-feedback text-left col-lg-6">
+              <strong>Hora Inicio</strong>
+              {{ form.hora_inicio.erros }}
+              {{ form.hora_inicio }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-lg-6">
+              <strong>Hora Fin</strong>
+              {{ form.hora_fin.erros }}
+              {{ form.hora_fin }}
+              <div class="help-block with-errors"></div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group has-feedback text-left col-lg-6">
+              <strong>Valor Adicional/Hora:</strong>
+              {{ form.valor_hora_adicional.erros }}
+              {{ form.valor_hora_adicional }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-lg-6">
+              <strong>Valor Ruta:</strong>
+              {{ form.valor_ruta.erros }}
+              {{ form.valor_ruta }}
+              <div class="help-block with-errors"></div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group has-feedback text-left col-lg-6">
+              <strong>Valor Tercero:</strong>
+              {{ form.valor_tercero.erros }}
+              {{ form.valor_tercero }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group has-feedback text-left col-lg-6">
+              <strong>Comision Conductor:</strong>
+              {{ form.comision_conductor.erros }}
+              {{ form.comision_conductor }}
+              <div class="help-block with-errors"></div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group has-feedback text-left col-lg-6">
+              <strong>Kilometros(Km):</strong>
+              {{ form.kilometros.erros }}
+              {{ form.kilometros }}
+
+              <div class="help-block with-errors"></div>
+            </div>
+          </div>
+
+          <div class="form-group text-right col-lg-12">
+            <button class="btn btn-primary " type="submit">Guardar</button>
+          </div>
+
+        </div>
+        <!-- end info ruta -->
+      </div>
+    </form>
+  </div>
+</section>
+{% endblock %}
+
+{% block extrajs %}
+<script src="{% static 'tenant/js/ruta.js' %}"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBaIKmsLcBbdoH2hvM_Xc2tJ9UpTmXRZe0&callback=initMap"></script>
+{% endblock %}

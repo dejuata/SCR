@@ -1,0 +1,62 @@
+{% extends 'base/base_list.html' %}
+{% load staticfiles %}
+
+{% block overview %}
+<li><i class="fa fa-id-card-o" aria-hidden="true"></i>Conductores</li>
+{% endblock%}
+
+{% block btn-new %}
+<i class="fa fa-plus table-btn-padding-right" aria-hidden="true"></i>
+Nuevo Conductor
+{% endblock %}
+
+{% block url %}
+{% url 'dashboard:conductor:conductor_new' %}
+{% endblock %}
+
+{% block url_upload %}
+{% url 'dashboard:conductor:conductor_import' %}
+{% endblock%}
+
+{% block url_download %}
+{% url 'dashboard:conductor:conductor_export' %}
+{% endblock%}
+
+{% block table-head %}
+<thead>
+  <tr>
+      <th data-field="state" data-checkbox="true"></th>
+      <th data-halign="center" data-align="center" data-field="cedula"  data-sortable="true" >Cedula</th>
+      <th data-halign="center" data-align="center" data-field="nombres" data-sortable="true">Nombres</th>
+      <th data-halign="center" data-align="center" data-field="apellidos" data-sortable="true">Apellidos</th>
+      <th data-halign="center" data-align="center" data-field="celular" data-sortable="true">Celular</th>
+      <th data-halign="center" data-align="center" data-field="estado" data-sortable="true">Estado</th>
+      <th data-halign="center" data-align="center" data-field="acciones">Acciones</th>
+  </tr>
+</thead>
+{% endblock %}
+
+{% block table-body %}
+<tbody>
+  {% if object_list %}
+  {% for conductor in object_list %}
+    <tr>
+        <td></td>
+        <td><a href="{% url 'dashboard:conductor:conductor_edit' conductor.cedula %}">{{ conductor.cedula }}</a></td>
+        <td>{{ conductor.nombres }}</td>
+        <td>{{ conductor.apellidos }}</td>
+        <td>{{ conductor.celular }}</td>
+        <td>{% if conductor.activo_inactivo %}Activo{% else %}Inactivo{% endif %}</td>
+        <td>
+          <div class="btn-group">
+            <a class="btn btn-primary" href="{% url 'dashboard:conductor:conductor_edit' conductor.cedula %}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+            <a onclick="change_status({{ conductor.cedula }}, '{{ csrf_token }}', '{% url 'dashboard:conductor:conductor_delete' %}', '{% url 'dashboard:conductor:conductor_list' %}')" class="btn btn-danger" data-toggle="modal" data-target="#modalEmergente"><i class="fa fa-ban" aria-hidden="true"></i></a>
+          </div>
+        </td>
+    </tr>
+  {% endfor %}
+  {% else %}
+    <h3 class="page-header"><i class="fa fa-laptop"></i> No hay registros</h3>
+  {% endif %}
+</tbody>
+{% endblock %}

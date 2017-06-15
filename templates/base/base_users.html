@@ -1,0 +1,62 @@
+{% extends 'base/base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+<section class="container-fluid container-login text-center">
+  <div class="col-md-8 col-sm-10 col-md-offset-2 col-sm-offset-1">
+
+
+    {% block message %}
+      <!-- messages erros -->
+      {% if form.errors %}
+          <div class="alert alert-danger">
+            {{ password }}
+          {% for field in form %}
+              {% for error in field.errors %}
+                <strong><div>{{ error|escape }}</div></strong>
+
+              {% endfor %}
+          {% endfor %}
+          </div>
+
+          {% for error in form.non_field_errors %}
+            <div class="alert alert-danger">
+              <strong>{{ error|escape }}</strong>
+            </div>
+          {% endfor %}
+      {% endif %}
+      <!-- end messages erros -->
+    {% endblock %}
+
+
+    <div class="panel {% block color_panel %}{% endblock %}">
+      <div class="panel-heading" >
+        {% block title_panel %}
+        {% endblock %}
+      </div>
+      <div class="panel-body">
+
+        {% block form %}
+        {% endblock%}
+
+        <div class="{% block colum_one_size %}col-md-6 col-sm-6{% endblock %}">
+          {% block colum_one %}
+          {% endblock %}
+        </div>
+
+        <div class="{% block colum_two_size %}col-md-6 col-sm-6{% endblock %}">
+          {% block colum_two %}
+          {% endblock %}
+        </div>
+
+        {% block end_form %}
+        {% endblock%}
+
+      </div>
+    </div>
+
+    {% block row %}
+    {% endblock %}
+  </div>
+</section>
+{% endblock %}

@@ -1,82 +1,124 @@
-{% extends 'base/base.html' %}
+{% extends 'base/base_users.html' %}
 {% load staticfiles %}
+
+{% block extrastatic %}
+{{ form.media.css }}
+{% endblock %}
+
+{% block extrajs %}
+{{ form.media.js }}
+{% endblock %}
 
 {% block title %}
 Registrar Empresa
 {% endblock %}
 
-{% block extrastatic %}
-<link rel="stylesheet" href="{% static 'css/login.css' %}"/>
+{% block title_panel %}
+<p>Registrar Empresa</p>
 {% endblock %}
 
-{% block content %}
-<div class="container">
-  <div class="login sign-up">
-  <div class="panel panel-success">
-	  <div class="panel-heading" style="text-align:center;font-size:22px">Registrar Empresa</div>
-	  <div class="panel-body">
-      <form method="post" class="form-empresa">
-			{% csrf_token %}
-      <div class="col-sm-4 login-left">
+{% block color_panel %}
+panel-success
+{% endblock %}
 
-          <div class="logo cuadrado">
+{% block colum_one_size %}
+col-lg-4 col-md-12
+{% endblock %}
+
+{% block colum_two_size %}
+col-lg-8 col-md-12
+{% endblock %}
 
 
-          </div>
-      </div>
-			<div class="col-sm-8 login-right">
-				<br>
-				<div class="form-input form-input-empresa">
-          <div class="form-group">
+{% block form %}
+  <form enctype="multipart/form-data" method="post" class="form-empresa" data-toggle="validator">
+  {% csrf_token %}
+{% endblock%}
 
-            {{ form.nit.label_tag }}
-            {{ form.nit }}
-            {{ form.nit.errors }}
-          </div>
-          <div class="form-group">
-            {{ form.nombre_comercial.label_tag }}
-            {{ form.nombre_comercial }}
-            {{ form.nombre_comercial.errors }}
-          </div>
-				</div>
-        <div class="form-group text-left" >
-          {{ form.razon_social.label_tag }}
-          {{ form.razon_social.errors }}
-          {{ form.razon_social }}
-        </div>
-        <div class="form-input form-input-empresa">
-          <div class="form-group">
-            {{ form.telefono.label_tag }}
-            {{ form.telefono.errors }}
-            {{ form.telefono }}
-          </div>
-          <div class="form-group">
-            {{ form.correo.label_tag }}
-            {{ form.correo.errors }}
-            {{ form.correo }}
-          </div>
-				</div><div class="form-input form-input-empresa">
-          <div class="form-group">
-            {{ form.ciudad.label_tag }}
-            {{ form.ciudad.errors }}
-            {{ form.ciudad }}
-          </div>
-          <div class="form-group">
-            {{ form.direccion.label_tag }}
-            {{ form.direccion.errors }}
-            {{ form.direccion }}
-          </div>
-				</div>
-        <br>
-				<div class="form-group form-input">
-					<button class="btn btn-primary login-btn" type="submit">Guardar</button>
-				</div>
+{% block end_form %}
+  </form>
+{% endblock%}
 
-        <input type="hidden" name="user" value="{{ user.id }}">
-			</form>
-			</div>
-		</div>
-	  </div>
+{% block colum_one %}
+  <div class="cuadrado" id="image-preview">
+    {% if user.logo.url != ''%}
+      <img src="{{ user.logo }}" style="width:100%" alt='user'>
+    {% endif %}
   </div>
-</div>
+  <div class="text-left">
+    <label for="image-upload" id="image-label">Elige una imagen</label>
+    {{ form.logo }}
+  </div>
+{% endblock %}
+
+{% block colum_two %}
+  <div class="row">
+
+    <div class="col-lg-6 col-md-12 form-group has-feedback disableModal text-left">
+      {{ form.nit.label_tag }}
+      {{ form.nit }}
+      <div class="help-block with-errors"></div>
+    </div>
+    <div class="col-lg-6 col-md-12 form-group has-feedback disableModal text-left">
+      {{ form.nombre_comercial.label_tag }}
+      {{ form.nombre_comercial }}
+      <div class="help-block with-errors"></div>
+    </div>
+
+    <div class="col-lg-12 form-group has-feedback text-left disableModal" >
+      {{ form.razon_social.label_tag }}
+      {{ form.razon_social }}
+      <div class="help-block with-errors"></div>
+    </div>
+
+    <div class="col-lg-6 form-group has-feedback disableModal text-left">
+      {{ form.telefono.label_tag }}
+      {{ form.telefono }}
+      <div class="help-block with-errors"></div>
+    </div>
+
+    <div class="col-lg-6 form-group has-feedback disableModal text-left">
+      {{ form.correo.label_tag }}
+      {{ form.correo }}
+      <div class="help-block with-errors"></div>
+    </div>
+
+    <div class="col-lg-6 form-group has-feedback disableModal text-left">
+      {{ form.departamento.label_tag }}
+      {{ form.departamento }}
+      <div class="help-block with-errors"></div>
+    </div>
+
+    <div class="col-lg-6 form-group has-feedback disableModal text-left">
+      {{ form.ciudad.label_tag }}
+      {{ form.ciudad }}
+      <div class="help-block with-errors"></div>
+    </div>
+
+    <div class=" col-lg-12 form-group has-feedback disableModal text-left">
+      {{ form.direccion.label_tag }}
+      {{ form.direccion }}
+      <div class="help-block with-errors"></div>
+    </div>
+
+    <div class="col-lg-12 form-group has-feedback text-left">
+        <label for="password">Digite su contraseña para continuar:</label>
+        <input type="password" class="form-control" name="password" required>
+        <div class="help-block with-errors"></div>
+    </div>
+
+    <div class="col-lg-12 form-group has-feedback text-left">
+      {{ form.captcha }}
+      <div class="help-block with-errors">
+        <pcaptcha class="errors">{{ form.captcha.errors|striptags }}</pcaptcha>
+      </div>
+    </div>
+
+    <div class="col-lg-12 form-group form-input">
+      <button type="submit" class="btn btn-primary login-btn">Guardar</button>
+    </div>
+
+    <input type="hidden" name="user" value="{{ user.id }}">
+
+  </div>
 {% endblock %}

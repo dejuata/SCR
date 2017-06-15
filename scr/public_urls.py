@@ -1,27 +1,48 @@
 from django.conf.urls import url, include
-# from django.contrib import admin
-from apps.tenant.admin import admin_site
 from django.views.generic import TemplateView
-from django.contrib.auth.views import login, logout_then_login
+from django.contrib.auth.views import login, logout_then_login, password_reset, password_reset_done, password_reset_confirm, password_reset_complete
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
-from apps.tenant.views import TenantCreateView
+from django.conf.urls.static import static  # ARCHIVOS MEDIA JODA_BETA
+
+from apps.custom_admin.admin_public import admin_site
+# from django.contrib import admin
 
 
 urlpatterns = [
     url(r'^$', TemplateView.as_view(template_name="landing/index.html"), name='index'),
     url(r'^jet/', include('jet.urls', 'jet')),
     url(r'^jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),
-    # url(r'^admin/', admin.site.urls),
-    url(r'^myadmin/', include(admin_site.urls)),
+    url(r'^admin/', include(admin_site.urls)),
 
-    url(r'^login/', login, {'template_name': 'usuario/tenant_login.html'}, name='tenant_login'),
+    url(r'^login/', login, {'template_name': 'users/user_login.html'}, name='tenant_login'),
     url(r'^logout/', logout_then_login, name='logout'),
-    url(r'^accounts/login/', login, {'template_name': 'usuario/tenant_login.html'}, name='tenant_login'),
+    url(r'^accounts/login/', login, {'template_name': 'users/user_login.html'}, name='tenant_login'),
 
-    url(r'^', include('apps.usuarios.urls-tenant', namespace='usuario')),
-    url(r'^registrar-empresa/$', login_required(TenantCreateView.as_view()), name='registrar-empresa'),
-]
+    url(r'^', include('apps.users.urls_tenant', namespace='usuario')),
+    url(r'^company/', include('apps.tenant.urls', namespace='tenant')),
+
+    # Hacer esta url accesible solo para el superusuario
+    url(r'^cities/', include('apps.cities.urls', namespace='ciudades')),
+
+    url(r'^select2/', include('django_select2.urls')),
+
+    url(r'^reset/password_reset/$', password_reset,
+        {'template_name': 'password_reset/password_reset_form.html',
+         'html_email_template_name': 'password_reset/password_reset_email.html'},
+        name='password_reset'),
+    url(r'^password_reset_done/$', password_reset_done,
+        {'template_name': 'password_reset/password_reset_done.html'},
+        name='password_reset_done'),
+    url(r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>.+)/$', password_reset_confirm,
+        {'template_name': 'password_reset/password_reset_confirm.html'},
+        name='password_reset_confirm'
+        ),
+    url(r'^reset/done', password_reset_complete,
+        {'template_name': 'password_reset/password_reset_complete.html'},
+        name='password_reset_complete'),
+
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)  # ARCHIVOS MEDIA JODA_BETA
 
 if settings.DEBUG:
     import debug_toolbar

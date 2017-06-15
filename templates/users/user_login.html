@@ -1,0 +1,71 @@
+{% extends 'base/base_users.html' %}
+{% load staticfiles %}
+
+{% block title %}
+Login
+{% endblock %}
+
+{% block title_panel %}
+<p>Iniciar Sesión</p>
+{% endblock %}
+
+{% block color_panel %}
+panel-warning
+{% endblock %}
+
+{% block navbar-btn %}
+<a href="{% url 'usuario:usuario_new' %}">
+	<button  class="btn btn-success">Registrate!</button>
+</a>
+{% endblock navbar-btn %}
+
+{% block message %}
+<!-- messages success -->
+{% if messages %}
+<div class="alert alert-dismissible alert-info" style="width:50em;margin: 0.3em auto 0;">
+  <button type="button" class="close text-center" data-dismiss="alert">&times;</button>
+  {% for message in messages %}
+    <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+  {% endfor %}
+</div>
+{% endif %}
+<!-- end messages success -->
+{% endblock %}
+
+{% block colum_one %}
+<h4>Con tu Correo:</h4>
+<br>
+<form method="post" data-toggle="validator">
+	{% csrf_token %}
+	<div class="form-group has-feedback text-left">
+		<input type="email" id="email" pattern="^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$" name="username" class="form-control" id="inputTwitter" placeholder="Correo Electronico" required>
+		<div class="help-block with-errors"></div>
+	</div>
+	<div class="form-group has-feedback text-left">
+		<input class="form-control" type="password" name="password" placeholder="Contraseña" data-minlength="8" data-error="Minimo 8 caracteres" required>
+		<div class="help-block with-errors"></div>
+	</div>
+	<div class="form-group">
+		<input class="btn btn-primary login-btn" type="submit" value="Ingresar">
+	</div>
+	<a href="{% url 'password_reset' %}">Olvidé mi contraseña</a>
+</form>
+{% endblock %}
+
+{% block colum_two %}
+<h4>Con tus Redes sociales:</h4>
+<br>
+<div class="form-group">
+	<a href="#" class="btn btn-info btn-signup login-btn btn-face"><i class="fa fa-facebook fa-2x"></i></a>
+</div>
+<div class="form-group">
+	<a href="#" class="btn btn-info btn-signup login-btn btn-twitter"><i class="fa fa-twitter fa-2x"></i></a>
+</div>
+<div class="form-group">
+	<a href="#" class="btn btn-danger btn-signup login-btn btn-google"><i class="fa fa-google-plus fa-2x"></i></a>
+</div>
+{% endblock %}
+
+{% block row %}
+<div>¿Aún no tienes cuenta? <a href="{% url 'usuario:usuario_new' %}">Regístrate aquí</a></div>
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends 'base/base_list.html' %}
+{% load staticfiles %}
+
+{% block overview %}
+<li><i class="fa fa-arrows-h" aria-hidden="true"></i>Rutas</li>
+{% endblock%}
+
+{% block btn-new %}
+<i class="fa fa-plus table-btn-padding-right" aria-hidden="true"></i>
+Nueva Ruta
+{% endblock %}
+
+{% block url %}
+{% url 'dashboard:ruta:ruta_new' %}
+{% endblock %}
+
+{% block url_upload %}
+{% url 'dashboard:ruta:ruta_import' %}
+{% endblock%}
+
+{% block url_download %}
+{% url 'dashboard:ruta:ruta_export' %}
+{% endblock%}
+
+{% block table-head %}
+<thead>
+  <tr>
+      <th data-field="state" data-checkbox="true"></th>
+      <th  class="text-center" data-field="codigo_ruta"  data-sortable="true" >Codigo Ruta</th>
+      <th  class="text-center" data-field="cliente" data-sortable="true">Cliente</th>
+      <th  class="text-center" data-field="hora_inicio" data-sortable="true">Hora Inicio</th>
+      <th  class="text-center" data-field="hora_fin" data-sortable="true">Hora Fin</th>
+      <th  class="text-center" data-field="estado">Estado</th>
+      <th  class="text-center" data-field="acciones">Acciones</th>
+  </tr>
+</thead>
+{% endblock %}
+
+{% block table-body %}
+<tbody>
+  {% if object_list %}
+  {% for ruta in object_list %}
+    <tr>
+      <td></td>
+      <td><a href="{% url 'dashboard:ruta:ruta_edit' ruta.codigo_ruta %}">{{ ruta.codigo_ruta }}</a></td>
+      <td>{{ ruta.nit }}</td>
+      <td>{{ ruta.hora_inicio }}</td>
+      <td>{{ ruta.hora_fin }}</td>
+      <td>{% if ruta.activo_inactivo %}Activo{% else %}Inactivo{% endif %}</td>
+      <td>
+        <div class="btn-group">
+          <a class="btn btn-primary" href="{% url 'dashboard:ruta:ruta_edit' ruta.codigo_ruta %}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+          <a onclick="change_status({{ ruta.codigo_ruta }}, '{{ csrf_token }}', '{% url 'dashboard:ruta:ruta_delete' %}', '{% url 'dashboard:ruta:ruta_list' %}')" class="btn btn-danger" data-toggle="modal" data-target="#modalEmergente"><i class="fa fa-ban" aria-hidden="true"></i></a>
+        </div>
+      </td>
+    </tr>
+  {% endfor %}
+  {% else %}
+    <h3 class="page-header"><i class="fa fa-laptop"></i> No hay registros</h3>
+  {% endif %}
+</tbody>
+{% endblock %}

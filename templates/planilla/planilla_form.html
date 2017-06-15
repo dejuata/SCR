@@ -1,0 +1,105 @@
+{% extends 'base/base_dashboard.html' %}
+{% load staticfiles %}
+
+{% block overview %}
+<li><i class="fa fa-th" aria-hidden="true"></i><a href="{% url 'dashboard:planilla:planilla_list'%}">Planilla</a></li>
+<li><i class="fa fa-plus"></i>Nuevo</li>
+<a href="" class="">Guardar</a>
+{% endblock %}
+
+{% block content %}
+  <input type="hidden" name="" value="{{data}}" id="json">
+
+  <!-- <div class="container">
+    <div class="col-md-4">
+      {{ form.fecha }}
+    </div>
+    <div class="col-md-4">
+
+    </div>
+    <div class="col-md-4">
+      <a class="btn btn-primary" id="planilla_btn" onclick="planilla_get()">Load</a>
+    </div>
+  </div>
+  <br> -->
+
+  <div id="planilla"></div>
+
+{% endblock %}
+
+{% block extrajs %}
+<script type="text/javascript">
+var container = document.getElementById('planilla');
+var json = document.getElementById('json').value
+
+var hot = new Handsontable(container, {
+      // data: objectData
+      // dataSchema: {id: null, name: {first: null, last: null}, address: null},
+      width: 1150,
+      height: 700,
+      startRows: 20,
+      startCols: 19,
+      colHeaders: ['fecha',
+                  'kilometros',
+                  'hora_adicional',
+                  'hora_inicio',
+                  'hora_fin',
+                  'tiempo_operado',
+                  'observaciones',
+                  'novedades',
+                  'flota',
+                  'valor_ruta',
+                  'valor_tercero',
+                  'viaticos',
+                  'descuentos_conductor',
+                  'valor_hora_adicional',
+                  'adicional_conductor',
+                  'total_ingreso',
+                  'conductor_id',
+                  'placa_id',
+                  'ruta_id'],
+      columns: [
+        {data: 'fields.fecha'},
+        {data: 'fields.kilometros'},
+        {data: 'fields.hora_adicional'},
+        {data: 'fields.hora_inicio'},
+        {data: 'fields.hora_fin'},
+        {data: 'fields.tiempo_operado'},
+        {data: 'fields.observaciones'},
+        {data: 'fields.novedades'},
+        {data: 'fields.flota'},
+        {data: 'fields.valor_ruta'},
+        {data: 'fields.valor_tercero'},
+        {data: 'fields.viaticos'},
+        {data: 'fields.descuentos_conductor'},
+        {data: 'fields.valor_hora_adicional'},
+        {data: 'fields.adicional_conductor'},
+        {data: 'fields.total_ingreso'},
+        {data: 'fields.conductor_id'},
+        {data: 'fields.placa_id'},
+        {data: 'fields.ruta_id'},
+      ],
+      minSpareRows: 3
+    });
+
+  hot.loadData(JSON.parse(json));
+
+    function planilla_get(){
+      $('#planilla_btn').click(function(){
+        var request = $.ajax({
+            type: "POST",
+            url: "{% url 'dashboard:planilla:planilla_get'%}",
+            data: {
+                "csrfmiddlewaretoken": '{{ csrf_token }}',
+                "fecha": '2017-06-04',
+            },
+        });
+        request.done(function(response) {
+          var data = response;
+          console.log(data)
+          hot.loadData(data);
+        });
+      });
+    }
+</script>
+{% endblock %}

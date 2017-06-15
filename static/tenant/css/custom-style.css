@@ -1,0 +1,100 @@
+/* Estilos para tablas */
+
+.table-btn-padding-right{
+  padding-right: 8px;
+}
+/*navbar*/
+.navbar-logo{
+  height: 84px;
+}
+/* iconos del sidenav*/
+.sub-icon{
+  font-size: 14px !important;
+}
+.sub-menu-icon{
+  font-size: 14px !important;
+  position: absolute;
+  right: 15px;
+}
+/* para las vistas form new*/
+.row {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+/* Cuadrado para las imagenes*/
+.cuadrado,  .rectangulo{
+  background: #f2f2f2;
+  margin: 20px auto;
+}
+.cuadrado {
+   width: 200px;
+   height: 200px;
+}
+.rectangulo{
+  width: 100%;
+  height: 350px;
+}
+.rectangulo img{
+  width: 100%
+  background-size: cover;
+  overflow: hidden;
+}
+
+/*mostrar btn cuando archivos son subidos*/
+.hide{
+  display: none;
+}
+.show{
+  display: initial;
+}
+
+.left-input{
+  margin-left: 16px !important;
+}
+
+/* estilos mapa */
+/* Always set the map height explicitly to define the size of the div
+ * element that contains the map. */
+#map {
+  height: 600px;
+  max-height: 800px;
+  width: 95%;
+  bottom: 10px;
+}
+/* Optional: Makes the sample page fill the window. */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+#floating-panel {
+  position: absolute;
+  top: 10px;
+  left: 25%;
+  z-index: 5;
+  background-color: #fff;
+  padding: 5px;
+  border: 1px solid #999;
+  text-align: center;
+  font-family: 'Roboto','sans-serif';
+  line-height: 30px;
+  padding-left: 10px;
+}
+
+/* Animacion */
+.fadeIn{
+  animation: fadeIn 1s;
+}
+.fadeOut{
+  animation: fadeOut .5s ;
+}
+
+@keyframes fadeIn {
+  from{ opacity: 0; }
+  to{ opacity: 1;}
+}
+@keyframes fadeOut {
+  from{ opacity: 1; }
+  to { opacity: 0; }
+}
