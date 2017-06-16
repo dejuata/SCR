@@ -18,6 +18,5 @@ tests/.coverage
 build/
 tests/report/
 migrations/
-manage.py
 wsgi.py
 scr/settings/local.py
