@@ -14,13 +14,6 @@
     <!-- bootstrap theme -->
     <link href="{% static 'tenant/css/bootstrap-theme.css' %}" rel="stylesheet">
 
-    <!--external css-->
-    <!-- font icon -->
-    <link href="{% static 'tenant/css/elegant-icons-style.css' %}" rel="stylesheet" />
-    <link href="{% static 'tenant/css/font-awesome.min.css' %}" rel="stylesheet" />
-
-    <!-- easy pie chart-->
-    <link href="{% static 'tenant/assets/jquery-easy-pie-chart/jquery.easy-pie-chart.css' %}" rel="stylesheet" type="text/css" media="screen"/>
 
     <!-- style -->
     <link href="{% static 'tenant/css/style.css' %}" rel="stylesheet">
@@ -45,9 +38,11 @@
 
     <!-- animated css -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css" rel="stylesheet" media="all">
-    <!--<link rel="stylesheet" href="{% static 'tenant/css/fakeLoader.css'%}">
+
+    <!-- <link rel="stylesheet" href="{% static 'tenant/css/fakeLoader.css'%}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="{% static 'tenant/js/fakeLoader.js'%}"></script>-->
+    <script src="{% static 'tenant/js/fakeLoader.js'%}"></script> -->
+
     <!-- fontawesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" media="all">
 
@@ -75,7 +70,9 @@
       </div>
 
       <!--logo start-->
-      <a href="{% url 'dashboard:index' %}" class="logo"><span class="lite">SCR</span></a>
+      <a href="{% url 'dashboard:index' %}" class="logo">
+        <span class="lite">SCR</span>
+      </a>
       <!--logo end-->
 
       <div class="top-nav notification-row">
@@ -116,29 +113,87 @@
     <div id="sidebar"  class="nav-collapse ">
         <!-- sidebar menu start-->
         <ul class="sidebar-menu" >
-            <li class="active">
-                <a class="" href="{% url 'dashboard:cliente:cliente_list' %}">
-                    <i class="fa fa-user-circle-o" aria-hidden="true"></i>
-                    <span>Clientes</span>
-                </a>
-            </li>
-            <li class="active">
-                <a class="" href="{% url 'dashboard:conductor:conductor_list' %}">
+          <li class="sub-menu">
+            <a class="" href="{% url 'dashboard:planilla:planilla_list' %}">
+                <i class="fa fa-th" aria-hidden="true"></i>
+                <span>Planilla</span>
+            </a>
+          </li>
+          <li class="sub-menu">
+              <a class="" href="javascript:;">
+                  <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+                  <span>Clientes</span>
+                  <i class="fa fa-sort-desc sub-menu-icon" aria-hidden="true"></i>
+              </a>
+              <ul class="sub">
+                  <li>
+                    <a class="" href="{% url 'dashboard:cliente:cliente_new' %}">
+                      <i class="fa fa-plus sub-icon" aria-hidden="true"></i>Nuevo Cliente
+                    </a>
+                  </li>
+                  <li>
+                    <a class="" href="{% url 'dashboard:cliente:cliente_list' %}">
+                      <i class="fa fa-list sub-icon" aria-hidden="true"></i>Listar Cliente
+                    </a>
+                  </li>
+              </ul>
+          </li>
+            <li class="sub-menu">
+                <a class="" href="javascript:;">
                     <i class="fa fa-id-card-o" aria-hidden="true"></i>
                     <span>Conductores</span>
+                    <i class="fa fa-sort-desc sub-menu-icon" aria-hidden="true"></i>
                 </a>
+                <ul class="sub">
+                    <li>
+                      <a class="" href="{% url 'dashboard:conductor:conductor_new' %}">
+                        <i class="fa fa-plus sub-icon" aria-hidden="true"></i>Nuevo Conductor
+                      </a>
+                    </li>
+                    <li>
+                      <a class="" href="{% url 'dashboard:conductor:conductor_list' %}">
+                        <i class="fa fa-list sub-icon" aria-hidden="true"></i>Listar Conductores
+                      </a>
+                    </li>
+                </ul>
             </li>
-            <li class="active">
-                <a class="" href="{% url 'dashboard:vehiculo:vehiculo_list' %}">
+            <li class="sub-menu">
+                <a class="" href="javascript:;">
                     <i class="fa fa-bus" aria-hidden="true"></i>
                     <span>Vehiculos</span>
+                    <i class="fa fa-sort-desc sub-menu-icon" aria-hidden="true"></i>
                 </a>
+                <ul class="sub">
+                    <li>
+                      <a class="" href="{% url 'dashboard:vehiculo:vehiculo_new' %}">
+                        <i class="fa fa-plus sub-icon" aria-hidden="true"></i>Nuevo Vehiculo
+                      </a>
+                    </li>
+                    <li>
+                      <a class="" href="{% url 'dashboard:vehiculo:vehiculo_list' %}">
+                        <i class="fa fa-list sub-icon" aria-hidden="true"></i>Listar Vehiculos
+                      </a>
+                    </li>
+                </ul>
             </li>
-            <li>
-                <a class="" href="{% url 'dashboard:ruta:ruta_list' %}">
+            <li class="sub-menu">
+                <a class="" href="javascript:;">
                     <i class="fa fa-arrows-h" aria-hidden="true"></i>
                     <span>Rutas</span>
+                    <i class="fa fa-sort-desc sub-menu-icon" aria-hidden="true"></i>
                 </a>
+                <ul class="sub">
+                    <li>
+                      <a class="" href="{% url 'dashboard:ruta:ruta_new' %}">
+                        <i class="fa fa-plus sub-icon" aria-hidden="true"></i>Nueva Ruta
+                      </a>
+                    </li>
+                    <li>
+                      <a class="" href="{% url 'dashboard:ruta:ruta_list' %}">
+                        <i class="fa fa-list sub-icon" aria-hidden="true"></i>Listar Rutas
+                      </a>
+                    </li>
+                </ul>
             </li>
             <li class="active">
                 <a class="" href="{% url 'dashboard:planilla:planilla_list' %}">
@@ -172,9 +227,9 @@
     <!-- end messages success -->
     {% endblock %}
 
-      <!--overview start-->
+    <!--overview start-->
     <div class="row" style="padding-bottom: 10px;">
-			<div class="col-lg-12">
+			<div class="">
 				<ol class="breadcrumb">
 					<li><i class="fa fa-home"></i><a href="{% url 'dashboard:index' %}">Home</a></li>
           {% block overview %}
@@ -243,7 +298,7 @@
         <div class="modal-body">
           <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
-              <form action="{% url 'dashboard:cliente:cliente_import' %}" id="upload" class="dropzone" method="post" enctype="multipart/form-data">
+              <form action="{% block url_upload %}{% endblock%}" id="upload" class="dropzone" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
               </form>
             </div>
@@ -307,14 +362,11 @@
     <script src="{% static 'tenant/js/dashboard.js' %}"></script>
 
     <!-- turbolinks -->
-    <script src="{% static 'tenant/js/turbolinks.js' %}"></script>
+    <!-- <script src="{% static 'tenant/js/turbolinks.js' %}"></script> -->
 
     <!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> -->
 
-
     {% block extrajs %}
     {% endblock %}
-
-
   </body>
 </html>

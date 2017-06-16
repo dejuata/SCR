@@ -1,21 +1,10 @@
 {% extends 'base/base_dashboard.html' %}
 {% load staticfiles %}
 
-{% block extrastatic %}
-<style>
-  .display-flex{
-    display: flex;
-    justify-content: space-between;
-  }
-</style>
-{% endblock %}
-
 {% block overview %}
-<li><i class="fa fa-laptop"></i><a href="{% url 'dashboard:vehiculo:vehiculo_list'%}">Vehiculos</a></li>
-<li><i class="fa fa-laptop"></i>Nuevo</li>
+<li><i class="fa fa-bus" aria-hidden="true"></i><a href="{% url 'dashboard:vehiculo:vehiculo_list'%}">Vehiculos</a></li>
+<li><i class="fa fa-plus"></i>Nuevo</li>
 {% endblock %}
-
-
 
 {% block content %}
 <!-- messages success -->
@@ -65,7 +54,7 @@
     </ul>
     <!-- end menu tabs -->
 
-    <form enctype="multipart/form-data" method="post" class="form-horizontal" data-toggle="validator">
+    <form enctype="multipart/form-data" method="post" data-toggle="validator">
     {% csrf_token %}
       <!-- tabs -->
       <div id="myTabContent" class="tab-content">
@@ -127,35 +116,31 @@
         <!-- licensia transito -->
         <div class="tab-pane fade" id="licencia_transito">
           <br>
-          <div class="col-md-12">
-            <div class="form-group has-feedback text-left col-md-5">
-              <strong>Numero de licencia transito</strong>
-              {{ form.num_licencia_transito.erros }}
-              {{ form.num_licencia_transito }}
+          <div class="row">
+            <div class="form-group has-feedback text-left col-md-6">
+              <strong>Número de licencia de tránsito</strong>
+              {{ form.numero_licencia_transito.erros }}
+              {{ form.numero_licencia_transito }}
               <div class="help-block with-errors"></div>
             </div>
 
-            <div class="col-md-1"></div>
-
-            <div class="form-group has-feedback text-left col-md-5">
-              <strong>Archivo PDF LT</strong>
-              {{ form.doc_licencia_transito.erros }}
-              {{ form.doc_licencia_transito }}
+            <div class="form-group has-feedback text-left col-md-6">
+              <strong>Archivo PDF licencia de tránsito</strong>
+              {{ form.documento_licencia_transito.erros }}
+              {{ form.documento_licencia_transito }}
               <div class="help-block with-errors"></div>
             </div>
           </div>
 
-          <div class="col-md-12">
-            <div class="form-group has-feedback text-left col-md-5">
+          <div class="row">
+            <div class="form-group has-feedback text-left col-lg-6">
               <strong>Organismo de transito</strong>
               {{ form.organismo_transito.erros }}
               {{ form.organismo_transito }}
               <div class="help-block with-errors"></div>
             </div>
 
-            <div class="col-md-1"></div>
-
-            <div class="form-group has-feedback text-left col-md-5">
+            <div class="form-group has-feedback text-left col-lg-6">
               <strong>Fecha de expedición</strong>
               {{ form.fecha_expedicion.erros }}
               {{ form.fecha_expedicion }}
@@ -163,17 +148,15 @@
             </div>
           </div>
 
-          <div class="col-md-12">
-            <div class="form-group has-feedback text-left col-md-5">
+          <div class="row">
+            <div class="form-group has-feedback text-left col-lg-6">
               <strong>Marca</strong>
               {{ form.marca.erros }}
               {{ form.marca }}
               <div class="help-block with-errors"></div>
             </div>
 
-            <div class="col-md-1"></div>
-
-            <div class="form-group has-feedback text-left col-md-5">
+            <div class="form-group has-feedback text-left col-lg-6">
               <strong>Linea</strong>
               {{ form.linea.erros }}
               {{ form.linea }}
@@ -181,17 +164,15 @@
             </div>
           </div>
 
-          <div class="col-md-12">
-            <div class="form-group has-feedback text-left col-md-5">
+          <div class="row">
+            <div class="form-group has-feedback text-left col-lg-6">
               <strong>Cilindraje</strong>
               {{ form.cilindraje.erros }}
               {{ form.cilindraje }}
               <div class="help-block with-errors"></div>
             </div>
 
-            <div class="col-md-1"></div>
-
-            <div class="form-group has-feedback text-left col-md-5">
+            <div class="form-group has-feedback text-left col-lg-6">
               <strong>Modelo</strong>
               {{ form.modelo.erros }}
               {{ form.modelo }}
@@ -199,17 +180,15 @@
             </div>
           </div>
 
-          <div class="col-md-12">
-            <div class="form-group has-feedback text-left col-md-5">
+          <div class="row">
+            <div class="form-group has-feedback text-left col-lg-6">
               <strong>Clase de vehiculo</strong>
               {{ form.clase_vehiculo.erros }}
               {{ form.clase_vehiculo }}
               <div class="help-block with-errors"></div>
             </div>
 
-            <div class="col-md-1"></div>
-
-            <div class="form-group has-feedback text-left col-md-5">
+            <div class="form-group has-feedback text-left col-lg-6">
               <strong>Color</strong>
               {{ form.color.erros }}
               {{ form.color }}
@@ -217,17 +196,15 @@
             </div>
           </div>
 
-          <div class="col-md-12">
-            <div class="form-group has-feedback text-left col-md-5">
+          <div class="row">
+            <div class="form-group has-feedback text-left col-lg-6">
               <strong>Tipo de servicio</strong>
               {{ form.tipo_servicio.erros }}
               {{ form.tipo_servicio }}
               <div class="help-block with-errors"></div>
             </div>
 
-            <div class="col-md-1"></div>
-
-            <div class="form-group has-feedback text-left col-md-5">
+            <div class="form-group has-feedback text-left col-lg-6">
               <strong>Tipo Carroceria</strong>
               {{ form.carroceria.erros }}
               {{ form.carroceria }}
@@ -235,35 +212,31 @@
             </div>
           </div>
 
-          <div class="col-md-12">
-            <div class="form-group has-feedback text-left col-md-5">
+          <div class="row">
+            <div class="form-group has-feedback text-left col-lg-6">
               <strong>Capacidad</strong>
               {{ form.capacidad.erros }}
               {{ form.capacidad }}
               <div class="help-block with-errors"></div>
             </div>
 
-            <div class="col-md-1"></div>
-
-            <div class="form-group has-feedback text-left col-md-5">
+            <div class="form-group has-feedback text-left col-lg-6">
               <strong>Numero de motor</strong>
-              {{ form.num_motor.erros }}
-              {{ form.num_motor }}
+              {{ form.numero_motor.erros }}
+              {{ form.numero_motor }}
               <div class="help-block with-errors"></div>
             </div>
           </div>
 
-          <div class="col-md-12">
-            <div class="form-group has-feedback text-left col-md-5">
+          <div class="row">
+            <div class="form-group has-feedback text-left col-lg-6">
               <strong>Numero de chasis</strong>
-              {{ form.num_chasis.erros }}
-              {{ form.num_chasis }}
+              {{ form.numero_chasis.erros }}
+              {{ form.numero_chasis }}
               <div class="help-block with-errors"></div>
             </div>
 
-            <div class="col-md-1"></div>
-
-            <div class="form-group has-feedback text-left col-md-5">
+            <div class="form-group has-feedback text-left col-lg-6">
               <strong>Nombre propietario</strong>
               {{ form.propietario.erros }}
               {{ form.propietario }}
@@ -271,16 +244,16 @@
             </div>
           </div>
 
-          <div class="col-md-12">
-            <div class="form-group has-feedback text-left col-md-5">
-              <strong>Identificacion propietario</strong>
+          <div class="row">
+            <div class="form-group has-feedback text-left col-lg-6">
+              <strong>Identificación propietario</strong>
               {{ form.id_propietario.erros }}
               {{ form.id_propietario }}
               <div class="help-block with-errors"></div>
             </div>
           </div>
 
-          <div class="form-group text-right col-md-12">
+          <div class="form-group text-right col-lg-12">
             <a class="btn btn-primary " href="#tarjeta_operacion" data-toggle="tab" aria-expanded="false" onclick="tabActive('#tarjetaOperacion')">Siguiente</a>
           </div>
         </div>
@@ -289,53 +262,47 @@
         <!-- tarjeta operacion -->
         <div class="tab-pane fade" id="tarjeta_operacion">
           <br>
-          <div class="col-md-12">
-            <div class="form-group has-feedback text-left col-md-5">
+          <div class="row">
+            <div class="form-group has-feedback text-left col-lg-6">
               <strong>Numero tarjeta de operacion</strong>
-              {{ form.num_tarjeta_operacion.erros }}
-              {{ form.num_tarjeta_operacion }}
+              {{ form.numero_tarjeta_operacion.erros }}
+              {{ form.numero_tarjeta_operacion }}
               <div class="help-block with-errors"></div>
             </div>
 
-            <div class="col-md-1"></div>
-
-            <div class="form-group has-feedback text-left col-md-5">
+            <div class="form-group has-feedback text-left col-lg-6">
               <strong>Archivo PDF TO</strong>
-              {{ form.doc_to.erros }}
-              {{ form.doc_to }}
+              {{ form.documento_tarjeta_operacion.erros }}
+              {{ form.documento_tarjeta_operacion }}
               <div class="help-block with-errors"></div>
             </div>
           </div>
 
-          <div class="col-md-12">
-            <div class="form-group has-feedback text-left col-md-5">
+          <div class="row">
+            <div class="form-group has-feedback text-left col-lg-6">
               <strong>Fecha de expedicion</strong>
-              {{ form.fecha_inicio_to.erros }}
-              {{ form.fecha_inicio_to }}
+              {{ form.fecha_inicio_tarjeta_operacion.erros }}
+              {{ form.fecha_inicio_tarjeta_operacion }}
               <div class="help-block with-errors"></div>
             </div>
 
-            <div class="col-md-1"></div>
-
-            <div class="form-group has-feedback text-left col-md-5">
+            <div class="form-group has-feedback text-left col-lg-6">
               <strong>Fecha de vencimiento</strong>
-              {{ form.fecha_vencimiento_to.erros }}
-              {{ form.fecha_vencimiento_to }}
+              {{ form.fecha_vencimiento_tarjeta_operacion.erros }}
+              {{ form.fecha_vencimiento_tarjeta_operacion }}
               <div class="help-block with-errors"></div>
             </div>
           </div>
 
-          <div class="col-md-12">
-            <div class="form-group has-feedback text-left col-md-5">
+          <div class="row">
+            <div class="form-group has-feedback text-left col-lg-6">
               <strong>Empresa afiliado</strong>
               {{ form.empresa_afiliado.erros }}
               {{ form.empresa_afiliado }}
               <div class="help-block with-errors"></div>
             </div>
 
-            <div class="col-md-1"></div>
-
-            <div class="form-group has-feedback text-left col-md-5">
+            <div class="form-group has-feedback text-left col-lg-6">
               <strong>Nit empresa afiliado</strong>
               {{ form.id_empresa_afiliado.erros }}
               {{ form.id_empresa_afiliado }}
@@ -343,7 +310,7 @@
             </div>
           </div>
 
-          <div class="form-group text-right col-md-12">
+          <div class="form-group text-right col-lg-12">
             <a class="btn btn-primary " href="#soat" data-toggle="tab" aria-expanded="false" onclick="tabActive('#SOAT')">Siguiente</a>
           </div>
         </div>
@@ -352,35 +319,31 @@
         <!-- soat -->
         <div class="tab-pane fade" id="soat">
           <br>
-          <div class="col-md-12">
-            <div class="form-group has-feedback text-left col-md-5">
+          <div class="row">
+            <div class="form-group has-feedback text-left col-lg-6">
               <strong>Numero de SOAT</strong>
-              {{ form.num_soat.erros }}
-              {{ form.num_soat }}
+              {{ form.numero_soat.erros }}
+              {{ form.numero_soat }}
               <div class="help-block with-errors"></div>
             </div>
 
-            <div class="col-md-1"></div>
-
-            <div class="form-group has-feedback text-left col-md-5">
+            <div class="form-group has-feedback text-left col-lg-6">
               <strong>Archivo PDF Soat</strong>
-              {{ form.doc_soat.erros }}
-              {{ form.doc_soat }}
+              {{ form.documento_soat.erros }}
+              {{ form.documento_soat }}
               <div class="help-block with-errors"></div>
             </div>
           </div>
 
-          <div class="col-md-12">
-            <div class="form-group has-feedback text-left col-md-5">
+          <div class="row">
+            <div class="form-group has-feedback text-left col-lg-6">
               <strong>Fecha de expedicion</strong>
               {{ form.fecha_inicio_soat.erros }}
               {{ form.fecha_inicio_soat }}
               <div class="help-block with-errors"></div>
             </div>
 
-            <div class="col-md-1"></div>
-
-            <div class="form-group has-feedback text-left col-md-5">
+            <div class="form-group has-feedback text-left col-lg-6">
               <strong>Fecha de vencimiento</strong>
               {{ form.fecha_vencimiento_soat.erros }}
               {{ form.fecha_vencimiento_soat }}
@@ -388,8 +351,8 @@
             </div>
           </div>
 
-          <div class="col-md-12">
-            <div class="form-group has-feedback text-left col-md-5">
+          <div class="row">
+            <div class="form-group has-feedback text-left col-lg-6">
               <strong>Aseguradora</strong>
               {{ form.aseguradora_soat.erros }}
               {{ form.aseguradora_soat }}
@@ -397,7 +360,7 @@
             </div>
           </div>
 
-          <div class="form-group text-right col-md-12">
+          <div class="form-group text-right col-lg-12">
             <a class="btn btn-primary " href="#rtm" data-toggle="tab" aria-expanded="false" onclick="tabActive('#RTM')">Siguiente</a>
           </div>
         </div>
@@ -406,35 +369,31 @@
         <!-- rtm -->
         <div class="tab-pane fade" id="rtm">
           <br>
-          <div class="col-md-12">
-            <div class="form-group has-feedback text-left col-md-5">
+          <div class="row">
+            <div class="form-group has-feedback text-left col-lg-6">
               <strong>Numero de revision tecnico mecanica</strong>
-              {{ form.num_certificado_rtm.erros }}
-              {{ form.num_certificado_rtm }}
+              {{ form.numero_certificado_rtm.erros }}
+              {{ form.numero_certificado_rtm }}
               <div class="help-block with-errors"></div>
             </div>
 
-            <div class="col-md-1"></div>
-
-            <div class="form-group has-feedback text-left col-md-5">
+            <div class="form-group has-feedback text-left col-lg-6">
               <strong>Archivo PDF Rtm</strong>
-              {{ form.doc_rtm.erros }}
-              {{ form.doc_rtm }}
+              {{ form.documento_rtm.erros }}
+              {{ form.documento_rtm }}
               <div class="help-block with-errors"></div>
             </div>
           </div>
 
-          <div class="col-md-12">
-            <div class="form-group has-feedback text-left col-md-5">
+          <div class="row">
+            <div class="form-group has-feedback text-left col-lg-6">
               <strong>Fecha de expedicion</strong>
               {{ form.fecha_inicio_rtm.erros }}
               {{ form.fecha_inicio_rtm }}
               <div class="help-block with-errors"></div>
             </div>
 
-            <div class="col-md-1"></div>
-
-            <div class="form-group has-feedback text-left col-md-5">
+            <div class="form-group has-feedback text-left col-lg-6">
               <strong>Fecha de expedicion</strong>
               {{ form.fecha_vencimiento_rtm.erros }}
               {{ form.fecha_vencimiento_rtm }}
@@ -442,16 +401,16 @@
             </div>
           </div>
 
-          <div class="col-md-12">
-            <div class="form-group has-feedback text-left col-md-5">
+          <div class="row">
+            <div class="form-group has-feedback text-left col-lg-6">
               <strong>Centro de diagnostico Automotriz</strong>
-              {{ form.cda.erros }}
-              {{ form.cda }}
+              {{ form.centro_diagnostico_automotriz.erros }}
+              {{ form.centro_diagnostico_automotriz }}
               <div class="help-block with-errors"></div>
             </div>
           </div>
 
-          <div class="form-group text-right col-md-12">
+          <div class="form-group text-right col-lg-12">
             <a class="btn btn-primary " href="#polizas" data-toggle="tab" aria-expanded="false" onclick="tabActive('#Polizas')">Siguiente</a>
           </div>
         </div>
@@ -460,35 +419,31 @@
         <!-- polizas -->
         <div class="tab-pane fade" id="polizas">
           <br>
-          <div class="col-md-12">
-            <div class="form-group has-feedback text-left col-md-5">
+          <div class="row">
+            <div class="form-group has-feedback text-left col-lg-6">
               <strong>Numero de Polizas Rcc y Rce</strong>
               {{ form.numero_polizas_rce_rcc.erros }}
               {{ form.numero_polizas_rce_rcc }}
               <div class="help-block with-errors"></div>
             </div>
 
-            <div class="col-md-1"></div>
-
-            <div class="form-group has-feedback text-left col-md-5">
-              <strong>Archivo PDF PolizasRce_Rcc</strong>
-              {{ form.doc_polizas_rce_rcc.erros }}
-              {{ form.doc_polizas_rce_rcc }}
+            <div class="form-group has-feedback text-left col-lg-6">
+              <strong>Archivo PDF Polizas Rce y Rcc</strong>
+              {{ form.documento_polizas_rce_rcc.erros }}
+              {{ form.documento_polizas_rce_rcc }}
               <div class="help-block with-errors"></div>
             </div>
           </div>
 
-          <div class="col-md-12">
-            <div class="form-group has-feedback text-left col-md-5">
+          <div class="row">
+            <div class="form-group has-feedback text-left col-lg-6">
               <strong>Fecha de expedicion</strong>
               {{ form.fecha_inicio_rce_rcc.erros }}
               {{ form.fecha_inicio_rce_rcc }}
               <div class="help-block with-errors"></div>
             </div>
 
-            <div class="col-md-1"></div>
-
-            <div class="form-group has-feedback text-left col-md-5">
+            <div class="form-group has-feedback text-left col-lg-6">
               <strong>Fecha de vencimiento</strong>
               {{ form.fecha_vencimiento_rce_rcc.erros }}
               {{ form.fecha_vencimiento_rce_rcc }}
@@ -496,8 +451,8 @@
             </div>
           </div>
 
-          <div class="col-md-12">
-            <div class="form-group has-feedback text-left col-md-5">
+          <div class="row">
+            <div class="form-group has-feedback text-left col-lg-6">
               <strong>Aseguradora</strong>
               {{ form.aseguradora_rce_rcc.erros }}
               {{ form.aseguradora_rce_rcc }}
@@ -505,7 +460,7 @@
             </div>
           </div>
 
-          <div class="form-group text-right col-md-12">
+          <div class="form-group text-right col-lg-12">
             <button class="btn btn-primary " type="submit">Guardar</button>
           </div>
         </div>

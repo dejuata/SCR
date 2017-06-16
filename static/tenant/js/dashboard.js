@@ -22,14 +22,29 @@ $(document).ready(function() {
     no_label: false
   });
 
+  // Cerrar mensajes de alerta
   $(".alert").fadeIn("slow").delay(2000).fadeOut("slow");
+  // Inicializar el calendario
   $('.datepicker').pikaday({ firstDay: 1 });
   $('#id_file').addClass('inputfile');
+
 
   function tabActive(id){
     $('.active').removeClass('active');
     $(id).addClass('active')
   }
+
+  // Cambiar iconos del toolbar table por los de fontawesome
+  $("i").remove(".glyphicon");
+  $("button[name='refresh']").prepend('<i class="fa fa-refresh" aria-hidden="true"></i>');
+  $("button[name='toggle']").prepend('<i class="fa fa-list" aria-hidden="true"></i>');
+
+  var keep_open = $('.keep-open').children('button');
+  $(keep_open).prepend('<i class="fa fa-th" aria-hidden="true"></i> ');
+
+  var btn_export = $('.export').children('button');
+  $(btn_export).prepend('<i class="fa fa-download" aria-hidden="true"></i> ');
+
 
   // Configuracion de la libreria dropzone.js
   // para subir archivos drap and drop
@@ -65,6 +80,8 @@ $(document).ready(function() {
       });
       // Cerrar el modal
       $('#modalUpload').modal('hide')
+      location.href = window.location;
+      // console.log()
       console.log(request)
     }
   };

@@ -19,7 +19,7 @@
         </a>
         <!-- end upload file -->
         <!-- download file -->
-        <a href="{% url 'dashboard:cliente:cliente_export' %}" id="download" class="btn btn-default">
+        <a href="{% block url_download %}{% endblock%}" id="download" class="btn btn-default">
           <i class="fa fa-file-excel-o table-btn-padding-right" aria-hidden="true"></i>Excel
         </a>
         <!-- end download file -->
@@ -98,7 +98,5 @@
       });
     });
   }
-  
-
 </script>
 {% endblock %}

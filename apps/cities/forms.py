@@ -26,3 +26,7 @@ def ciudad_widget():
         )
     )
     return ciudad
+
+
+class UploadFileForm(forms.Form):
+    file = forms.FileField()

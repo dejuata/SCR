@@ -6,7 +6,8 @@ Directions service
 {% endblock %}
 
 {% block overview %}
-<li><i class="fa fa-arrows-h" aria-hidden="true"></i>Rutas</li>
+<li><i class="fa fa-arrows-h" aria-hidden="true"></i><a href="{% url 'dashboard:ruta:ruta_list'%}">Rutas</a></li>
+<li><i class="fa fa-plus"></i>Nuevo</li>
 {% endblock%}
 
 {% block content %}
@@ -32,15 +33,17 @@ Directions service
 
 <section class="panel">
   {% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-    {% endfor %}
-</ul>
-{% endif %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+  {% endif %}
+
   <header class="panel-heading">
     Nueva Ruta
   </header>
+
   <div class="panel-body">
 
     <ul class="nav nav-tabs">
@@ -48,65 +51,62 @@ Directions service
       <li><a href="#info" data-toggle="tab">Info Ruta</a></li>
     </ul>
 
-    <form enctype="multipart/form-data" method="post" class="form-horizontal" data-toggle="validator">
+    <form enctype="multipart/form-data" method="post" data-toggle="validator">
     {% csrf_token %}
 
       <div id="myTabContent" class="tab-content">
 
         <!-- ruta -->
         <div class="tab-pane fade active in" id="ruta">
-          <br>
+        <br>
+
+          <div class="row">
+
+            <div class="form-group has-feedback text-left col-lg-5">
+              <strong>Origen:</strong>
+              {{ form.origen.erros }}
+              {{ form.origen }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+
+            <div class="form-group has-feedback text-left  col-lg-5">
+              <strong>Destino:</strong>
+              {{ form.destino.erros }}
+              {{ form.destino }}
+              <div class="help-block with-errors"></div>
+            </div>
+
+            {{ form.link_ruta.erros }}
+            {{ form.link_ruta }}
+
+            <div class="form-group col-lg-2">
+              <br>
+              <button class="btn btn-primary " onclick="initMap(); return false">Calcular ruta</button>
+            </div>
+          </div>
 
           <div class="row">
             <div class="col-md-12">
-
-              <div class="form-group has-feedback text-left col-md-4">
-                <strong>Origen:</strong>
-                {{ form.origen.erros }}
-                {{ form.origen }}
-                <div class="help-block with-errors"></div>
-              </div>
-
-              <div class="form-group has-feedback text-left  col-md-4 left-input">
-                <strong>Destino:</strong>
-                {{ form.destino.erros }}
-                {{ form.destino }}
-                <div class="help-block with-errors"></div>
-              </div>
-
-                {{ form.link_ruta.erros }}
-                {{ form.link_ruta }}
-
-
-
-
-              <div class="form-group ">
-                <br>
-                <button class="btn btn-primary left-input" onclick="initMap(); return false">Calcular ruta</button>
-              </div>
-
-            </div>
-
-            <div class="col-md-12">
               <div id="map"></div>
             </div>
-
           </div>
+
         </div>
         <!-- end ruta -->
 
         <!-- info ruta -->
         <div class="tab-pane fade" id="info">
           <br>
-          <div class="col-md-12">
-            <div class="form-group has-feedback text-left col-md-6">
+          <div class="row">
+            <div class="form-group has-feedback text-left col-lg-6">
               <strong>Cliente:</strong>
               {{ form.nit.erros }}
               {{ form.nit }}
               <div class="help-block with-errors"></div>
             </div>
 
-            <div class="form-group has-feedback text-left left-input col-md-6">
+            <div class="form-group has-feedback text-left col-lg-6">
               <strong>Codigo de ruta:</strong>
               {{ form.codigo_ruta.erros }}
               {{ form.codigo_ruta }}
@@ -114,15 +114,15 @@ Directions service
             </div>
           </div>
 
-          <div class="col-md-12">
-            <div class="form-group has-feedback text-left col-md-6">
+          <div class="row">
+            <div class="form-group has-feedback text-left col-lg-6">
               <strong>Nombre Ruta:</strong>
               {{ form.nombre_ruta.erros }}
               {{ form.nombre_ruta }}
               <div class="help-block with-errors"></div>
             </div>
 
-            <div class="form-group has-feedback text-left left-input col-md-6">
+            <div class="form-group has-feedback text-left col-lg-6">
               <strong>Tipo de viaje:</strong>
               {{ form.tipo_viaje.erros }}
               {{ form.tipo_viaje }}
@@ -130,15 +130,15 @@ Directions service
             </div>
           </div>
 
-          <div class="col-md-12">
-            <div class="form-group has-feedback  col-md-6">
+          <div class="row">
+            <div class="form-group has-feedback col-md-6">
               <strong>Tipo de ruta:</strong>
               {{ form.tipo_ruta.erros }}
               {{ form.tipo_ruta }}
               <div class="help-block with-errors"></div>
             </div>
 
-            <div class="form-group has-feedback text-left left-input col-md-6">
+            <div class="form-group has-feedback text-left col-lg-6">
               <strong>Tipo de vehiculo:</strong>
               {{ form.tipo_vehiculo_requerido.erros }}
               {{ form.tipo_vehiculo_requerido }}
@@ -146,33 +146,31 @@ Directions service
             </div>
           </div>
 
-          <div class="col-md-12">
-            <div class="form-group has-feedback text-left col-md-6">
+          <div class="row">
+            <div class="form-group has-feedback text-left col-lg-6">
               <strong>Hora Inicio</strong>
               {{ form.hora_inicio.erros }}
               {{ form.hora_inicio }}
-              <!--<input type="Time" class="form-control" name="hora_Inicio" data-error="Ingrese la hora de inicio de la ruta" required>-->
               <div class="help-block with-errors"></div>
             </div>
 
-            <div class="form-group has-feedback text-left left-input col-md-6">
+            <div class="form-group has-feedback text-left col-lg-6">
               <strong>Hora Fin</strong>
               {{ form.hora_fin.erros }}
               {{ form.hora_fin }}
-              <!--<input type="Time" class="form-control" name="hora_Fin" data-error="Ingrese la hora de finalizacion de la ruta" required>-->
               <div class="help-block with-errors"></div>
             </div>
           </div>
 
-          <div class="col-md-12">
-            <div class="form-group has-feedback text-left col-md-6">
+          <div class="row">
+            <div class="form-group has-feedback text-left col-lg-6">
               <strong>Valor Adicional/Hora:</strong>
               {{ form.valor_hora_adicional.erros }}
               {{ form.valor_hora_adicional }}
               <div class="help-block with-errors"></div>
             </div>
 
-            <div class="form-group has-feedback text-left left-input col-md-6">
+            <div class="form-group has-feedback text-left col-lg-6">
               <strong>Valor Ruta:</strong>
               {{ form.valor_ruta.erros }}
               {{ form.valor_ruta }}
@@ -180,15 +178,15 @@ Directions service
             </div>
           </div>
 
-          <div class="col-md-12">
-            <div class="form-group has-feedback text-left col-md-6">
+          <div class="row">
+            <div class="form-group has-feedback text-left col-lg-6">
               <strong>Valor Tercero:</strong>
               {{ form.valor_tercero.erros }}
               {{ form.valor_tercero }}
               <div class="help-block with-errors"></div>
             </div>
 
-            <div class="form-group has-feedback text-left left-input col-md-6">
+            <div class="form-group has-feedback text-left col-lg-6">
               <strong>Comision Conductor:</strong>
               {{ form.comision_conductor.erros }}
               {{ form.comision_conductor }}
@@ -196,8 +194,8 @@ Directions service
             </div>
           </div>
 
-          <div class="col-md-12">
-            <div class="form-group has-feedback text-left col-md-6">
+          <div class="row">
+            <div class="form-group has-feedback text-left col-lg-6">
               <strong>Kilometros(Km):</strong>
               {{ form.kilometros.erros }}
               {{ form.kilometros }}
@@ -206,7 +204,7 @@ Directions service
             </div>
           </div>
 
-          <div class="form-group text-right col-md-12">
+          <div class="form-group text-right col-lg-12">
             <button class="btn btn-primary " type="submit">Guardar</button>
           </div>
 
@@ -216,116 +214,10 @@ Directions service
     </form>
   </div>
 </section>
-
-<script>
-  function initMap() {
-		var ruta = new Array();
-		var map = new google.maps.Map(document.getElementById('map'), {
-			zoom: 6,
-			center: {lat: 4.159746996685188, lng: -72.93036419999999}//Colombia
-		});
-		var directionsService = new google.maps.DirectionsService;
-		var directionsDisplay = new google.maps.DirectionsRenderer({
-			draggable: true,
-			map: map,
-			panel: document.getElementById('right-panel')
-		});
-
-		directionsDisplay.addListener('directions_changed', function() {
-			  document.getElementById('linkRuta').value = '';
-			  computeTotalDistance(directionsDisplay.getDirections());
-			  computeGeocode(directionsDisplay.getDirections(),ruta);
-		});
-
-		if(document.getElementById('origen').value !="" && document.getElementById('destino').value !="" && document.getElementById('linkRuta').value =="")
-		{
-      var origen = document.getElementById('origen').value;
-    	var destino = document.getElementById('destino').value;
-			displayRoute(origen, destino, directionsService,
-				directionsDisplay);
-		}
-    if(document.getElementById('origen').value !="" && document.getElementById('destino').value !="" && document.getElementById('linkRuta').value !="")
-    {
-
-      var routeTxt = document.getElementById('linkRuta').value;
-			ruta = routeTxt.split(";");
-			var origen = ruta[0];
-			var destino = ruta[ruta.length-1]
-			var waypts = [];
-			for (var i = 1; i < ruta.length-1; i++) {
-				waypts.push({
-				stopover: true,
-				location:{'placeId':ruta[i]}
-				});
-			}
-			displayRouteWaypts(origen, destino, directionsService,
-				directionsDisplay, waypts);
-    }
-	}
-
-  //SE DEFINEN FUNCIONES
-  function displayRoute(origin, destination, service, display) {
-    service.route({
-      origin: origin,
-      destination: destination,
-      //waypoints: [{location: origin},{location: origin}],
-      travelMode: 'DRIVING',
-      avoidTolls: true
-    },function(response, status) {
-      if (status === 'OK') {
-        display.setDirections(response);
-      } else {
-        alert('Could not display directions due to: ' + status);
-      }
-      });
-  }
+{% endblock %}
 
 
-  function displayRouteWaypts(origin, destination, service, display, waypts) {
-		service.route({
-			origin: {'placeId':origin},//PARA CONSULTAR
-			destination: {'placeId':destination},//PARA CONSULTAR
-			waypoints: waypts,//PLACE_ID
-			travelMode: 'DRIVING',
-			avoidTolls: true
-		},function(response, status) {
-			if (status === 'OK') {
-				display.setDirections(response);
-			} else {
-				alert('Could not display directions due to: ' + status);
-			}
-		  });
-	}
-
-
-  function computeTotalDistance(result) {
-		var total = 0;
-		var myroute = result.routes[0];
-		for (var i = 0; i < myroute.legs.length; i++) {
-			total += myroute.legs[i].distance.value;
-		}
-		total = total / 1000;
-		document.getElementById('kilometros').value = total;
-	}
-
-
-  function computeGeocode(result,ruta) {
-		var address;
-		var geocoder = new google.maps.Geocoder;
-		for (var i = 0; i < result.geocoded_waypoints.length; i++) {
-			ruta[i]=result.geocoded_waypoints[i].place_id;
-			if(i==result.geocoded_waypoints.length-1)
-			{
-				document.getElementById('linkRuta').value += result.geocoded_waypoints[i].place_id;
-			}
-			else
-			{
-				document.getElementById('linkRuta').value += result.geocoded_waypoints[i].place_id+';';
-			}
-		}
-	}
-</script>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBaIKmsLcBbdoH2hvM_Xc2tJ9UpTmXRZe0&callback=initMap">
-</script>
-
+{% block extrajs %}
+<script src="{% static 'tenant/js/ruta.js' %}"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBaIKmsLcBbdoH2hvM_Xc2tJ9UpTmXRZe0&callback=initMap"></script>
 {% endblock %}

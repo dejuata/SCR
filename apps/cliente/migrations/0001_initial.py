@@ -18,8 +18,8 @@ class Migration(migrations.Migration):
             fields=[
                 ('nit', models.IntegerField(primary_key=True, serialize=False)),
                 ('razon_social', models.CharField(max_length=50)),
-                ('logo', models.ImageField(blank=True, default='', null=True, upload_to='logo_media')),
-                ('telefono', models.IntegerField(null=True)),
+                ('logo', models.ImageField(blank=True, null=True, upload_to='logo_media')),
+                ('telefono', models.IntegerField()),
                 ('correo', models.EmailField(max_length=254)),
                 ('ciudad', models.CharField(default='', max_length=50)),
                 ('direccion', models.TextField()),

@@ -12,6 +12,36 @@ from .sorting import SortMixin
 import django_excel as excel
 
 
+class ClienteList(FormMixin, SortMixin, ListView):
+    model = Cliente
+    template_name = 'cliente/cliente_list.html'
+    form_class = UploadFileForm
+    default_sort_params = ('razon_social', 'asc')
+
+    def sort_queryset(self, qs, sort_by, order):
+        if sort_by == 'razon_social':
+            qs = qs.order_by('razon_social')
+        if order == 'desc':
+            qs = qs.reverse()
+        return qs
+
+
+class ClienteCreate(SuccessMessageMixin, CreateView):
+    model = Cliente
+    form_class = ClienteForm
+    template_name = 'cliente/cliente_form.html'
+    success_url = reverse_lazy('dashboard:cliente:cliente_list')
+    success_message = "El cliente fue creado exitosamente"
+
+
+class ClienteUpdate(SuccessMessageMixin, UpdateView):
+    model = Cliente
+    form_class = ClienteForm
+    template_name = 'cliente/cliente_form.html'
+    success_url = reverse_lazy('dashboard:cliente:cliente_list')
+    success_message = "El cliente fue editado exitosamente"
+
+
 def import_data(request):
     if request.method == 'POST':
         form = UploadFileForm(data=request.POST, files=request.FILES)
@@ -54,33 +84,3 @@ def export_data(request):
         'xls',
         file_name="clientes"
     )
-
-
-class ClienteList(FormMixin, SortMixin, ListView):
-    model = Cliente
-    template_name = 'cliente/cliente_list.html'
-    form_class = UploadFileForm
-    default_sort_params = ('razon_social', 'asc')
-
-    def sort_queryset(self, qs, sort_by, order):
-        if sort_by == 'razon_social':
-            qs = qs.order_by('razon_social')
-        if order == 'desc':
-            qs = qs.reverse()
-        return qs
-
-
-class ClienteCreate(SuccessMessageMixin, CreateView):
-    model = Cliente
-    form_class = ClienteForm
-    template_name = 'cliente/cliente_form.html'
-    success_url = reverse_lazy('dashboard:cliente:cliente_list')
-    success_message = "El cliente fue creado exitosamente"
-
-
-class ClienteUpdate(SuccessMessageMixin, UpdateView):
-    model = Cliente
-    form_class = ClienteForm
-    template_name = 'cliente/cliente_form.html'
-    success_url = reverse_lazy('dashboard:cliente:cliente_list')
-    success_message = "El cliente fue editado exitosamente"

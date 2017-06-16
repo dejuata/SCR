@@ -1,9 +1,12 @@
+
 import os
 from django.core.urlresolvers import reverse_lazy
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+from unipath import Path
 
+BASE_DIR = Path(__file__).ancestor(3)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
@@ -18,10 +21,7 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '.localhost']
 
 SHARED_APPS = (
     'django_tenants',
@@ -100,21 +100,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'scr.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/1.10/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django_tenants.postgresql_backend',
-        'NAME': 'scr_test',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
-}
-
 DATABASE_ROUTERS = (
     'django_tenants.routers.TenantSyncRouter',
 )
@@ -153,20 +138,6 @@ USE_TZ = True
 
 LOGIN_REDIRECT_URL = reverse_lazy('index')
 LOGOUT_REDIRECT_URL = '/'
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.10/howto/static-files/
-
-STATIC_URL = '/static/'
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "static"),
-)
-
-STATIC_ROOT = os.path.join(BASE_DIR, '..', 'static_collected')
-
-
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
 
 # Django JET
 
@@ -214,6 +185,48 @@ RECAPTCHA_PUBLIC_KEY = '6Lc_RB4UAAAAAIjVIJgONuqnMd3sVRZwLEVC_rvH'
 RECAPTCHA_PRIVATE_KEY = '6Lc_RB4UAAAAALGWluRsX4qP3TKNy-sw3eUFCYpd'
 
 # RECAPTCHA_PROXY = 'http://127.0.0.1:8000'
+
+
+# Django JET
+
+JET_DEFAULT_THEME = 'default'
+JET_THEMES = [
+    {
+        'theme': 'default',
+        'color': '#47bac1',
+        'title': 'Default'
+    },
+    {
+        'theme': 'green',
+        'color': '#44b78b',
+        'title': 'Green'
+    },
+    {
+        'theme': 'light-green',
+        'color': '#2faa60',
+        'title': 'Light Green'
+    },
+    {
+        'theme': 'light-violet',
+        'color': '#a464c4',
+        'title': 'Light Violet'
+    },
+    {
+        'theme': 'light-blue',
+        'color': '#5EADDE',
+        'title': 'Light Blue'
+    },
+    {
+        'theme': 'light-gray',
+        'color': '#222',
+        'title': 'Light Gray'
+    }
+]
+
+# JET_INDEX_DASHBOARD = 'dashboard.CustomIndexDashboard'
+# JET_APP_INDEX_DASHBOARD = 'dashboard.CustomAppIndexDashboard'
+
+JET_SIDE_MENU_COMPACT = True
 
 
 # django_tenants

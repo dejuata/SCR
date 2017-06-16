@@ -24,6 +24,7 @@ class Tenant(TenantMixin):
         verbose_name = _('tenant')
         verbose_name_plural = _('tenants')
 
+
     def __str__(self):
         return self.schema_name
 

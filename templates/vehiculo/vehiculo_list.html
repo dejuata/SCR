@@ -14,6 +14,14 @@ Nuevo Vehiculo
 {% url 'dashboard:vehiculo:vehiculo_new' %}
 {% endblock %}
 
+{% block url_upload %}
+{% url 'dashboard:vehiculo:vehiculo_import' %}
+{% endblock%}
+
+{% block url_download %}
+{% url 'dashboard:vehiculo:vehiculo_export' %}
+{% endblock%}
+
 {% block table-head %}
 <thead>
   <tr>
@@ -29,7 +37,6 @@ Nuevo Vehiculo
 {% endblock %}
 
 {% block table-body %}
-
 <tbody>
   {% if object_list %}
   {% for vehiculo in object_list %}
@@ -43,8 +50,6 @@ Nuevo Vehiculo
         <td>
           <div class="btn-group">
             <a class="btn btn-primary" href="{% url 'dashboard:vehiculo:vehiculo_edit' vehiculo.placa %}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-          </div>
-          <div class="btn-group">
             <a onclick="change_status('{{ vehiculo.placa }}', '{{ csrf_token }}', '{% url 'dashboard:vehiculo:vehiculo_delete' %}', '{% url 'dashboard:vehiculo:vehiculo_list' %}')" class="btn btn-danger" data-toggle="modal" data-target="#modalEmergente"><i class="fa fa-ban" aria-hidden="true"></i></a>
           </div>
         </td>
