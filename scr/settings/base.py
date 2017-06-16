@@ -18,10 +18,7 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '.localhost']
 
 SHARED_APPS = (
     'django_tenants',
@@ -100,21 +97,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'scr.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/1.10/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django_tenants.postgresql_backend',
-        'NAME': 'scr_test',
-        'USER': 'dejuata',
-        'PASSWORD': 'America27',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
-}
-
 DATABASE_ROUTERS = (
     'django_tenants.routers.TenantSyncRouter',
 )
@@ -153,20 +135,6 @@ USE_TZ = True
 
 LOGIN_REDIRECT_URL = reverse_lazy('index')
 LOGOUT_REDIRECT_URL = '/'
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.10/howto/static-files/
-
-STATIC_URL = '/static/'
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "static"),
-)
-
-STATIC_ROOT = os.path.join(BASE_DIR, '..', 'static_collected')
-
-
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
 
 # Django JET
 
