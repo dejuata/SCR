@@ -23,7 +23,7 @@ a{
   cursor: pointer;
 }
 select{
-  width: 100%;  
+  width: 100%;
 }
 .panel-body {
   padding: 20px 30px !important;
@@ -213,6 +213,9 @@ select{
   border: 1px solid #3a589a
 }
 .btn-signup{
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-size: 18px;
   text-align: center;
   font-style: normal;

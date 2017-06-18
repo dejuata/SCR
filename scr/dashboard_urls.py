@@ -11,4 +11,5 @@ urlpatterns = [
     url(r'^vehiculo/', include('apps.vehiculo.urls', namespace='vehiculo')),
     url(r'^ruta/', include('apps.ruta.urls', namespace='ruta')),
     url(r'^planilla/', include('apps.planilla.urls', namespace='planilla')),
+    url(r'^theme/', include('apps.custom_ui.urls', namespace='theme')),
 ]

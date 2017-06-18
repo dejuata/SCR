@@ -20,8 +20,6 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-
-
 SHARED_APPS = (
     'django_tenants',
     'apps.tenant',
@@ -41,6 +39,7 @@ SHARED_APPS = (
     'apps.cities',
     'django_select2',
     'turbolinks',
+    'social_django',
 )
 
 TENANT_APPS = (
@@ -53,14 +52,13 @@ TENANT_APPS = (
     'apps.vehiculo',
     'apps.ruta',
     'apps.planilla',
+    'apps.custom_ui',
 )
 
 INSTALLED_APPS = list(set(SHARED_APPS + TENANT_APPS))
 
 TENANT_MODEL = "tenant.Tenant"  # app.Model
 TENANT_DOMAIN_MODEL = "tenant.Domain"
-
-AUTH_USER_MODEL = 'users.MyCustomEmailUser'
 
 MIDDLEWARE = [
     'django_tenants.middleware.TenantMiddleware',
@@ -74,6 +72,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
 ROOT_URLCONF = 'scr.tenant_urls'
@@ -92,16 +91,27 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
 ]
 
-WSGI_APPLICATION = 'scr.wsgi.application'
+# ------------------------- AUTH -------------------------#
 
-DATABASE_ROUTERS = (
-    'django_tenants.routers.TenantSyncRouter',
-)
+AUTH_USER_MODEL = 'users.MyCustomEmailUser'
+SOCIAL_AUTH_USER_MODEL = 'users.MyCustomEmailUser'
+
+# User login
+LOGIN_URL = 'tenant_login'
+LOGOUT_URL = 'logout'
+LOGIN_REDIRECT_URL = reverse_lazy('index')
+LOGOUT_REDIRECT_URL = reverse_lazy('index')
+
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = reverse_lazy('index')
+SOCIAL_AUTH_LOGIN_ERROR_URL = reverse_lazy('index')
+SOCIAL_AUTH_RAISE_EXCEPTIONS = False
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
@@ -121,6 +131,64 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.open_id.OpenIdAuth',
+    'social_core.backends.google.GoogleOpenId',
+    'social_core.backends.google.GoogleOAuth2',
+    'social_core.backends.google.GoogleOAuth',
+    'social_core.backends.twitter.TwitterOAuth',
+    'social_core.backends.facebook.FacebookOAuth2',
+
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+SOCIAL_AUTH_PIPELINE = (
+    'social_core.pipeline.social_auth.social_details',
+    'social_core.pipeline.social_auth.social_uid',
+    'social_core.pipeline.social_auth.auth_allowed',
+    'social_core.pipeline.social_auth.social_user',
+
+    # Make up a username for this person, appends a random string at the end if
+    # there's any collision.
+    # 'social_core.pipeline.user.get_username',
+
+    # CUSTOM: this gets email address as the username and validates it matches
+    # the logged in user's email address.
+    'apps.users.pipeline.get_username',
+
+    # 'social_core.pipeline.mail.mail_validation',
+    'social_core.pipeline.social_auth.associate_by_email',
+    'social_core.pipeline.user.create_user',
+    'social_core.pipeline.social_auth.associate_user',
+    'social_core.pipeline.social_auth.load_extra_data',
+    'social_core.pipeline.user.user_details'
+)
+
+# secrets id auth social
+SOCIAL_AUTH_TWITTER_KEY = 'rIcFcMVUbegQWPvPNY3Q2VKZV'
+SOCIAL_AUTH_TWITTER_SECRET = 'Mmz23dk0YYQA7naoShV1PZ5Vl0m7OQM3q5PcuQaJkkHitgYL6X'
+SOCIAL_AUTH_TWITTER_SCOPE = ['email']
+SOCIAL_AUTH_TWITTER_PROFILE_EXTRA_PARAMS = {
+    'fields': 'id, email',
+}
+
+SOCIAL_AUTH_FACEBOOK_KEY = '910029992471998'
+SOCIAL_AUTH_FACEBOOK_SECRET = 'baa05f0adbb33fd858443e58539c33a9'
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
+SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
+    'fields': 'id, name, email',
+}
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '128173655574-7fecombl7flt0ivnsi6opdrkgcqiiil3.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '7IqdD0ULO9l9Ei1u18i5PgJ8'
+
+# ------------------------- END AUTH -------------------------#
+
+WSGI_APPLICATION = 'scr.wsgi.application'
+
+DATABASE_ROUTERS = (
+    'django_tenants.routers.TenantSyncRouter',
+)
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
@@ -134,9 +202,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
-LOGIN_REDIRECT_URL = reverse_lazy('index')
-LOGOUT_REDIRECT_URL = '/'
 
 # Django JET
 

@@ -2,7 +2,7 @@
 {% load recaptcha2 %}
 <!DOCTYPE html>
 <html lang="en">
-<head>  
+<head>
   {% recaptcha_init %}
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -41,18 +41,18 @@
 
       <div class="collapse navbar-collapse text-center" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav navbar-right nav-btn">
-          <li><a href="#inicio" class="navbar-option">Inicio</a></li>
-          <li><a href="#services" class="navbar-option">Beneficios</a></li>
-          <li><a href="#clients" class="navbar-option">Clientes</a></li>
-          <li><a href="#price" class="navbar-option">Planes</a></li>
-            <li><a href="#contact" class="navbar-option">Contáctenos</a></li>
+          <li><a href="{% url 'index' %}" class="navbar-option">Inicio</a></li>
+          <li><a href="/#services" class="navbar-option">Beneficios</a></li>
+          <li><a href="/#clients" class="navbar-option">Clientes</a></li>
+          <li><a href="/#price" class="navbar-option">Planes</a></li>
+            <li><a href="/#contact" class="navbar-option">Contáctenos</a></li>
           {% if user.is_authenticated %}
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" style="text-transform:uppercase" data-toggle="dropdown" role="button" aria-expanded="false">
                 {{ user.get_short_name }} <span class="caret"></span>
               </a>
               <ul class="dropdown-menu" role="menu">
-                <li><a href="{% url 'usuario:usuario_edit' user.id %}">Ver Perfil</a></li>
+                <li><a href="{% url 'usuario:usuario_edit' user.id %}" >Configuración</a></li>
                 <li><a href="{% url 'tenant:tenant_new' %}">Pagar</a></li>
                 <li><a href="{% url 'logout' %}">Salir</a></li>
               </ul>
@@ -150,7 +150,9 @@
     $('[data-toggle="popover"]').popover()
   })
   $( document ).ready(function(){
+
     $(".alert").fadeIn("slow").delay(6000).fadeOut("slow");
+
   });
 
   </script>

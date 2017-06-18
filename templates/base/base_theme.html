@@ -1,0 +1,679 @@
+{% extends 'base/base_dashboard.html' %}
+{% load staticfiles %}
+
+{% block content %}
+<div class="row">
+  <div class="col-sm-12">
+    <strong>Seleccione un tema: </strong>
+    <br>
+    <div class="btn-group">
+      <a href="{% url 'dashboard:theme:theme1' %}" class="btn btn-default btn-theme {% block active1 %}{% endblock %}">Tema 1</a>
+      <a href="{% url 'dashboard:theme:theme2' %}" class="btn btn-default btn-theme {% block active2 %}{% endblock %}">Tema 2</a>
+      <a href="{% url 'dashboard:theme:theme3' %}" class="btn btn-default btn-theme {% block active3 %}{% endblock %}">Tema 3</a>
+      <a href="{% url 'dashboard:theme:theme4' %}" class="btn btn-default btn-theme {% block active4 %}{% endblock %}">Tema 4</a>
+      <a href="{% url 'dashboard:theme:theme5' %}" class="btn btn-default btn-theme {% block active5 %}{% endblock %}">Tema 5</a>
+      <a href="{% url 'dashboard:theme:theme6' %}" class="btn btn-default btn-theme {% block active6 %}{% endblock %}">Tema 6</a>
+      <a href="{% url 'dashboard:theme:theme7' %}" class="btn btn-default btn-theme {% block active7 %}{% endblock %}">Tema 7</a>
+      <a href="{% url 'dashboard:theme:theme8' %}" class="btn btn-default btn-theme {% block active8 %}{% endblock %}">Tema 8</a>
+      <a href="{% url 'dashboard:theme:theme9' %}" class="btn btn-default btn-theme {% block active9 %}{% endblock %}">Tema 9</a>
+      <button class="btn btn-primary" data-toggle="modal" data-target="#modalEmergente">Guardar Tema</button>
+      <input type="hidden" value="{% block value %}{% endblock %}" id="value">
+    </div>
+  </div>
+</div>
+
+<br>
+
+<div class="row">
+<!-- panel buttons -->
+<div class="col-sm-7">
+  <section class="panel panel-default">
+    <header class="panel-heading">
+        Buttons
+    </header>
+
+    <div class="panel-body">
+      <!-- buttons -->
+      <div class="btn-row">
+        <a class="btn btn-default" href="" title="Bootstrap 3 themes generator">Default</a>
+        <a class="btn btn-primary" href="" title="Bootstrap 3 themes generator">Primary</a>
+        <a class="btn btn-info" href="" title="Bootstrap 3 themes generator">Info</a>
+        <a class="btn btn-success" href="" title="Bootstrap 3 themes generator">Success</a>
+        <a class="btn btn-warning" href="" title="Bootstrap 3 themes generator">Warning</a>
+        <a class="btn btn-danger" href="" title="Bootstrap 3 themes generator">Danger</a>
+      </div>
+      <div class="btn-row">
+        <a class="btn btn-default disabled" href="" title="Bootstrap 3 themes generator">Default</a>
+        <a class="btn btn-primary disabled" href="" title="Bootstrap 3 themes generator">Primary</a>
+        <a class="btn btn-info disabled" href="" title="Bootstrap 3 themes generator">Info</a>
+        <a class="btn btn-success disabled" href="" title="Bootstrap 3 themes generator">Success</a>
+        <a class="btn btn-warning disabled" href="" title="Bootstrap 3 themes generator">Warning</a>
+        <a class="btn btn-danger disabled" href="" title="Bootstrap 3 themes generator">Danger</a>
+      </div>
+      <div class="btn-row">
+        <a class="btn btn-default" href="" title="Bootstrap 3 themes generator"><span class="icon_cloud-upload_alt"></span> Default</a>
+        <a class="btn btn-primary" href="" title="Bootstrap 3 themes generator"><span class="icon_lightbulb_alt"></span> Primary</a>
+        <a class="btn btn-info" href="" title="Bootstrap 3 themes generator"><span class="icon_house_alt"></span> Info</a>
+        <a class="btn btn-success" href="" title="Bootstrap 3 themes generator"><span class="icon_mic_alt"></span> Success</a>
+        <a class="btn btn-warning" href="" title="Bootstrap 3 themes generator"><span class="icon_pin_alt"></span> Warning</a>
+        <a class="btn btn-danger" href="" title="Bootstrap 3 themes generator"><span class="icon_target"></span> Danger</a>
+      </div>
+      <!-- end buttons -->
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+      <header class="panel-heading">
+        Alerts
+      </header>
+      <div class="panel-body">
+        <div class="alert alert-success fade in">
+              <button data-dismiss="alert" class="close close-sm" type="button">
+                  <i class="icon-remove"></i>
+              </button>
+              <strong>Well done!</strong> You successfully read this important alert message.
+          </div>
+          <div class="alert alert-block alert-danger fade in">
+              <button data-dismiss="alert" class="close close-sm" type="button">
+                  <i class="icon-remove"></i>
+              </button>
+              <strong>Oh snap!</strong> Change a few things up and try submitting again.
+          </div>
+          <div class="alert alert-info fade in">
+              <button data-dismiss="alert" class="close close-sm" type="button">
+                  <i class="icon-remove"></i>
+              </button>
+              <strong>Heads up!</strong> This alert needs your attention, but it's not super important.
+          </div>
+          <div class="alert alert-warning fade in">
+              <button data-dismiss="alert" class="close close-sm" type="button">
+                  <i class="icon-remove"></i>
+              </button>
+              <strong>Warning!</strong> Best check yo self, you're not looking too good.
+          </div>
+
+      </div>
+  </section>
+</div>
+<!-- end panel buttons -->
+
+<!-- panel group buttons -->
+<div class="col-sm-5">
+  <section class="panel panel-default">
+    <header class="panel-heading">
+        Group Buttons
+    </header>
+
+    <div class="panel-body">
+
+      <!-- group button -->
+      <p class="">Group Button</p>
+      <div class="btn-row">
+        <div class="btn-group">
+          <button type="button" class="btn btn-default">Left</button>
+          <button type="button" class="btn btn-default">Middle</button>
+          <button type="button" class="btn btn-default">Right</button>
+        </div>
+      </div>
+      <!-- end group button -->
+
+      <!-- button groups -->
+      <p class="">Nested button groups</p>
+      <div class="btn-row">
+        <div class="btn-group">
+          <button class="btn btn-default" type="button">1</button>
+          <button class="btn btn-primary" type="button">2</button>
+          <button class="btn btn-default" type="button">3</button>
+          <button class="btn btn-default" type="button">4</button>
+          <div class="btn-group">
+            <button data-toggle="dropdown" class="btn btn-default dropdown-toggle" type="button"> Dropdown <span class="caret"></span> </button>
+            <ul class="dropdown-menu">
+              <li><a href="#">Dropdown link 1</a></li>
+              <li><a href="#">Dropdown link 2</a></li>
+              <li><a href="#">Dropdown link 3</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- end button groups -->
+
+      <!-- Group Radio -->
+      <p class="">Group Radio</p>
+      <div class="btn-row">
+        <div class="btn-group" data-toggle="buttons">
+          <label class="btn btn-default active">
+            <input type="radio" name="options" id="option1"> Option 1
+          </label>
+          <label class="btn btn-default">
+            <input type="radio" name="options" id="option2"> Option 2
+          </label>
+          <label class="btn btn-default">
+            <input type="radio" name="options" id="option3"> Option 3
+          </label>
+        </div>
+      </div>
+      <div class="btn-row">
+        <div class="btn-group" data-toggle="buttons">
+          <label class="btn btn-primary">
+            <input type="radio" name="options" id="option1"> Option 1
+          </label>
+          <label class="btn btn-primary active">
+            <input type="radio" name="options" id="option2"> Option 2
+          </label>
+          <label class="btn btn-primary">
+            <input type="radio" name="options" id="option3"> Option 3
+          </label>
+        </div>
+       </div>
+      <!-- end group radio -->
+
+    </div>
+  </section>
+
+  <!-- Navbar -->
+  <section class="panel panel-default">
+    <header class="panel-heading">
+        Navbar
+    </header>
+    <div class="panel-body">
+      <!-- navbar default -->
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Brand</a>
+          </div>
+
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="#">Link</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href="#">Action</a></li>
+                  <li><a href="#">Another action</a></li>
+                  <li class="divider"></li>
+                  <li><a href="#">Separated link</a></li>
+                  <li class="divider"></li>
+                  <li><a href="#">One more separated link</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <!-- end navbar default -->
+      <!-- navbar inverse -->
+      <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Brand</a>
+          </div>
+
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="#">Link</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href="#">Action</a></li>
+                  <li><a href="#">Another action</a></li>
+                  <li class="divider"></li>
+                  <li><a href="#">Separated link</a></li>
+                  <li class="divider"></li>
+                  <li><a href="#">One more separated link</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <!-- end navbar inverse -->
+    </div>
+  </section>
+  <!-- end navbar -->
+</div>
+<!-- end panel group buttons -->
+</div>
+
+<div class="row">
+  <!-- Tipografia -->
+  <div class="col-md-12">
+    <section class="panel panel-default">
+      <header class="panel-heading">
+          Tipografia
+      </header>
+      <div class="panel-body">
+        <div class="col-md-4">
+          <h1>Heading 1</h1>
+          <h2>Heading 2</h2>
+          <h3>Heading 3</h3>
+          <h4>Heading 4</h4>
+          <h5>Heading 5</h5>
+          <h6>Heading 6</h6>
+          <p class="lead">Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
+        </div>
+        <div class="col-md-4">
+          <h2>Example body text</h2>
+          <p>Nullam quis risus eget <a href="#">urna mollis ornare</a> vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula.</p>
+          <p><small>This line of text is meant to be treated as fine print.</small></p>
+          <p>The following snippet of text is <strong>rendered as bold text</strong>.</p>
+          <p>The following snippet of text is <em>rendered as italicized text</em>.</p>
+          <p>An abbreviation of the word attribute is <abbr title="attribute">attr</abbr>.</p>
+        </div>
+        <div class="col-md-4">
+          <h2>Emphasis classes</h2>
+          <p class="text-muted">Fusce dapibus, tellus ac cursus commodo, tortor mauris nibh.</p>
+          <p class="text-primary">Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+          <p class="text-warning">Etiam porta sem malesuada magna mollis euismod.</p>
+          <p class="text-danger">Donec ullamcorper nulla non metus auctor fringilla.</p>
+          <p class="text-success">Duis mollis, est non commodo luctus, nisi erat porttitor ligula.</p>
+          <p class="text-info">Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+<!--end tipografia  -->
+
+<!-- form -->
+<div class="row">
+  <div class="col-md-12">
+    <section class="panel panel-default">
+      <header class="panel-heading">
+          Form
+      </header>
+      <div class="panel-body">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="control-label" for="focusedInput">Focused input</label>
+            <input class="form-control" id="focusedInput" type="text" value="This is focused...">
+          </div>
+
+          <div class="form-group">
+            <label class="control-label" for="disabledInput">Disabled input</label>
+            <input class="form-control" id="disabledInput" type="text" placeholder="Disabled input here..." disabled="">
+          </div>
+
+          <div class="form-group has-error">
+            <label class="control-label" for="inputError">Input error</label>
+            <input type="text" class="form-control" id="inputError">
+          </div>
+
+          <div class="form-group has-success">
+            <label class="control-label" for="inputSuccess">Input success</label>
+            <input type="text" class="form-control" id="inputSuccess">
+          </div>
+
+
+        </div>
+
+        <div class="col-md-6">
+          <label class="">Checkboxes and radios</label>
+
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" value="">
+              Option one is this and that&mdash;be sure to include why it's great
+            </label>
+          </div>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" value="">
+              Option one is this and that&mdash;be sure to include why it's great option one
+            </label>
+          </div>
+
+          <div class="radio">
+            <label>
+              <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+              Option one is this and that&mdash;be sure to include why it's great
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+              Option two can be something else and selecting it will deselect option one
+            </label>
+          </div>
+
+          <label class="">Selects</label>
+
+          <select class="form-control m-bot15">
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+          </select>
+
+          <select multiple class="form-control">
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+          </select>
+
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+<!-- end form -->
+
+<!-- table -->
+<div class="row">
+  <!-- basic table -->
+  <div class="col-md-6">
+      <section class="panel panel-default">
+        <header class="panel-heading">
+            Basic Table
+        </header>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Username</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>Mark</td>
+              <td>Otto</td>
+              <td>@mdo</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>Jacob</td>
+              <td>Thornton</td>
+              <td>@fat</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>Larry</td>
+              <td>the Bird</td>
+              <td>@twitter</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+  </div>
+  <!-- end basic table -->
+
+  <!-- border table -->
+  <div class="col-md-6">
+    <section class="panel panel-default">
+      <header class="panel-heading no-border">
+          Border Table
+      </header>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Username</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td rowspan="2">1</td>
+            <td>Mark</td>
+            <td>Otto</td>
+            <td>@mdo</td>
+          </tr>
+          <tr>
+            <td>Mark</td>
+            <td>Otto</td>
+            <td>@TwBootstrap</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Jacob</td>
+            <td>Thornton</td>
+            <td>@fat</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td colspan="2">Larry the Bird</td>
+            <td>@twitter</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </div>
+  <!-- end border table -->
+</div>
+
+<div class="row">
+  <!-- advance table -->
+  <div class="col-md-12">
+    <section class="panel panel-default">
+      <header class="panel-heading">
+          Advanced Table
+      </header>
+
+      <table class="table table-striped table-advance table-hover">
+       <tbody>
+          <tr>
+            <th><i class="icon_profile"></i> Full Name</th>
+            <th><i class="icon_calendar"></i> Date</th>
+            <th><i class="icon_mail_alt"></i> Email</th>
+            <th><i class="icon_pin_alt"></i> City</th>
+            <th><i class="icon_mobile"></i> Mobile</th>
+            <th><i class="icon_cogs"></i> Action</th>
+          </tr>
+          <tr>
+            <td>Angeline Mcclain</td>
+            <td>2004-07-06</td>
+            <td>dale@chief.info</td>
+            <td>Rosser</td>
+            <td>176-026-5992</td>
+            <td>
+              <div class="btn-group">
+                <a class="btn btn-primary" href="#"><i class="icon_plus_alt2"></i></a>
+                <a class="btn btn-success" href="#"><i class="icon_check_alt2"></i></a>
+                <a class="btn btn-danger" href="#"><i class="icon_close_alt2"></i></a>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>Sung Carlson</td>
+            <td>2011-01-10</td>
+            <td>ione.gisela@high.org</td>
+            <td>Robert Lee</td>
+            <td>724-639-4784</td>
+            <td>
+              <div class="btn-group">
+                <a class="btn btn-primary" href="#"><i class="icon_plus_alt2"></i></a>
+                <a class="btn btn-success" href="#"><i class="icon_check_alt2"></i></a>
+                <a class="btn btn-danger" href="#"><i class="icon_close_alt2"></i></a>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>Bryon Osborne</td>
+            <td>2006-10-29</td>
+            <td>sol.raleigh@language.edu</td>
+            <td>York</td>
+            <td>180-456-0056</td>
+            <td>
+              <div class="btn-group">
+                  <a class="btn btn-primary" href="#"><i class="icon_plus_alt2"></i></a>
+                  <a class="btn btn-success" href="#"><i class="icon_check_alt2"></i></a>
+                  <a class="btn btn-danger" href="#"><i class="icon_close_alt2"></i></a>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>Dalia Marquez</td>
+            <td>2011-12-15</td>
+            <td>angeline.frieda@thick.com</td>
+            <td>Alton</td>
+            <td>690-601-1922</td>
+            <td>
+              <div class="btn-group">
+                <a class="btn btn-primary" href="#"><i class="icon_plus_alt2"></i></a>
+                <a class="btn btn-success" href="#"><i class="icon_check_alt2"></i></a>
+                <a class="btn btn-danger" href="#"><i class="icon_close_alt2"></i></a>
+              </div>
+            </td>
+          </tr>
+            <tr>
+               <td>Selina Fitzgerald</td>
+               <td>2003-01-06</td>
+               <td>moshe.mikel@parcelpart.info</td>
+               <td>Waelder</td>
+               <td>922-810-0915</td>
+               <td>
+                <div class="btn-group">
+                    <a class="btn btn-primary" href="#"><i class="icon_plus_alt2"></i></a>
+                    <a class="btn btn-success" href="#"><i class="icon_check_alt2"></i></a>
+                    <a class="btn btn-danger" href="#"><i class="icon_close_alt2"></i></a>
+                </div>
+                </td>
+            </tr>
+            <tr>
+               <td>Abraham Avery</td>
+               <td>2006-07-14</td>
+               <td>harvey.jared@pullpump.org</td>
+               <td>Harker Heights</td>
+               <td>511-175-7115</td>
+               <td>
+                <div class="btn-group">
+                    <a class="btn btn-primary" href="#"><i class="icon_plus_alt2"></i></a>
+                    <a class="btn btn-success" href="#"><i class="icon_check_alt2"></i></a>
+                    <a class="btn btn-danger" href="#"><i class="icon_close_alt2"></i></a>
+                </div>
+                </td>
+            </tr>
+            <tr>
+               <td>Caren Mcdowell</td>
+               <td>2002-03-29</td>
+               <td>valeria@hookhope.org</td>
+               <td>Blackwell</td>
+               <td>970-147-5550</td>
+               <td>
+                <div class="btn-group">
+                    <a class="btn btn-primary" href="#"><i class="icon_plus_alt2"></i></a>
+                    <a class="btn btn-success" href="#"><i class="icon_check_alt2"></i></a>
+                    <a class="btn btn-danger" href="#"><i class="icon_close_alt2"></i></a>
+                </div>
+                </td>
+            </tr>
+            <tr>
+               <td>Owen Bingham</td>
+               <td>2013-04-06</td>
+               <td>thomas.christopher@firstfish.info</td>
+               <td>Rule</td>
+               <td>934-118-6046</td>
+               <td>
+                <div class="btn-group">
+                    <a class="btn btn-primary" href="#"><i class="icon_plus_alt2"></i></a>
+                    <a class="btn btn-success" href="#"><i class="icon_check_alt2"></i></a>
+                    <a class="btn btn-danger" href="#"><i class="icon_close_alt2"></i></a>
+                </div>
+                </td>
+            </tr>
+            <tr>
+               <td>Ahmed Dean</td>
+               <td>2008-03-19</td>
+               <td>lakesha.geri.allene@recordred.com</td>
+               <td>Darrouzett</td>
+               <td>338-081-8817</td>
+               <td>
+                <div class="btn-group">
+                    <a class="btn btn-primary" href="#"><i class="icon_plus_alt2"></i></a>
+                    <a class="btn btn-success" href="#"><i class="icon_check_alt2"></i></a>
+                    <a class="btn btn-danger" href="#"><i class="icon_close_alt2"></i></a>
+                </div>
+                </td>
+            </tr>
+            <tr>
+               <td>Mario Norris</td>
+               <td>2010-02-08</td>
+               <td>mildred@hour.info</td>
+               <td>Amarillo</td>
+               <td>945-547-5302</td>
+               <td>
+                <div class="btn-group">
+                    <a class="btn btn-primary" href="#"><i class="icon_plus_alt2"></i></a>
+                    <a class="btn btn-success" href="#"><i class="icon_check_alt2"></i></a>
+                    <a class="btn btn-danger" href="#"><i class="icon_close_alt2"></i></a>
+                </div>
+                </td>
+            </tr>
+         </tbody>
+      </table>
+      </section>
+  </div>
+  <!-- end advance table -->
+</div>
+<!-- end table -->
+{% endblock %}
+
+<!-- modal -->
+{% block modal-title %}
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">Aplicar Tema</h4>
+  </div>
+{% endblock %}
+
+{% block modal-body %}
+  <div class="modal-body">
+    <h4>Desea guardar este tema como predeterminado?</h4>
+  </div>
+{% endblock %}
+
+{% block modal-footer %}
+  <div class="modal-footer">
+    <button class="btn btn-success" id="confirmarTheme">Confirmar</button>
+    <a class="btn btn-default" href="#" class="close" data-dismiss="modal">Cancelar</a>
+  </div>
+{% endblock %}
+
+<!-- end modal -->
+
+{% block extrajs %}
+<script type="text/javascript">
+$('#confirmarTheme').click(function(){
+    var value = $('#value').attr('value')
+    var request = $.ajax({
+        type: "POST",
+        url: "{% url 'dashboard:theme:save_theme'%}",
+        data: {
+            "csrfmiddlewaretoken": '{{ csrf_token }}',
+            'id': '{{ user.id }}',
+            "value": value
+        },
+    });
+    request.done(function(response) {
+      if (response.delete){
+        $('#modalEmergente').modal(response.class)
+        location.href = window.location;
+      }
+    });
+    // $('#alert').removeClass('hide');
+    // $('#alert').prepend('<strong><p>El tema se ha guardado con exito</p></strong>');
+  });
+
+
+
+</script>
+{% endblock %}

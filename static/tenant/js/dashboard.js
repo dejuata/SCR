@@ -8,8 +8,18 @@ $(document).on('turbolinks:render', function(){
   $('#content').addClass('fadeIn');
 })
 
+
+
 // Cuando el DOM esta cargado
 $(document).ready(function() {
+
+  // Obtener subdominio para mostrarlo en el navbar
+  var url = window.location;
+  var split1 = url['href'].split('.')
+  var split2 = split1[0].split('/')
+  var subdominio = split2[2].toUpperCase()
+  $('.div-brand').prepend("<label class='brand-tenant'>" + subdominio + '</label> <span class="brand-separator">|</span> ');
+
 
   // Visualizar imagen al momento de cargarla
   // por medio de la libreria uploadPreview
@@ -23,7 +33,7 @@ $(document).ready(function() {
   });
 
   // Cerrar mensajes de alerta
-  $(".alert").fadeIn("slow").delay(2000).fadeOut("slow");
+  $("#alert").fadeIn("slow").delay(2000).fadeOut("slow");
   // Inicializar el calendario
   $('.datepicker').pikaday({ firstDay: 1 });
   $('#id_file').addClass('inputfile');

@@ -19,6 +19,7 @@ urlpatterns = [
     url(r'^login/', login, {'template_name': 'users/user_login.html'}, name='tenant_login'),
     url(r'^logout/', logout_then_login, name='logout'),
     url(r'^accounts/login/', login, {'template_name': 'users/user_login.html'}, name='tenant_login'),
+    url(r'^oauth/', include('social_django.urls', namespace='social')),
 
     url(r'^', include('apps.users.urls_tenant', namespace='usuario')),
     url(r'^company/', include('apps.tenant.urls', namespace='tenant')),

@@ -8,6 +8,17 @@
  * Designed and built with all the love in the world by @mdo and @fat.
  */
 /*! normalize.css v2.1.0 | MIT License | git.io/normalize */
+/*Juan Pino*/
+.navbar.navbar-default.navbar-fixed-top.sidebar{
+  margin-top: 52px;
+  /*background-color: #394a59;*/
+}
+.div-brand {
+  height: 52px;  
+}
+.navbar .navbar-default a{
+  color: #fff;
+}
 article,
 aside,
 details,
@@ -1885,17 +1896,17 @@ fieldset[disabled] .btn-default.active {
 }
 .btn-primary {
   color: #ffffff;
-  background-color: #2c3e50;
-  border-color: #2c3e50;
+  background-color: #007aff;
+  border-color: #007aff;
 }
 .btn-primary:hover,
 .btn-primary:focus,
 .btn-primary:active,
 .btn-primary.active,
 .open .dropdown-toggle.btn-primary {
-  color: #ffffff;
-  border-color: #1a242f;
-  background: #1a242f;
+  color: #007aff;
+  border-color: #007aff;
+  background: transparent;
 }
 .btn-primary:active,
 .btn-primary.active,
@@ -1959,17 +1970,17 @@ fieldset[disabled] .btn-warning.active {
 }
 .btn-danger {
   color: #ffffff;
-  background-color: #e74c3c;
-  border-color: #e74c3c;
+  background-color: #ff2d55;
+  border-color: #ff2d55;
 }
 .btn-danger:hover,
 .btn-danger:focus,
 .btn-danger:active,
 .btn-danger.active,
 .open .dropdown-toggle.btn-danger {
-  color: #ffffff;
-  background: #d62c1a;
-  border-color: #d62c1a;
+  color: #ff2d55;
+  background: transparent;
+  border-color: #ff2d55;
 }
 .btn-danger:active,
 .btn-danger.active,
@@ -3812,8 +3823,8 @@ textarea.input-group-sm > .input-group-btn > .btn {
   }
 }
 .navbar-default {
-  background-color: #ffffff;
-  border-color: #007AFF;
+  background-color:#1a2732 ;
+  border-color: #1a2732;
 }
 .navbar-default .navbar-brand {
   color: #4a4a4a;
@@ -3827,12 +3838,12 @@ textarea.input-group-sm > .input-group-btn > .btn {
   color: #2b2b2b;
 }
 .navbar-default .navbar-nav > li > a {
-  color: #4a4a4a;
+  color: #fff;
 }
 .navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > li > a:focus {
-  color: #2b2b2b;
-  background-color: transparent;
+  background: #2e3b46;
+  color: #fff;
 }
 .navbar-default .navbar-nav > .active > a,
 .navbar-default .navbar-nav > .active > a:hover,

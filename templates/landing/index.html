@@ -47,7 +47,7 @@
                   {{ user.get_short_name }} <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu" role="menu">
-                  <li><a href="{% url 'usuario:usuario_edit' user.id %}">Ver Perfil</a></li>
+                  <li><a href="{% url 'usuario:usuario_edit' user.id %}">Configuración</a></li>
                   <li><a href="{% url 'tenant:tenant_new' %}">Pagar</a></li>
                   <li><a href="{% url 'logout' %}">Salir</a></li>
                 </ul>

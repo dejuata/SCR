@@ -30,18 +30,20 @@ panel-info
 {% endblock %}
 
 {% block colum_two %}
+<input type="hidden" value="{{user.id}}" name="pk" id="pk">
+
   <div class="form-group text-left">
-    {{ form.first_name.label_tag }}
+    <strong>Nombre: </strong>
     {{ form.first_name.errors }}
     {{ form.first_name }}
   </div>
   <div class="form-group text-left">
-    {{ form.last_name.label_tag }}
+    <strong>Apellido: </strong>
     {{ form.last_name.errors }}
     {{ form.last_name }}
   </div>
   <div class="form-group has-feedback text-left">
-    {{ form.email.label_tag}}
+    <strong>Correo: </strong>
     {{ form.email }}
     <div class="help-block with-errors">
       {% if form.email.errors %}
@@ -51,21 +53,74 @@ panel-info
       {% endif %}
     </div>
   </div>
-  <div class="form-group text-left">
-    {{ form.password1.label_tag }}
-    {{ form.password1.errors }}
-    <input class="form-control" id="password1" name="password1" type="password" value="" >
+
+  <div class="text-left">
+    <a href="{% url 'usuario:usuario_password'%}">Cambiar Contraseña</a>
   </div>
-  <div class="form-group text-left">
-    {{ form.password2.label_tag }}
-    {{ form.password2.errors }}
-    <input class="form-control" id="password2" name="password2" type="password" value="" >
-  </div>
+
+  <br>
 
   <div class="form-group">
     <input class="btn btn-primary" style="width:100%" type="submit" value="Actualizar">
   </div>
   </form>
+{% endblock %}
+
+{% block colum_three %}
+
+<br>
+
+<div class="col-md-6 col-sm-12 text-left">
+  <strong>Twitter:</strong>
+  {% if twitter_login %}
+  <div>
+    Conectado como <a href="https://twitter.com/{{ twitter_login.extra_data.access_token.screen_name }}/" target="_blank">@{{ twitter_login.extra_data.access_token.screen_name }}</a>
+  </div>
+
+    {% if can_disconnect %}
+      <form method="post" action="{% url 'social:disconnect' 'twitter' %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-info btn-signup login-btn btn-twitter">
+          <i class="fa fa-twitter fa-2x margin-right"></i> Desconectar de Twitter
+        </button>
+      </form>
+    {% else %}
+      <button type="button" class="btn btn-info btn-signup login-btn btn-twitter" disabled>
+        <i class="fa fa-twitter fa-2x margin-right"></i> Desconectar de Twitter
+      </button>
+      <strong style="color: red">Tu deberias <a href="{% url 'usuario:usuario_password' %}">definir una contraseña</a> para tu cuenta antes de desconectarte de Twitter.</strong>
+      <br>
+    {% endif %}
+  {% else %}
+  <a href="{% url 'social:begin' 'twitter' %}">Conectar a Twitter</a>
+  {% endif %}
+</div>
+
+<div class="col-md-6 col-sm-12 text-left">
+  <div class="text-left"><strong>Facebook</strong></div>
+  {% if facebook_login %}
+  <div class="text-left">
+    Conectado como <a href="https://facebook.com/{{ facebook_login.extra_data.id }}/" target="_blank">{{ facebook_login.extra_data.id }}</a>
+  </div>
+
+    {% if can_disconnect %}
+      <form method="post" action="{% url 'social:disconnect' 'facebook' %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-info btn-signup login-btn btn-face">
+          <i class="fa fa-facebook fa-2x margin-right"></i> Desconectar de Facebook
+        </button>
+      </form>
+    {% else %}
+      <button type="button" class="btn btn-info btn-signup login-btn btn-face" disabled>
+        <i class="fa fa-facebook fa-2x margin-right"></i> Desconectar de Facebook
+      </button>
+
+      <strong style="color: red">Tu deberias <a href="{% url 'usuario:usuario_password' %}">definir una contraseña</a> para tu cuenta antes de deconectarte de Facebook.</strong>
+    {% endif %}
+  {% else %}
+    <a href="{% url 'social:begin' 'facebook' %}">Conectar a Facebook</a>
+  {% endif %}
+</div>
 {% endblock %}
 
 {% block row %}
@@ -101,7 +156,7 @@ panel-info
   function eliminarUsuario() {
       $('#modalEmergente').modal('hide')
       var request = $.ajax({
-          type: "POST",
+          type: "GET",
           url: "{% url 'usuario:usuario_delete' %}",
           data: {
               "csrfmiddlewaretoken": "{{ csrf_token }}",
