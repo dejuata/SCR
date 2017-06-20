@@ -19,8 +19,8 @@ class Ruta(models.Model):
     valor_tercero = models.IntegerField(null=True, blank=True)
     comision_conductor = models.IntegerField(null=True, blank=True)
     kilometros = models.FloatField(null=True, blank=True, max_length=10)
-    link_ruta = models.CharField(null=True,blank=True,max_length=1000)
+    link_ruta = models.CharField(null=True, blank=True, max_length=1000)
     activo_inactivo = models.BooleanField(default=True)
 
     def __str__(self):
-        return self.tipo_Ruta
+        return self.tipo_ruta

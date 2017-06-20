@@ -1,15 +1,20 @@
 from django.conf.urls import url
 from django.contrib.auth.decorators import login_required
 
-from .views import PlanillaList, PlanillaCreate, PlanillaUpdate, import_data, export_data
-from .ajax import planilla_delete, planilla_get
+from .views import PlanillaList, import_data, export_data, PlanillaCreate, PlanillaUpdate, create_data
+# from .ajax import planilla_delete, planilla_get
+
 
 urlpatterns = [
-    url(r'^new$', login_required(PlanillaCreate.as_view()), name='planilla_new'),
     url(r'^list/', login_required(PlanillaList.as_view()), name='planilla_list'),
+
+    url(r'^new$', login_required(PlanillaCreate.as_view()), name='planilla_new'),
+
+    url(r'^save$', login_required(create_data), name='planilla_save'),
     url(r'^edit/(?P<pk>\d+)/$', login_required(PlanillaUpdate.as_view()), name='planilla_edit'),
-    url(r'^delete/$', login_required(planilla_delete), name='planilla_delete'),
-    url(r'^get/$', login_required(planilla_get), name='planilla_get'),
+
+    # url(r'^get/$', login_required(planilla_get), name='planilla_get'),
+
     url(r'^import/', import_data, name='planilla_import'),
     url(r'^export/', export_data, name='planilla_export'),
 ]

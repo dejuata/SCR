@@ -39,6 +39,16 @@
 .table-btn-padding-right{
   padding-right: 8px;
 }
+/*handsontable*/
+.scroll-container{
+  width: 1150px;
+  height: 500px;
+  margin: 1rem 0 1rem;
+  overflow: hidden;
+}
+.fixed-container{
+  width: 1150px;
+}
 /*navbar*/
 .navbar-logo{
   height: 84px;
