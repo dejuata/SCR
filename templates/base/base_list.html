@@ -1,6 +1,12 @@
 {% extends 'base/base_dashboard.html' %}
 {% load staticfiles %}
 
+{% block message %}
+<div id="messages">
+
+</div>
+{% endblock %}
+
 {% block content %}
 
   {% block section %}
@@ -9,7 +15,7 @@
 
       <!-- toolbar -->
       <div id="toolbar" class="btn-group">
-        <a class="btn btn-default" href="{% block url %}{% endblock %}">
+        <a class="btn btn-default" href="{% block url %}{% endblock %}" {% block modal%}{% endblock%} id="btn-new">
           {% block btn-new %}
           {% endblock %}
         </a>

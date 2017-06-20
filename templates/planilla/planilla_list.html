@@ -10,8 +10,8 @@
 Nueva Planilla
 {% endblock %}
 
-{% block url %}
-{% url 'dashboard:planilla:planilla_new' %}
+{% block modal %}
+data-toggle="modal" data-target="#modalEmergente"
 {% endblock %}
 
 {% block url_upload %}
@@ -43,7 +43,7 @@ Nueva Planilla
         <td>{{ planilla.fecha }}</td>
         <td>
           <div class="btn-group">
-            <a class="btn btn-primary" href="{% url 'dashboard:planilla:planilla_edit' planilla.id %}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+            <a class="btn btn-primary" href=""><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 
             <!-- <a class="btn btn-primary" id="planilla" onclick="planilla_get()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> -->
           </div>
@@ -54,4 +54,46 @@ Nueva Planilla
     <!-- <h3 class="page-header"><i class="fa fa-laptop"></i> No hay registros</h3> -->
   {% endif %}
 </tbody>
+{% endblock %}
+
+<!-- modal -->
+{% block modal-title %}
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">Nueva Planilla</h4>
+  </div>
+{% endblock %}
+
+{% block modal-form %}
+<form method="post" enctype="multipart/form-data" action="{% url 'dashboard:planilla:planilla_new'%}">
+{% csrf_token %}
+{% endblock %}
+
+{% block modal-body %}
+  <div class="modal-body">
+    <p>Crear la planilla con fecha de:</p>
+    <input type="date" class="form-control datepicker" id="fechaPlanilla" name='fecha'>
+  </div>
+{% endblock %}
+
+{% block modal-footer %}
+  <div class="modal-footer">
+    <input type="submit" class="btn btn-success" value="Confirmar">
+    <a class="btn btn-default" href="#" class="close" data-dismiss="modal">Cancelar</a>
+  </div>
+{% endblock %}
+
+{% block modal-end-form %}
+</form>
+{% endblock %}
+<!-- end modal -->
+
+{% block extrajs %}
+<script>
+  $('#btn-new').click(function(){
+    var today = moment().format('YYYY-MM-DD');
+    document.getElementById("fechaPlanilla").value = today;
+  })
+
+</script>
 {% endblock %}

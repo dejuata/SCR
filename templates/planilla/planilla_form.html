@@ -4,113 +4,284 @@
 {% block overview %}
 <li><i class="fa fa-th" aria-hidden="true"></i><a href="{% url 'dashboard:planilla:planilla_list'%}">Planilla</a></li>
 <li><i class="fa fa-plus"></i>Nuevo</li>
-<a href="" class="">Guardar</a>
 {% endblock %}
 
 {% block content %}
-<h1>hola</h1>
-  <input type="hidden" name="" value="{{data}}" id="json">
+  <div class="row">
+    <div class="col-md-2" style="padding-left:0">
+      <input type="text" value="{{fecha}}" id="fecha" class="form-control" disabled>
+    </div>
+    <div class="btn-group" >
+      <button class="btn btn-default" id="load_template">Cargar Template</button>
+      <button class="btn btn-default" id="save_planilla">Guardar Planilla</button>
+    </div>
 
-  <!-- <div class="container">
-    <div class="col-md-4">
-      {{ form.fecha }}
-    </div>
-    <div class="col-md-4">
 
-    </div>
-    <div class="col-md-4">
-      <a class="btn btn-primary" id="planilla_btn" onclick="planilla_get()">Load</a>
-    </div>
+    <input type="hidden" value="{{ruta}}" id="ruta">
+    <input type="hidden" value="{{conductor}}" id="conductor">
+    <input type="hidden" value="{{vehiculo}}" id="vehiculo">
+    <input type="hidden" name="" value="{{data}}" id="json">
   </div>
-  <br> -->
 
-  <div id="planilla"></div>
-
+  <div id="planilla" class="scroll-container fixed-container"></div>
 {% endblock %}
 
 {% block extrajs %}
 <script type="text/javascript">
-var container = document.getElementById('planilla');
-var data = [];
-var json = document.getElementById('json').value
 
-var id = (() => {
-    // https://syncer.jp/javascript-reference/location
-    var found = location.pathname.match(/\/myapp\/records\/(.*?)\/edit$/);
-    console.log(found)
-    // 新規作成の時は、便宜上id=0とみなして処理する
-    return found ? found[1] : NEW_PAGE_ID;
-})();
 
-var hot = new Handsontable(container, {
-      data: data,
-      // dataSchema: {id: null, name: {first: null, last: null}, address: null},
-      width: 1150,
-      height: 700,
-      startRows: 20,
-      startCols: 19,
-      // stretchH: 'all',
-      colHeaders: ['fecha',
-                  'kilometros',
-                  'hora_adicional',
-                  'hora_inicio',
-                  'hora_fin',
-                  'tiempo_operado',
-                  'observaciones',
-                  'novedades',
-                  'flota',
-                  'valor_ruta',
-                  'valor_tercero',
-                  'viaticos',
-                  'descuentos_conductor',
-                  'valor_hora_adicional',
-                  'adicional_conductor',
-                  'total_ingreso',
-                  'conductor_id',
-                  'placa_id',
-                  'ruta_id'],
+$(document).ready(function() {
+
+  // data en formato json
+  var rutaJSON = JSON.parse(document.getElementById('ruta').value)
+  var conductorJSON = JSON.parse(document.getElementById('conductor').value)
+  var vehiculoJSON = JSON.parse(document.getElementById('vehiculo').value)
+
+  var ruta = [];
+  var ruta_pk = [];
+  var conductor = [];
+  var conductor_pk = [];
+  var vehiculo = [];
+
+  // llenar un array con los nombres de la ruta
+  // para mostrarlo en la handsontable
+  for(var i = 0; i < rutaJSON.length; i++){
+    ruta[i] = rutaJSON[i].fields.nombre_ruta;
+    ruta_pk[i] = rutaJSON[i].pk;
+  }
+  // llenar un array con los nombres de los conductores
+  // para mostrarlo en la handsontable
+  for(var i = 0; i < conductorJSON.length; i++){
+    conductor[i] = conductorJSON[i].fields.nombres + ' ' + conductorJSON[i].fields.apellidos
+    conductor_pk[i] = conductorJSON[i].pk;
+  }
+  // llenar un array con los nombres de los vehiculos
+  // para mostrarlo en la handsontable
+  for(var i = 0; i < vehiculoJSON.length; i++){
+    vehiculo[i] = vehiculoJSON[i].pk
+  }
+  // Funcion para calcular el tiempo Operado
+  function tiempoOperado(inicio, fin){
+    inicio = parseFloat(inicio.substring(0,2)) + parseFloat(inicio.substring(3))/60;
+    fin = parseFloat(fin.substring(0,2)) + parseFloat(fin.substring(3))/60;
+    var hora = fin - inicio;
+    return parseFloat(hora.toFixed(2))
+  }
+  // Obtengo los nombres de los campos que se debe sumar para el total de Ingreso
+  var camposValores = ['fields.valor_ruta',
+                   'fields.valor_tercero',
+                   'fields.valor_hora_adicional',
+                   'fields.viaticos',
+                   'fields.descuentos_conductor',
+                   'fields.adicional_conductor']
+  // variable que almacena los valores numericos de los camposValores
+  var totalIngreso = [];
+  var totalIngresoRow = [];
+  var calculate = true;
+
+  // Handsontable
+  var hot;
+  var container = document.getElementById('planilla');
+  var container1 = document.getElementById('demo');
+  // Obtengo la fecha de creacion de la planilla
+  var fecha = document.getElementById('fecha').value
+
+  hot = new Handsontable(container, {
+      // data: ruta,
+      startRows: 18,
+      startCols: 18,
+      minSpareRows: 3,
+      rowHeaders: true,
+      fixedRowsTop: 1,
+      fixedColumnsLeft: 1,
+      formulas: true,
+      colWidths: [100, 100, 100, 100, 130, 100, 140, 140, 160, 140, 100, 100, 100, 140, 100, 170, 160, 100, 100],
+      contextMenu: true,
+      manualRowMove: true,
+      manualColumnResize: true,
+      manualRowResize: true,
+      fillHandle: {
+        direction: 'vertical',
+      },
+      colHeaders: ['Codigo Ruta',
+                  'Hora Inicio',
+                  'Hora Fin',
+                  'Hora Adicional',
+                  'Tiempo Operado',
+                  'Kilometros',
+                  'Observaciones',
+                  'Novedades',
+                  'Cedula Conductor',
+                  'Conductor',
+                  'Flota',
+                  'Valor Ruta',
+                  'Valor Tercero',
+                  'Valor Hora Adicional',
+                  'Viaticos',
+                  'Descuentos al Conductor',
+                  'Adicional al Conductor',
+                  'Placa',
+                  '$ Total Ingreso'],
       columns: [
-        {data: 'fields.fecha'},
-        {data: 'fields.kilometros'},
-        {data: 'fields.hora_adicional'},
-        {data: 'fields.hora_inicio'},
-        {data: 'fields.hora_fin'},
-        {data: 'fields.tiempo_operado'},
+        // Column 0
+        {data: 'fields.ruta_id', type: 'autocomplete', source: ruta, strict: true},
+        // Column 1
+        {data: 'fields.hora_inicio', type: 'time', timeFormat: 'h:mm:ss', correctFormat: true},
+        // Column 2
+        {data: 'fields.hora_fin', type: 'time', timeFormat: 'h:mm:ss', correctFormat: true},
+        // Column 3
+        {data: 'fields.hora_adicional', type: 'numeric'},
+        // Column 4
+        {data: 'fields.tiempo_operado', editor: false},
+        // Column 5
+        {data: 'fields.kilometros', type: 'numeric', editor: false},
+        // Column 6
         {data: 'fields.observaciones'},
+        // Column 7
         {data: 'fields.novedades'},
+        // Column 8
+        {data: 'fields.conductor_id', type: 'autocomplete', source: conductor_pk, strict: true},
+        // Column 9
+        {data: 'fields.nombres', type: 'autocomplete', source: conductor, strict: true},
+        // Column 10
         {data: 'fields.flota'},
-        {data: 'fields.valor_ruta'},
-        {data: 'fields.valor_tercero'},
-        {data: 'fields.viaticos'},
-        {data: 'fields.descuentos_conductor'},
-        {data: 'fields.valor_hora_adicional'},
-        {data: 'fields.adicional_conductor'},
-        {data: 'fields.total_ingreso'},
-        {data: 'fields.conductor_id'},
-        {data: 'fields.placa_id'},
-        {data: 'fields.ruta_id'},
+        // Column 11
+        {data: 'fields.valor_ruta', type: 'numeric', format: '$0,0.00'},
+        // Column 12
+        {data: 'fields.valor_tercero', type: 'numeric', format: '$0,0.00'},
+        // Column 13
+        {data: 'fields.valor_hora_adicional', type: 'numeric', format: '$0,0.00'},
+        // Column 14
+        {data: 'fields.viaticos', type: 'numeric', format: '$0,0.00'},
+        // Column 15
+        {data: 'fields.descuentos_conductor', type: 'numeric', format: '$0,0.00'},
+        // Column 16
+        {data: 'fields.adicional_conductor', type: 'numeric', format: '$0,0.00'},
+        // Column 17
+        {data: 'fields.placa_id', type: 'autocomplete', source: vehiculo, strict: true},
+        // Column 18
+        {data: 'fields.total_ingreso', type: 'numeric', format: '$0,0.00'}
       ],
-      minSpareRows: 3
-    });
+      afterChange : function(arr, op) {
 
-  hot.loadData(JSON.parse(json));
+        // console.log()
 
-    function planilla_get(){
-      $('#planilla_btn').click(function(){
-        var request = $.ajax({
-            type: "POST",
-            url: "{% url 'dashboard:planilla:planilla_get'%}",
-            data: {
-                "csrfmiddlewaretoken": '{{ csrf_token }}',
-                "fecha": '2017-06-04',
-            },
-        });
-        request.done(function(response) {
-          var data = response;
-          console.log(data)
-          hot.loadData(data);
-        });
+  				if(op == "edit" && arr.length == 1) {
+            calculate = true
+            // variable que almacena la suma de todos los valores
+            var total = 0;
+
+            // almaceno los valores asociados a los campos numericos
+            for(var j = 0; j < camposValores.length; j++){
+              if(arr[0][1] == camposValores[j]){
+                totalIngreso[j] = arr[0][3];
+              }
+            }
+            // Hago una sumatoria de los valores almacenados previamente
+            for(var j = 0; j < totalIngreso.length; j++){
+              total += totalIngreso[j];
+            }
+
+
+            // for(var j = 0; j < this.countRows(); j++){
+            //   totalIngresoRow[j];
+            // }
+
+            var value = arr[0][3];
+  					for(var i = 0; i < rutaJSON.length; i++) {
+  						if(rutaJSON[i].fields.nombre_ruta == value) {
+                // var value = this.getDataAtCell(arr[0][0], 11);
+
+                var tiempo_operado = tiempoOperado(rutaJSON[i].fields.hora_inicio, rutaJSON[i].fields.hora_fin)
+                console.log(tiempo_operado)
+                this.setDataAtCell(arr[0][0], 1, rutaJSON[i].fields.hora_inicio);
+                this.setDataAtCell(arr[0][0], 2, rutaJSON[i].fields.hora_fin);
+                this.setDataAtCell(arr[0][0], 3, 0);
+                this.setDataAtCell(arr[0][0], 4, tiempo_operado);
+                this.setDataAtCell(arr[0][0], 5, rutaJSON[i].fields.kilometros);
+                this.setDataAtCell(arr[0][0], 11, rutaJSON[i].fields.valor_ruta);
+                this.setDataAtCell(arr[0][0], 12, rutaJSON[i].fields.valor_tercero);
+                this.setDataAtCell(arr[0][0], 13, rutaJSON[i].fields.valor_hora_adicional);
+                this.setDataAtCell(arr[0][0], 14, 0);
+                this.setDataAtCell(arr[0][0], 15, 0);
+                this.setDataAtCell(arr[0][0], 16, 0);
+                this.setDataAtCell(arr[0][0], 18, 0);
+  							return false;
+  						}
+  					}
+            for(var i = 0; i < conductorJSON.length; i++) {
+              if(conductorJSON[i].pk == value) {
+                this.setDataAtCell(arr[0][0], 9, conductor[i]);
+              }
+            }
+            // for(var i = 0; i < conductorJSON.length; i++) {
+            //   if(conductor[i] == value) {
+            //     this.setDataAtCell(arr[0][0], 8, conductor_pk[i]);
+            //   }
+            // }
+  				}
+  			}
+        // end afterChange
       });
+
+    function add_pk_ruta_to_data(data){
+      for(var i = 0; i < data.length; i++) {
+        for(var j = 0; j < ruta.length; j++){
+          if(data[i][0] == ruta[j]){
+            data[i][0] = ruta_pk[j];
+          }
+        }
+      }
+      return data;
     }
+    // post data
+    $('#save_planilla').click(function(){
+      var data = JSON.stringify(add_pk_ruta_to_data(hot.getData()));
+      var data_to_post = {
+        'csrfmiddlewaretoken': '{{ csrf_token }}',
+        'fecha': fecha,
+        'table_content' : data,
+      };
+      $.ajax({
+        type: "POST",
+        url: "{% url 'dashboard:planilla:planilla_save' %}",
+        data : data_to_post,
+        success: function(data) {
+          // alert('success')
+            location.href = "{% url 'dashboard:planilla:planilla_list' %}"
+            console.log(data)
+        },
+        failure: function(data) {
+          console.log(data)
+            $( "#messages div" ).remove();
+            $( "#messages" ).append( "<div class='alert alert-danger'><strong>Error!</strong>" +data + "</div>" );
+        }
+      });
+    });
+    // end post data
+	});
+  // end document ready
+
+
+
+  // hot.loadData(JSON.parse(json));
+  //
+  //   function planilla_get(){
+  //     $('#planilla_btn').click(function(){
+  //       var request = $.ajax({
+  //           type: "POST",
+  //           url: "",
+  //           data: {
+  //               "csrfmiddlewaretoken": '{{ csrf_token }}',
+  //               "fecha": '2017-06-04',
+  //           },
+  //       });
+  //       request.done(function(response) {
+  //         var data = response;
+  //         console.log(data)
+  //         hot.loadData(data);
+  //       });
+  //     });
+  //   }
 </script>
 {% endblock %}

@@ -62,8 +62,6 @@ class VehiculoForm(forms.ModelForm):
             ('OFICIAL', 'OFICIAL')
         )
 
-
-
         fields = [
                 'placa',
                 'conductor_default',
