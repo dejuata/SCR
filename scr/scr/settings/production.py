@@ -9,9 +9,9 @@ ALLOWED_HOSTS = []
 DATABASES = {
     'default': {
         'ENGINE': 'django_tenants.postgresql_backend',
-        'NAME': 'scrdb',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
+        'NAME': 'scrdbprod',
+        'USER': 'scruserprod',
+        'PASSWORD': 'america27',
         'HOST': 'localhost',
         'PORT': '5432',
     }
