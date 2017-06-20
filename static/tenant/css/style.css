@@ -488,7 +488,7 @@ input:focus, textarea:focus { outline: none; }
 
 .modal-content{
 
-    border-radius:0px;
+    /*border-radius:0px;*/
 
     background:rgba(255,255,255,0.9);
 
@@ -3074,7 +3074,7 @@ div[data-role="editor-toolbar"] {
 
 .widget .widget-head,.modal-header{
 
-  background-color: #f8f8f8;
+  /*background-color: #f8f8f8;*/
 
   background: -webkit-gradient(linear, left top, left bottom, from(#f8f8f8), to(#f2f2f2));
 
@@ -3100,11 +3100,11 @@ div[data-role="editor-toolbar"] {
 
 	color: #666;
 
-	font-size: 14px;
+	/*font-size: 14px;*/
 
 	font-weight: bold;
 
-    padding: 8px 15px;
+  padding: 8px 15px;
 
 }
 
@@ -3340,7 +3340,7 @@ div[data-role="editor-toolbar"] {
 
 .widget .padd, .modal-body{
 
-	padding: 13px 15px;
+	/*padding: 13px 15px;*/
 
 }
 
@@ -6446,7 +6446,7 @@ ul.inbox-pagination li {
 
     font-weight: 300;
 
-    font-family: 'Lato', sans-serif;
+    /*font-family: 'Lato', sans-serif;*/
 
 }
 

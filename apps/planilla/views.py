@@ -7,6 +7,8 @@ from django.views.generic.edit import FormMixin
 from django.core.serializers import serialize
 from django.http import JsonResponse
 from django.contrib import messages
+from django.core.serializers.json import DjangoJSONEncoder
+
 
 from .forms import UploadFileForm
 from .models import Planilla, Header
@@ -20,10 +22,18 @@ import django_excel as excel
 import json
 
 
-class PlanillaList(ListView):
+class PlanillaList(SortMixin, ListView):
     model = Header
     template_name = 'planilla/planilla_list.html'
     form_class = UploadFileForm
+    default_sort_params = ('fecha', 'asc')
+
+    def sort_queryset(self, qs, sort_by, order):
+        if sort_by == 'fecha':
+            qs = qs.order_by('fecha')
+        if order == 'desc':
+            qs = qs.reverse()
+        return qs
 
 
 class PlanillaCreate(TemplateView):
@@ -31,14 +41,35 @@ class PlanillaCreate(TemplateView):
 
     def post(self, request, *args, **kwargs):
         fecha = request.POST.get('fecha')
-        ruta = serialize('json', Ruta.objects.all())
-        conductor = serialize('json', Conductor.objects.all())
-        vehiculo = serialize('json', Vehiculo.objects.all())
-        return render(request, 'planilla/planilla_form.html', {'fecha': fecha,
-                                                               'ruta': ruta,
-                                                               'conductor': conductor,
-                                                               'vehiculo': vehiculo
-                                                               })
+
+        if(Header.objects.get(fecha=fecha)):
+            messages.add_message(request, messages.INFO, 'Ya existe una planilla con esa fecha')
+            return HttpResponseRedirect(reverse_lazy('dashboard:planilla:planilla_list'))
+        else:
+            ruta = json.dumps(list(Ruta.objects.values('codigo_ruta',
+                                                       'nombre_ruta',
+                                                       'hora_inicio',
+                                                       'hora_fin',
+                                                       'valor_hora_adicional',
+                                                       'kilometros',
+                                                       'valor_ruta',
+                                                       'valor_tercero',
+                                                       )), cls=DjangoJSONEncoder)
+
+            conductor = json.dumps(list(Conductor.objects.values('cedula',
+                                                                 'apellidos',
+                                                                 'nombres',
+                                                                 ).order_by('apellidos')))
+
+            vehiculo = json.dumps(list(Vehiculo.objects.values('placa')))
+
+            return render(request, 'planilla/planilla_form.html', {'fecha': fecha,
+                                                                   'ruta': ruta,
+                                                                   'conductor': conductor,
+                                                                   'vehiculo': vehiculo,
+                                                                   'btn_value': 'Guardar Planilla',
+                                                                   'btn_id': 'save_planilla'
+                                                                   })
 
 
 def create_data(request):
@@ -46,7 +77,7 @@ def create_data(request):
     data = request.POST['table_content']
     data = json.loads(data)
     response = {'delete': True, 'class': 'hide'}
-    messages.add_message(request, messages.INFO, 'Hello world.')
+    # messages.add_message(request, messages.INFO, 'Hello world.')
 
     try:
         header = Header(fecha=fecha)
@@ -121,7 +152,9 @@ class PlanillaUpdate(SuccessMessageMixin, UpdateView):
                                                                'fecha': fecha,
                                                                'ruta': ruta,
                                                                'conductor': conductor,
-                                                               'vehiculo': vehiculo
+                                                               'vehiculo': vehiculo,
+                                                               'btn_value': 'Actualizar Planilla',
+                                                               'btn_id': 'update_planilla'
                                                                })
         # return HttpResponse(data, content_type='application/json')
 

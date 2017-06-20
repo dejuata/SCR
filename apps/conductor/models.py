@@ -31,6 +31,12 @@ class Conductor(models.Model):
     experiencia = models.CharField(max_length=2)
     activo_inactivo = models.BooleanField(blank=True, default=True)
 
+    # def as_dict(self):
+    #     return {
+    #         "cedula": self.cedula,
+    #         # other stuff
+    #     }
+
     def __str__(self):
         full_name = self.nombres + ' ' + self.apellidos
         return full_name
