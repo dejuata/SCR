@@ -4,7 +4,7 @@ import os
 
 
 DEBUG = True
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 DATABASES = {
     'default': {
@@ -20,10 +20,18 @@ DATABASES = {
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
-STATIC_URL = '/static/'
+AWS_STORAGE_BUCKET_NAME = 'scrvistas'
+STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+AWS_ACCESS_KEY_ID = 'AKIAJ3GVEFT32KLMEBJA'
+AWS_SECRET_ACCESS_KEY = '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'
+
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/1.10/howto/static-files/
+
+STATIC_URL = 'https://s3.amazonaws.com/scrvistas/'
+MEDIA_URL = 'https://s3.amazonaws.com/scrvistas/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
-STATIC_ROOT = os.path.join(BASE_DIR, '..', 'static_collected')
+#STATIC_ROOT = os.path.join(BASE_DIR, '..', 'static_collected')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'

@@ -1,6 +1,8 @@
 from django.http import JsonResponse
+from django.core.serializers import serialize
+from django.http import HttpResponse
 
-from .models import Vehiculo
+from .models import Vehiculo, Conductor
 
 
 def vehiculo_delete(request):
@@ -17,3 +19,11 @@ def vehiculo_delete(request):
         identificador.save()
 
     return JsonResponse(response)
+
+
+def vehiculo_get(request):
+    all_objects = list(Vehiculo.objects.all()) + list(Conductor.objects.all())
+    data = serialize('json', all_objects)
+    #  data = serialize('json', Vehiculo.objects.all())
+    print(data)
+    return HttpResponse(data, content_type='application/json')

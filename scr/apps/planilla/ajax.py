@@ -15,7 +15,8 @@ def planilla_delete(request):
 
     return JsonResponse(response)
 
+
 def planilla_get(request):
     fecha = request.POST.get('fecha')
-    data = serialize('json', Planilla.objects.filter(fecha=fecha))    
+    data = serialize('json', Planilla.objects.filter(fecha=fecha))
     return HttpResponse(data, content_type='application/json')

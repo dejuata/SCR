@@ -13,6 +13,7 @@ import django_excel as excel
 
 class ConductorList(FormMixin, SortMixin, ListView):
     model = Conductor
+    queryset = Conductor.objects.order_by('apellidos')
     template_name = 'conductor/conductor_list.html'
     form_class = UploadFileForm
     default_sort_params = ('nombres', 'asc')

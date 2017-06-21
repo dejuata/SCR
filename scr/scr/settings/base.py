@@ -41,6 +41,7 @@ SHARED_APPS = (
     'apps.cities',
     'django_select2',
     'turbolinks',
+    #'storages',  # manejador amazon s3
 )
 
 TENANT_APPS = (

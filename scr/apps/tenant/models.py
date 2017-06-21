@@ -20,11 +20,6 @@ class Tenant(TenantMixin):
 
     auto_create_schema = True
 
-    class Meta:
-        verbose_name = _('tenant')
-        verbose_name_plural = _('tenants')
-
-
     def __str__(self):
         return self.schema_name
 

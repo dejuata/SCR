@@ -1,5 +1,6 @@
 from django.db import models
 from apps.conductor.models import Conductor
+from django.core import serializers
 
 
 class Vehiculo(models.Model):

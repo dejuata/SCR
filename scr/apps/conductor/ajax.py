@@ -1,4 +1,6 @@
 from django.http import JsonResponse
+from django.core.serializers import serialize
+from django.http import HttpResponse
 
 from .models import Conductor
 
@@ -16,3 +18,8 @@ def conductor_delete(request):
         identificador.save()
 
     return JsonResponse(response)
+
+
+def conductor_get(request):
+    data = serialize('json', Conductor.objects.all())
+    return HttpResponse(data, content_type='application/json')
