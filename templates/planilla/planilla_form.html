@@ -83,6 +83,8 @@
 
   vehiculo_json = JSON.parse(document.getElementById('vehiculo').value)
 
+  console.log(conductor_json)
+
   ruta_json = JSON.parse(document.getElementById('ruta').value)
   ruta_array = JSON.parse(JSON.stringify(ruta_json, ['codigo_ruta','nombre_ruta']));
 
