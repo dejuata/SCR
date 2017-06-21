@@ -1,3 +1,16 @@
+/*boton de template */
+.row-template{
+  display: flex;
+}
+.container-template{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.icon-template{
+  font-size: 90px !important;
+  padding: 15px;
+}
 /* Estilos para tablas */
 .navbar.navbar-default{
   /*height: 64px !important;*/

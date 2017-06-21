@@ -12,9 +12,20 @@
       <input type="date" value="{{fecha}}" id="fecha" class="form-control" disabled>
     </div>
 
-    <div class="btn-group" >
-      <button class="btn btn-default" id="load_template">Cargar Template</button>
-      <button class="btn btn-default" id="{{btn_id}}">{{btn_value}}</button>
+    <div class="btn-group col-md-8" data-toggle="buttons">
+      <button class="btn btn-primary" id="load_template" data-toggle="modal" data-target="#modalEmergente">Cargar Template</button>
+      <label for="" class="btn btn-primary {{template}}" id="active_template">
+        <input type="checkbox" id="done_template">
+        Hacer Template
+      </label>
+    </div>
+
+
+
+    <div class="btn-group col-md-2" style="padding-right: 0;
+    display: flex;
+    justify-content: flex-end;">
+      <button class="btn btn-success" id="{{btn_id}}">{{btn_value}}</button>
     </div>
 
     <input type="hidden" value="{{ruta}}" id="ruta">
@@ -26,9 +37,42 @@
   <div id="planilla" class="scroll-container fixed-container"></div>
 {% endblock %}
 
+<!-- modal -->
+{% block modal-title %}
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">Cargar Template</h4>
+  </div>
+{% endblock %}
+
+{% block modal-body %}
+  <div class="modal-body row">
+    {% if templates %}
+      {% for template in templates %}
+        <div class="col-xs-4" style="padding-bottom: 15px;">
+          <strong>{{template.fecha}}</strong>
+          <a class="btn btn-default btn-template" onclick="get_template({{template.id}})" href="#">
+            <i class="fa fa-file icon-template" aria-hidden="true"></i>
+          </a>
+        </div>
+      {% endfor %}
+    {% else %}
+      <p>no hay templates</p>
+    {% endif %}
+  </div>
+{% endblock %}
+
+{% block modal-footer %}
+  <div class="modal-footer">
+    <input type="submit" class="btn btn-success" value="Confirmar">
+    <a class="btn btn-default" href="#" class="close" data-dismiss="modal">Cancelar</a>
+  </div>
+{% endblock %}
+<!-- end modal -->
+
 {% block extrajs %}
 <script type="text/javascript">
-$(document).ready(function() {
+// $(document).ready(function() {
 
   // Informacion de conductores, vehiculos y ruta en formato JSON
   var conductor_json, vehiculo_json, ruta_json;
@@ -229,7 +273,7 @@ $(document).ready(function() {
   				}
   			},
         afterLoadData: function(firstTime){
-          console.log(firstTime)
+          // console.log(firstTime)
         }
 
       });
@@ -273,6 +317,11 @@ $(document).ready(function() {
         return true;
       }
     }
+    // Obtener el valor del checkbox para saber si debe guardarse como template la planilla
+    function is_template(){
+      var template = $('#active_template').hasClass('active');
+      return template ;
+    }
 
     // send data to server
     function save_data(url){
@@ -286,10 +335,13 @@ $(document).ready(function() {
       if(registry && conductor_cell && vehiculo_cell){
         // Obtener data de handsontable
         var data = JSON.stringify(add_pk_ruta_to_data(hot.getData()));
+        var template = is_template();
+        console.log(template)
 
         var data_to_post = {
           'csrfmiddlewaretoken': '{{ csrf_token }}',
           'fecha': fecha,
+          'template': template,
           'table_content' : data,
         };
         $.ajax({
@@ -335,7 +387,6 @@ $(document).ready(function() {
     if (data != null){
      data = JSON.parse(data)
     }
-    console.log(data)
 
     // Agregar el campo nombres al JSON antes de cargarlo
     function add_nombres_to_data(data){
@@ -352,9 +403,35 @@ $(document).ready(function() {
     // Cargar data en handsontable
     hot.loadData(add_nombres_to_data(data));
 
-
-
-	});
+    // funcion para cargar el datos a handsontable
+    function load_data(data){
+      hot.loadData(add_nombres_to_data(data));
+    }
+	// });
   // end document ready
+
+  /* --------------------------------------------------------------------
+   * Script para obtener el template
+   * -------------------------------------------------------------------- */
+
+  function get_template(pk){
+    var request = $.ajax({
+        type: "POST",
+        url: "{% url 'dashboard:planilla:planilla_get'%}",
+        data: {
+            "csrfmiddlewaretoken": '{{ csrf_token }}',
+            "pk": pk
+        },
+    });
+    request.done(function(response) {
+        if (response){
+          $('#modalEmergente').modal('toggle')
+          var data = JSON.parse(response)
+          // Cargar data en handsontable
+          load_data(data)
+          // console.log(data)
+        }
+    });
+  }
 </script>
 {% endblock %}

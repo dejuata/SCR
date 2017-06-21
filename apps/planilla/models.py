@@ -49,7 +49,7 @@ class PlanillaManager(models.Manager):
 
 class Header(models.Model):
     fecha = models.DateField(unique=True)
-    template = models.BooleanField()
+    template = models.BooleanField(default=False)
 
     def __str__(self):
         return str(self.fecha)

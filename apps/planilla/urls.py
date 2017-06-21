@@ -2,7 +2,7 @@ from django.conf.urls import url
 from django.contrib.auth.decorators import login_required
 
 from .views import PlanillaList, PlanillaCreate, PlanillaUpdate, create_data
-# from .ajax import planilla_delete, planilla_get , import_data, export_data
+from .ajax import get_template
 from .excel import export_data
 
 
@@ -15,7 +15,7 @@ urlpatterns = [
 
     url(r'^edit/(?P<pk>\d+)/$', login_required(PlanillaUpdate.as_view()), name='planilla_edit'),
 
-    # url(r'^get/$', login_required(planilla_get), name='planilla_get'),
+    url(r'^get/$', login_required(get_template), name='planilla_get'),
 
     # url(r'^import/', import_data, name='planilla_import'),
 

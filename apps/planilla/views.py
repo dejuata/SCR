@@ -6,7 +6,6 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.core.serializers import serialize
 from django.http import JsonResponse
 from django.contrib import messages
-from django.core.serializers.json import DjangoJSONEncoder
 
 from .forms import UploadFileForm
 from .models import Planilla, Header
@@ -45,6 +44,7 @@ class PlanillaCreate(TemplateView):
             messages.add_message(request, messages.INFO, 'Ya existe una planilla con esa fecha')
             return HttpResponseRedirect(reverse_lazy('dashboard:planilla:planilla_list'))
         else:
+            templates = Header.objects.filter(template=True)
             ruta = ruta_json
             conductor = conductor_json
             vehiculo = vehiculo_json
@@ -52,6 +52,7 @@ class PlanillaCreate(TemplateView):
                                                                    'ruta': ruta,
                                                                    'conductor': conductor,
                                                                    'vehiculo': vehiculo,
+                                                                   'templates': templates,
                                                                    'planilla_id': 0,
                                                                    'btn_value': 'Guardar Planilla',
                                                                    'btn_id': 'save_planilla'
@@ -61,11 +62,13 @@ class PlanillaCreate(TemplateView):
 def create_data(request):
     fecha = request.POST['fecha']
     data = request.POST['table_content']
+    template = True if request.POST.get('template') == 'true' else False
     data = json.loads(data)
     response = {'delete': True, 'class': 'hide'}
+    print(template)
 
     try:
-        header = Header(fecha=fecha)
+        header = Header(fecha=fecha, template=template)
         header.save()
 
         for row in data:
@@ -126,6 +129,11 @@ class PlanillaUpdate(SuccessMessageMixin, UpdateView):
     def get(self, request, *args, **kwargs):
         planilla_id = kwargs['pk']
         fecha = Header.objects.get(pk=planilla_id)
+
+        template = ''
+        if fecha.template:
+            template = 'active'
+
         data = serialize('json', Planilla.objects.filter(fecha=fecha).order_by('pk'))
         ruta = ruta_json
         conductor = conductor_json
@@ -136,12 +144,15 @@ class PlanillaUpdate(SuccessMessageMixin, UpdateView):
                                                                'conductor': conductor,
                                                                'vehiculo': vehiculo,
                                                                'planilla_id': planilla_id,
+                                                               'template': template,
                                                                'btn_value': 'Actualizar Planilla',
                                                                'btn_id': 'update_planilla'
                                                                })
 
     def post(self, request, *args, **kwargs):
+        pk = kwargs['pk']
         fecha = request.POST['fecha']
+        template = True if request.POST.get('template') == 'true' else False
         data = request.POST['table_content']
         data = json.loads(data)
 
@@ -149,7 +160,7 @@ class PlanillaUpdate(SuccessMessageMixin, UpdateView):
 
         if header[0] > 0:
             try:
-                header = Header(fecha=fecha)
+                header = Header(pk=pk, fecha=fecha, template=template)
                 header.save()
 
                 for row in data:

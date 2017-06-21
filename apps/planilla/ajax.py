@@ -1,8 +1,8 @@
 from django.http import JsonResponse
-from django.core.serializers import serialize
 from django.http import HttpResponse
+from django.core.serializers import serialize
 
-from .models import Planilla
+from .models import Planilla, Header
 
 
 def planilla_delete(request):
@@ -15,7 +15,9 @@ def planilla_delete(request):
 
     return JsonResponse(response)
 
-def planilla_get(request):
-    fecha = request.POST.get('fecha')
-    data = serialize('json', Planilla.objects.filter(fecha=fecha))    
-    return HttpResponse(data, content_type='application/json')
+
+def get_template(request):
+    header_id = request.POST.get('pk')
+    header = Header.objects.get(pk=header_id)
+    data = serialize('json', Planilla.objects.filter(fecha=header).order_by('pk'))
+    return HttpResponse(data)
