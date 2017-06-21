@@ -46,7 +46,13 @@ Nuevo Vehiculo
         <td>{{ vehiculo.conductor_default }}</td>
         <td>{{ vehiculo.numero_interno }}</td>
         <td>{{ vehiculo.marca }}</td>
-        <td>{% if vehiculo.activo_inactivo %}Activo{% else %}Inactivo{% endif %}</td>
+        <td>
+          {% if vehiculo.activo_inactivo %}
+          <i class="fa fa-check-circle" aria-hidden="true" style="color:green; font-size:18px"></i>
+          {% else %}
+          <i class="fa fa-times-circle" aria-hidden="true" style="color:red; font-size:18px"></i>
+          {% endif %}
+        </td>
         <td>
           <div class="btn-group">
             <a class="btn btn-primary" href="{% url 'dashboard:vehiculo:vehiculo_edit' vehiculo.placa %}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>

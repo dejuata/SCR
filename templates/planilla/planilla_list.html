@@ -28,6 +28,7 @@ data-toggle="modal" data-target="#modalEmergente"
   <tr>
     <th data-field="state" data-checkbox="true"></th>
     <th data-halign="center" data-align="center" data-field="fecha"  data-sortable="true" >Fecha de creación</th>
+    <th data-halign="center" data-align="center" data-field="template"  data-sortable="true" >Template</th>
     <th data-halign="center" data-align="center" data-field="acciones">Acciones</th>
   </tr>
 </thead>
@@ -41,6 +42,13 @@ data-toggle="modal" data-target="#modalEmergente"
     <tr>
         <td></td>
         <td>{{ planilla.fecha }}</td>
+        <td>
+        {% if planilla.template %}
+          <i class="fa fa-check-circle" aria-hidden="true" style="color:green; font-size:18px"></i>
+        {% else %}
+          <i class="fa fa-times-circle" aria-hidden="true" style="color:red; font-size:18px"></i>
+        {% endif %}
+        </td>
         <td>
           <div class="btn-group">
             <a class="btn btn-primary" href="{% url 'dashboard:planilla:planilla_edit' planilla.id %}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
