@@ -124,7 +124,42 @@
             </a>
             <ul class="dropdown-menu" role="menu">
               <li><a href="{% url 'usuario_tenant:usuario_profile' %}">Perfil</a></li>
+              <!-- Renderiza el enlace dependiendo del tema que hay guardado el usuario -->
+              {% if user.theme == 1 or user.theme == 0 %}
               <li><a href="{% url 'dashboard:theme:theme1'%}" >Temas</a></li>
+              {% endif %}
+
+              {% if user.theme == 2 %}
+              <li><a href="{% url 'dashboard:theme:theme2'%}" >Temas</a></li>
+              {% endif %}
+
+              {% if user.theme == 3 %}
+              <li><a href="{% url 'dashboard:theme:theme3'%}" >Temas</a></li>
+              {% endif %}
+
+              {% if user.theme == 4 %}
+              <li><a href="{% url 'dashboard:theme:theme4'%}" >Temas</a></li>
+              {% endif %}
+
+              {% if user.theme == 5 %}
+              <li><a href="{% url 'dashboard:theme:theme5'%}" >Temas</a></li>
+              {% endif %}
+
+              {% if user.theme == 6 %}
+              <li><a href="{% url 'dashboard:theme:theme6'%}" >Temas</a></li>
+              {% endif %}
+
+              {% if user.theme == 7 %}
+              <li><a href="{% url 'dashboard:theme:theme7'%}" >Temas</a></li>
+              {% endif %}
+
+              {% if user.theme == 8 %}
+              <li><a href="{% url 'dashboard:theme:theme8'%}" >Temas</a></li>
+              {% endif %}
+
+              {% if user.theme == 9 %}
+              <li><a href="{% url 'dashboard:theme:theme9'%}" >Temas</a></li>
+              {% endif %}
               <li><a href="{% url 'usuario_logout' %">Salir</a></li>
             </ul>
           </li>

@@ -55,15 +55,15 @@ class Header(models.Model):
 
 
 class Planilla(models.Model):
-    fecha = models.ForeignKey(Header)
+    fecha = models.ForeignKey(Header, on_delete=models.CASCADE)
     ruta = models.ForeignKey(Ruta)
     kilometros = models.FloatField(default=0)
     hora_adicional = models.IntegerField(default=0)
     hora_inicio = models.TimeField()
     hora_fin = models.TimeField()
     tiempo_operado = models.FloatField()
-    placa = models.ForeignKey(Vehiculo, on_delete=models.CASCADE, null=True)  # lo coloque null
-    conductor = models.ForeignKey(Conductor, on_delete=models.CASCADE, null=True)  # lo coloque null
+    placa = models.ForeignKey(Vehiculo)
+    conductor = models.ForeignKey(Conductor)
     observaciones = models.TextField(blank=True, null=True)
     novedades = models.CharField(max_length=100, blank=True, null=True)
     flota = models.CharField(max_length=100, null=True)  # lo coloque null

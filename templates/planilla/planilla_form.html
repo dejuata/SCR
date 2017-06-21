@@ -41,7 +41,7 @@ $(document).ready(function() {
 
   ruta_json = JSON.parse(document.getElementById('ruta').value)
   ruta_array = JSON.parse(JSON.stringify(ruta_json, ['codigo_ruta','nombre_ruta']));
-  console.log(ruta_json)
+
   // llenar un array con las placas de los vehiculos
   // para mostrarlo en la handsontable
   for(var i = 0; i < vehiculo_json.length; i++){
@@ -202,7 +202,7 @@ $(document).ready(function() {
   						if(ruta_json[i].codigo_ruta == value) {
 
                 // var value = this.getDataAtCell(arr[0][0], 11);
-                console.log()
+
 
                 var tiempo_operado = tiempoOperado(ruta_json[i].hora_inicio, ruta_json[i].hora_fin)
 
@@ -227,7 +227,11 @@ $(document).ready(function() {
               }
             }
   				}
-  			}
+  			},
+        afterLoadData: function(firstTime){
+          console.log(firstTime)
+        }
+
       });
 
     function add_pk_ruta_to_data(data){
@@ -240,6 +244,7 @@ $(document).ready(function() {
     }
 
     // Validar que la placa y el conductor no esten vacios
+    // La validacion pasa si retorna true
     function validate_empty_cell(colum, message){
       var rows_with_data = hot.countRows() - hot.countEmptyRows();
       var element = [];
@@ -250,51 +255,80 @@ $(document).ready(function() {
         return value
       }
       if(element.find(is_null)){
-        alert(message);
+        alert(message)
+        return false;
+      }else{
+        return true;
       }
     }
 
     // Validar que hay registros
-    function validate_empty_register(message){
+    // La validacion pasa si retorna true
+    function validate_empty_registry(message){
       var rows_with_data = hot.countRows() - hot.countEmptyRows();
-      return !rows_with_data ? alert(message) : false;
+      if (!rows_with_data){
+        alert(message);
+        return false;
+      }else{
+        return true;
+      }
     }
-    // post data
+
+    // send data to server
+    function save_data(url){
+      var registry, conductor_cell, vehiculo_cell;
+
+      registry = validate_empty_registry('No hay registros para guardar')
+      conductor_cell = validate_empty_cell(17, 'Hay registros con placas vacios, por favor revisa!');
+      vehiculo_cell = validate_empty_cell(8, 'Hay registros con conductores vacios, por favor revisa!');
+
+      // Todas las validaciones deben ser true para poder guardar los datos
+      if(registry && conductor_cell && vehiculo_cell){
+        // Obtener data de handsontable
+        var data = JSON.stringify(add_pk_ruta_to_data(hot.getData()));
+
+        var data_to_post = {
+          'csrfmiddlewaretoken': '{{ csrf_token }}',
+          'fecha': fecha,
+          'table_content' : data,
+        };
+        $.ajax({
+          type: "POST",
+          url: url,
+          data : data_to_post,
+          success: function(data) {
+            alert('success')
+            console.log(data)
+            location.href = "{% url 'dashboard:planilla:planilla_list' %}"
+
+          },
+          failure: function(data) {
+
+              $( "#messages div" ).remove();
+              $( "#messages" ).append( "<div class='alert alert-danger'><strong>Error!</strong>" +data + "</div>" );
+          }
+        });
+        // end ajax
+      }else{
+        alert('No se pudo guardar la informacion')
+      }
+
+
+    }
+    // Dispara la funcion save_data para guardar la planilla
     $('#save_planilla').click(function(){
-
-      validate_empty_register('No hay registros para guardar');
-      validate_empty_cell(17, 'Hay registros con placas vacios, por favor revisa!');
-      validate_empty_cell(8, 'Hay registros con conductores vacios, por favor revisa!');
-
-      // Obtener data de handsontable
-      var data = JSON.stringify(add_pk_ruta_to_data(hot.getData()));
-      console.log(data)
-      var data_to_post = {
-        'csrfmiddlewaretoken': '{{ csrf_token }}',
-        'fecha': fecha,
-        'table_content' : data,
-      };
-      $.ajax({
-        type: "POST",
-        url: "{% url 'dashboard:planilla:planilla_save' %}",
-        data : data_to_post,
-        success: function(data) {
-          alert('success')
-          location.href = "{% url 'dashboard:planilla:planilla_list' %}"
-
-        },
-        failure: function(data) {
-
-            $( "#messages div" ).remove();
-            $( "#messages" ).append( "<div class='alert alert-danger'><strong>Error!</strong>" +data + "</div>" );
-        }
-      });
-      // end ajax
+      var url = "{% url 'dashboard:planilla:planilla_save' %}";
+      save_data(url);
+    });
+    // Dispara la funcion save_data para actualizar la planilla
+    $('#update_planilla').click(function(){
+      var url = "{% url 'dashboard:planilla:planilla_edit'  planilla_id %}";
+      save_data(url)
     });
     // end post data
 
     /* --------------------------------------------------------------------
-     * Script actualizar data
+     * Script para cargar data
      * -------------------------------------------------------------------- */
     // Extraer data del input y almacenarlo en una variable
     var data = document.getElementById('json').value
@@ -306,15 +340,15 @@ $(document).ready(function() {
     // Agregar el campo nombres al JSON antes de cargarlo
     function add_nombres_to_data(data){
       for(var i = 0; i < data.length; i++) {
-        for(var j = 0; j < conductor_pk.length; j++) {
-          if(data[i].fields.conductor == conductor_pk[j].pk) {
-            data[i].fields.nombres = conductor[j]
+        for(var j = 0; j < conductor_json.length; j++) {
+          if(data[i].fields.conductor == conductor_json[j].cedula) {
+            data[i].fields.nombres = conductor_json[j].nombres + ' ' + conductor_json[j].apellidos
           }
         }
       }
       return data;
     }
-    console.log(add_nombres_to_data(data))
+
     // Cargar data en handsontable
     hot.loadData(add_nombres_to_data(data));
 
