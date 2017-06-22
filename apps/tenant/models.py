@@ -8,19 +8,8 @@ from django.db.models.fields import IntegerField
 from django.conf import settings
 
 
-class BigIntegerField(IntegerField):
-    empty_strings_allowed = False
-
-    def get_internal_type(self):
-        return "BigIntegerField"
-
-    # Note this won't work with Oracle.
-    def db_type(self):
-        return 'bigint'
-
-
 class Tenant(TenantMixin):
-    nit = BigIntegerField()
+    nit = models.IntegerField(unique=True)
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     logo = models.ImageField(upload_to='tenant', null=True, blank=True, default='')
     razon_social = models.CharField(max_length=200)

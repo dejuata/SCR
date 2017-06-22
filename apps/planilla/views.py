@@ -65,8 +65,10 @@ def create_data(request):
     template = True if request.POST.get('template') == 'true' else False
     data = json.loads(data)
     response = {'delete': True, 'class': 'hide'}
+    print(request)
+    print(data)
     print(template)
-
+    #int(float(a))
     try:
         header = Header(fecha=fecha, template=template)
         header.save()
@@ -116,7 +118,7 @@ def create_data(request):
 
     return HttpResponseRedirect(reverse_lazy('dashboard:planilla:planilla_list'))
 
-    # return JsonResponse(response)
+    return JsonResponse({'hola': 'estoy'})
 
 
 class PlanillaUpdate(SuccessMessageMixin, UpdateView):

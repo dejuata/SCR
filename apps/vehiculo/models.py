@@ -1,5 +1,5 @@
 from django.db import models
-from apps.conductor.models import Conductor
+from ..conductor.models import Conductor
 
 
 class Vehiculo(models.Model):

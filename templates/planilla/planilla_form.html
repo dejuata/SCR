@@ -337,8 +337,14 @@
       if(registry && conductor_cell && vehiculo_cell){
         // Obtener data de handsontable
         var data = JSON.stringify(add_pk_ruta_to_data(hot.getData()));
+
         var template = is_template();
-        console.log(template)
+        // for(var i = 0; i < data.length; i++){
+        //   console.log(data[i][8])
+        //   // data[i][8] = parseInt(data[i][8])
+        // }
+        // console.log(data)
+
 
         var data_to_post = {
           'csrfmiddlewaretoken': '{{ csrf_token }}',

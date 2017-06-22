@@ -12,5 +12,5 @@ urlpatterns = [
     url(r'^ruta/', include('apps.ruta.urls', namespace='ruta')),
     url(r'^planilla/', include('apps.planilla.urls', namespace='planilla')),
     url(r'^theme/', include('apps.custom_ui.urls', namespace='theme')),
-    url(r'^data/', include('apps.data_json.urls', namespace='data')),
+    url(r'^data/', include('apps.data.urls', namespace='data')),
 ]

@@ -6,7 +6,7 @@ ALLOWED_HOSTS = ['localhost', '.localhost']
 DATABASES = {
     'default': {
         'ENGINE': 'django_tenants.postgresql_backend',
-        'NAME': 'scr_test',
+        'NAME': 'scr_dev',
         'USER': 'dejuata',
         'PASSWORD': 'America27',
         'HOST': 'localhost',

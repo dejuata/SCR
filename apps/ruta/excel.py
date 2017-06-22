@@ -6,6 +6,7 @@ from django.http import HttpResponseBadRequest, HttpResponseRedirect
 from .forms import UploadFileForm
 from .models import Ruta
 
+
 import django_excel as excel
 
 
@@ -21,6 +22,9 @@ def import_data(request):
                          'nombre_ruta': 'nombre_ruta',
                          'tipo_viaje': 'tipo_viaje',
                          'tipo_ruta': 'tipo_ruta',
+                         'kilometros': 'kilometros',
+                         'valor_tercero': 'valor_tercero',
+                         'valor_hora_adicional': 'valor_hora_adicional',
                          'tipo_vehiculo_requerido': 'tipo_vehiculo_requerido',
                          'origen': 'origen',
                          'destino': 'destino',

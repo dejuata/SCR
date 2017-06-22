@@ -28,7 +28,7 @@ def create_admin_tenant(tenant, user_id, password, url):
     tenant = Tenant(schema_name=tenant)
 
     # Send email of welcome
-    send_mailgun("Bienvenido a SCR", user.email, url)
+    # send_mailgun("Bienvenido a SCR", user.email, url)
 
     with tenant_context(tenant):
         get_user_model().objects.create_superuser(email=user.email, password=password, first_name=user.first_name, last_name=user.last_name)

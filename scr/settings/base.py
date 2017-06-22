@@ -39,7 +39,7 @@ SHARED_APPS = (
     'apps.cities',
     'django_select2',
     'turbolinks',
-    'social_django',
+    # 'social_django',
 )
 
 TENANT_APPS = (
@@ -53,7 +53,7 @@ TENANT_APPS = (
     'apps.ruta',
     'apps.planilla',
     'apps.custom_ui',
-    'apps.data_json',
+    'apps.data',
 )
 
 INSTALLED_APPS = list(set(SHARED_APPS + TENANT_APPS))

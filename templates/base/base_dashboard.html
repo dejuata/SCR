@@ -230,7 +230,18 @@
                 <span class="fa fa-arrows-h pull-right hidden-xs" aria-hidden="true"></span>
               </a>
             </li>
-
+            {% if user.is_staff %}
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" href="">
+                Descarga de datos
+                <span class="fa fa-database pull-right hidden-xs" aria-hidden="true"></span>
+              </a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="{% url 'dashboard:data:data_json' %}">JSON</a></li>
+                <li><a href="{% url 'dashboard:data:data_csv' %}">CSV</a></li>
+              </ul>
+            </li>
+            {% endif %}
           </ul>
         </div>
       </div>

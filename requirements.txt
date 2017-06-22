@@ -26,7 +26,6 @@ olefile==0.44
 openpyxl==2.4.7
 packaging==16.8
 Pillow==4.1.1
-pkg-resources==0.0.0
 psycopg2==2.7.1
 pycodestyle==2.3.1
 pyexcel==0.4.5

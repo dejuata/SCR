@@ -10,8 +10,6 @@ from apps.conductor.models import Conductor
 from apps.ruta.models import Ruta
 from apps.planilla.models import Planilla
 
-import csv
-
 
 def get_all_data_json(request):
     all_objects = list(MyCustomEmailUser.objects.all()) + list(Cliente.objects.all()) + list(Vehiculo.objects.all()) + list(Conductor.objects.all()) + list(Ruta.objects.all()) + list(Planilla.objects.all())

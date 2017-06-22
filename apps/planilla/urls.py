@@ -20,4 +20,5 @@ urlpatterns = [
     # url(r'^import/', import_data, name='planilla_import'),
 
     url(r'^export/', export_data, name='planilla_export'),
+
 ]
