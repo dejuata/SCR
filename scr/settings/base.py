@@ -53,6 +53,7 @@ TENANT_APPS = (
     'apps.ruta',
     'apps.planilla',
     'apps.custom_ui',
+    'apps.data_json',
 )
 
 INSTALLED_APPS = list(set(SHARED_APPS + TENANT_APPS))
