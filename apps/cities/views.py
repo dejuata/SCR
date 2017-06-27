@@ -1,5 +1,4 @@
 from django.views.generic import FormView
-from django.shortcuts import render
 from django.core.urlresolvers import reverse_lazy
 from django.http import HttpResponseBadRequest, HttpResponse
 
@@ -15,7 +14,7 @@ class TemplateFormView(FormView):
     success_url = reverse_lazy('ciudades:cities')
 
     def post(self, request, *args, **kwargs):
-        form = UploadFileForm(request.POST,request.FILES)
+        form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
             print('entro aqui')
             request.FILES['file'].save_book_to_database(
@@ -33,4 +32,4 @@ class TemplateFormView(FormView):
 
 def export_data(request):
     return excel.make_response_from_tables(
-            [DepartmentColombia, CitiesColombia], 'xls', file_name="colombia")
+        [DepartmentColombia, CitiesColombia], 'xls', file_name="colombia")

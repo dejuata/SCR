@@ -1,7 +1,6 @@
 from django.conf.urls import url, include
 from django.views.generic import TemplateView
 from django.contrib.auth.views import login, logout_then_login, password_reset, password_reset_done, password_reset_confirm, password_reset_complete
-from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.conf.urls.static import static  # ARCHIVOS MEDIA JODA_BETA
 

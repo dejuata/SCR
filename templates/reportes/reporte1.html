@@ -1,0 +1,40 @@
+{% extends 'base/base_reporte.html' %}
+{% load staticfiles %}
+
+{% block title%}
+{{title}}
+{% endblock %}
+
+{% block data%}
+<input type="hidden" value="" id="data">
+{% endblock %}
+
+{% block thead %}
+<tr>
+  <th class="cell">
+    Cedula
+  </th>
+  <th class="cell">
+    Conductor
+  </th>
+  <th class="cell">
+    {{column3}}
+  </th>
+</tr>
+{% endblock %}
+
+{% block tbody %}
+{% for i, j in data %}
+<tr class="row">
+  <td class="cell">
+    {{i}}
+  </td>
+  <td class="cell">
+
+  </td>
+  <td class="cell">
+    {{j}}
+  </td>
+</tr>
+{% endfor %}
+{% endblock %}

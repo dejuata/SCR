@@ -39,6 +39,7 @@ SHARED_APPS = (
     'apps.cities',
     'django_select2',
     'turbolinks',
+    'jchart',
     # 'social_django',
 )
 
@@ -54,6 +55,7 @@ TENANT_APPS = (
     'apps.planilla',
     'apps.custom_ui',
     'apps.data',
+    'apps.reportes',
 )
 
 INSTALLED_APPS = list(set(SHARED_APPS + TENANT_APPS))
@@ -166,22 +168,22 @@ SOCIAL_AUTH_PIPELINE = (
 )
 
 # secrets id auth social
-SOCIAL_AUTH_TWITTER_KEY = 'rIcFcMVUbegQWPvPNY3Q2VKZV'
-SOCIAL_AUTH_TWITTER_SECRET = 'Mmz23dk0YYQA7naoShV1PZ5Vl0m7OQM3q5PcuQaJkkHitgYL6X'
+SOCIAL_AUTH_TWITTER_KEY = ''
+SOCIAL_AUTH_TWITTER_SECRET = ''
 SOCIAL_AUTH_TWITTER_SCOPE = ['email']
 SOCIAL_AUTH_TWITTER_PROFILE_EXTRA_PARAMS = {
     'fields': 'id, email',
 }
 
-SOCIAL_AUTH_FACEBOOK_KEY = '910029992471998'
-SOCIAL_AUTH_FACEBOOK_SECRET = 'baa05f0adbb33fd858443e58539c33a9'
+SOCIAL_AUTH_FACEBOOK_KEY = ''
+SOCIAL_AUTH_FACEBOOK_SECRET = ''
 SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
 SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
     'fields': 'id, name, email',
 }
 
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '128173655574-7fecombl7flt0ivnsi6opdrkgcqiiil3.apps.googleusercontent.com'
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '7IqdD0ULO9l9Ei1u18i5PgJ8'
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = ''
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = ''
 
 # ------------------------- END AUTH -------------------------#
 
@@ -280,8 +282,8 @@ LOGGING = {
 # Email transactional anymail
 ANYMAIL = {
     # (exact settings here depend on your ESP...)
-    "MAILGUN_API_KEY": "key-c91e693c95ab9d0ade486c8b5cc1cde6",
-    "MAILGUN_SENDER_DOMAIN": 'juandavidpino.com',  # your Mailgun domain, if needed
+    "MAILGUN_API_KEY": "",
+    "MAILGUN_SENDER_DOMAIN": '',  # your Mailgun domain, if needed
 }
 EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"  # or sendgrid.EmailBackend, or...
 DEFAULT_FROM_EMAIL = "juan.david.pino.reyes@gmail.com"  # if you don't already have this in settings

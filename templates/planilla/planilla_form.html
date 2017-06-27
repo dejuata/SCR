@@ -207,7 +207,12 @@
         // Column 9
         {data: 'fields.nombres', editor: false},
         // Column 10
-        {data: 'fields.flota'},
+        {
+          data: 'fields.flota',
+          type: 'autocomplete',
+          source: ['Propia', 'Afiliada', 'Tercero'],
+          strict: false
+        },
         // Column 11
         {data: 'fields.valor_ruta', type: 'numeric', format: '$0,0.00'},
         // Column 12

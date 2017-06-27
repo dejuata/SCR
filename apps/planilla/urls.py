@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 
 from .views import PlanillaList, PlanillaCreate, PlanillaUpdate, create_data
 from .ajax import get_template
-from .excel import export_data
+from .excel import export_data, import_data
 
 
 urlpatterns = [
@@ -17,7 +17,7 @@ urlpatterns = [
 
     url(r'^get/$', login_required(get_template), name='planilla_get'),
 
-    # url(r'^import/', import_data, name='planilla_import'),
+    url(r'^import/', import_data, name='planilla_import'),
 
     url(r'^export/', export_data, name='planilla_export'),
 

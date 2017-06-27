@@ -51,7 +51,7 @@ Login
       <img class="login-img" src="{% static 'img/scr.png' %}" alt="scr">
     </figure>
 
-    <form method="post" class="form" data-toggle="validator" action="{% url 'index' %}?next={% url 'dashboard:index' %}">
+    <form method="post" class="form" data-toggle="validator" action="{% url 'index' %}?next={% url 'dashboard:reporte:index' %}">
     	{% csrf_token %}
 
       <div class="form-group has-feedback text-left">

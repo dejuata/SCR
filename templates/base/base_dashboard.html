@@ -107,7 +107,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a href="{% url 'dashboard:index' %}">
+      <a href="{% url 'dashboard:reporte:index' %}">
         <div class="div-brand">
           <p id="name-tenant"></p>
           <p class="brand">SCR</p>
@@ -278,12 +278,15 @@
     <div class="row" style="padding-bottom: 10px;">
 			<div class="">
 				<ol class="breadcrumb">
-					<li><i class="fa fa-home"></i><a href="{% url 'dashboard:index' %}">Home</a></li>
+					<li><i class="fa fa-home"></i><a href="{% url 'dashboard:reporte:index' %}">Home</a></li>
           {% block overview %}
           {% endblock%}
 				</ol>
 			</div>
 		</div>
+
+    {% block content-row %}
+    {% endblock %}
 
     <!--end overview start-->
     <div id="content" class="">

@@ -21,3 +21,4 @@ migrations/
 manage.py
 wsgi.py
 production.py
+local.py

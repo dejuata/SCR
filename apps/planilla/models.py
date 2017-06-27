@@ -49,14 +49,14 @@ class PlanillaManager(models.Manager):
 
 class Header(models.Model):
     fecha = models.DateField(unique=True)
-    template = models.BooleanField(default=False)
+    template = models.NullBooleanField(default=False, null=True)
 
     def __str__(self):
         return str(self.fecha)
 
 
 class Planilla(models.Model):
-    fecha = models.ForeignKey(Header, on_delete=models.CASCADE)
+    fecha = models.ForeignKey(Header, on_delete=models.CASCADE, null=True)
     ruta = models.ForeignKey(Ruta, null=True)
     kilometros = models.FloatField(default=0, null=True)
     hora_adicional = models.IntegerField(default=0, null=True)

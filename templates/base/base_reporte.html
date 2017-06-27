@@ -1,0 +1,109 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <title>Reporte</title>
+  <style>
+    h1{
+      padding: 20px 0;
+      font-size: 32px;
+      margin-top: 3rem;
+      font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      text-align: center;
+      color: #2c3e50;
+    }
+    body {
+    font-family: "Helvetica Neue", Helvetica, Arial;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 400;
+    color: #3b3b3b;
+    -webkit-font-smoothing: antialiased;
+    font-smoothing: antialiased;
+    background: #fff;
+  }
+
+  .container {
+    margin-right: auto;
+    margin-left: auto;
+    width: 80%;
+  }
+
+  .text-center {
+    text-align: center;
+  }
+
+  .wrapper {
+    margin: 0 auto;
+    padding: 40px;
+    max-width: 800px;
+  }
+
+  .table {
+    margin: 0 0 40px 0;
+    width: 100%;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    display: table;
+  }
+  tr {
+    /*display: table-row;*/
+    background: #f6f6f6;
+  }
+  td{
+    border: 1px solid #e9e9e9;
+  }
+  tr:nth-of-type(odd) {
+    background: #e9e9e9;
+  }
+  thead {
+    font-weight: 900;
+    background-color: #ea6153;
+  }
+  th{
+    background-color: #2980b9;
+    color: #ffffff;
+  }
+  .cell {
+    padding: 6px 12px;
+    display: table-cell;
+  }
+  </style>
+</head>
+<body>
+<div class="container text-center">
+
+  {% block data%}
+  {% endblock %}
+
+  <h1 style="padding-bottom: 20px">{% block title%}{% endblock %}</h1>
+
+  <table class="table">
+
+    <thead class="row header blue">
+      {% block thead %}
+      {% endblock %}
+    </thead>
+
+    {% block tbody %}
+    {% endblock %}
+
+  </table>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
+<script>
+  // Metodo para eliminar valores duplicados en un array
+  Array.prototype.unique=function(a){
+  return function(){return this.filter(a)}}(function(a,b,c){return c.indexOf(a,b+1)<0
+  });
+</script>
+
+{% block extrajs %}
+{% endblock %}
+</body>
+</html>

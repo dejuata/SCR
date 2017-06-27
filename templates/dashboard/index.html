@@ -5,6 +5,233 @@
 Dashboard
 {% endblock %}
 
-{% block content %}
+{% block content-row %}
+<div class="row">
+  <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+    <div class="info-box blue-bg">
+      <i class="fa fa-user-circle-o"></i>
+      <div class="count">{{clientes}}</div>
+      <div class="title">Clientes</div>
+    </div><!--/.info-box-->
+  </div><!--/.col-->
 
+  <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+    <div class="info-box brown-bg">
+      <i class="fa fa-arrows-h"></i>
+      <div class="count">{{rutas}}</div>
+      <div class="title">Rutas</div>
+    </div><!--/.info-box-->
+  </div><!--/.col-->
+
+  <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+    <div class="info-box dark-bg">
+      <i class="fa fa-id-card-o"></i>
+      <div class="count">{{conductores_lic_vencida}}/{{total_conductores}}</div>
+      <div class="title">Conductores lic. vencida</div>
+    </div><!--/.info-box-->
+  </div><!--/.col-->
+
+  <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+    <div class="info-box green-bg">
+      <i class="fa fa-bus"></i>
+      <div class="count">{{vehiculos_to_vencida}}/{{vehiculos}}</div>
+      <div class="title">Vehiculos T.O vencida</div>
+    </div><!--/.info-box-->
+  </div><!--/.col-->
+
+</div><!--/.row-->
+{% endblock %}
+
+{% block content %}
+<input type="hidden" value="{{data}}" id="data">
+
+<div class="row" style="background-color:#fff">
+
+  <div class="panel panel-default col-md-4">
+    <div class="panel-heading">Flota utilizada</div>
+    <div class="panel-body">
+      <canvas id="reporte3"></canvas>
+        <br>
+        <a class="btn btn-primary" target="_blank" href="{% url 'dashboard:reporte:reporte3'%}">Ver Reporte</a>
+    </div>
+  </div>
+
+  <div class="panel panel-default col-md-8">
+    <div class="panel-heading">Tiempo operado por conductor</div>
+    <div class="panel-body">
+      <canvas id="reporte1"></canvas>
+        <br>
+        <a class="btn btn-primary" target="_blank" href="{% url 'dashboard:reporte:reporte1'%}">Ver Reporte</a>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="panel panel-default col-md-12">
+    <div class="panel-heading">Adicional por conductor</div>
+    <div class="panel-body">
+      <canvas id="reporte2"></canvas>
+        <br>
+        <a class="btn btn-primary" target="_blank" href="{% url 'dashboard:reporte:reporte2'%}">Ver Reporte</a>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+
+{% block extrajs %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
+
+<script>
+// Metodo para eliminar valores duplicados en un array
+Array.prototype.unique=function(a){
+return function(){return this.filter(a)}}(function(a,b,c){return c.indexOf(a,b+1)<0
+});
+/*--------------------------------------------------------------------------------
+ * Reporte 1
+ *--------------------------------------------------------------------------------*/
+// Obtengo data de input y convierto a formato JSON
+data = JSON.parse(document.getElementById('data').value)
+// console.log(data)
+var conductor_array = [], tiempo_operado_array = [], adicional_conductor_array = [], flota_array = []
+var conductor, tiempo_operado = [], adicional_conductor = [], flota, porcentaje_flota = []
+var colors = []
+// Lleno un arreglo con el id de los conductores, el tiempo_operado
+// el tipo de flota y el adicional del conductor
+for(var i = 0; i < data.length; i++){
+  conductor_array[i] = data[i].conductor
+  tiempo_operado_array[i] = data[i].tiempo_operado
+  adicional_conductor_array[i] = data[i].adicional_conductor
+  flota_array[i] = data[i].flota
+}
+
+// Elimino valores duplicados
+conductor = conductor_array.unique()
+flota = flota_array.unique()
+
+// Inicializo valores del arreglo con 0
+for(var i = 0; i < conductor.length; i++){
+  tiempo_operado[i] = 0
+  adicional_conductor[i] = 0
+  // colores aleatorios
+  var red = Math.floor(Math.random() * 255) + 1
+  var green = Math.floor(Math.random() * 255) + 1
+  var blue = Math.floor(Math.random() * 255) + 1
+  colors[i] = `rgba(${red}, ${green}, ${blue}, 1)`
+}
+// console.log(colors)
+// Inicializo valeres de flota en 0
+for(var i = 0; i < flota.length; i++){
+  porcentaje_flota[i] = 0
+}
+
+// Realizo sumatoria del tiempo operado y el adicional correspondiente para cada conductor_json
+for(var i = 0; i < conductor.length; i++){
+  for(var j = 0; j < conductor_array.length; j++){
+    if(conductor[i] == conductor_array[j]){
+      tiempo_operado[i] += tiempo_operado_array[j]
+      adicional_conductor[i] += adicional_conductor_array[j]
+    }
+  }
+}
+// Realizo sumatoria para el porcentaje de flota
+for(var i = 0; i < flota.length; i++){
+  for(var j = 0; j < flota_array.length; j++){
+    if(flota[i] == flota_array[j]){
+      porcentaje_flota[i] += 1
+    }
+  }
+}
+
+// Charts
+var ctx = document.getElementById("reporte1").getContext('2d');
+var ctx1 = document.getElementById("reporte2").getContext('2d');
+var ctx2 = document.getElementById("reporte3").getContext('2d');
+
+var colors_flota = [
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 99, 132, 1)',
+                'rgba(255, 159, 64, 1)']
+// var colors = [
+//                 'rgba(54, 162, 235, 1)',
+//                 'rgba(255, 99, 132, 1)',
+//                 'rgba(255, 159, 64, 1)',
+//                 'rgba(255, 205, 86, 1)',
+//                 'rgba(75, 192, 192, 1)',
+//                 'rgba(202, 43, 255, 1)',
+//                 'rgba(255, 225, 33, 1)',
+//                 'rgba(59, 242, 255, 1)',
+//                 'rgba(161, 55, 71, 1)',
+//                 'rgba(0, 143, 193, 1)',
+//                 'rgba(231, 232, 190, 1)',
+//                 'rgba(19, 89, 140, 1)',
+//                 'rgba(205, 83, 96, 1)',
+//                 'rgba(52, 110, 20, 1)',
+//                 'rgba(255, 213, 42, 1)',
+//                 'rgba(140, 78, 117, 1)',
+//                 'rgba(120, 199, 35, 1)',
+//                 'rgba(154, 35, 68, 1)',
+//                 'rgba(255, 83, 13, 1)',
+//                 'rgba(232, 44, 12, 1)',
+//                 'rgba(232, 12, 122, 1)',
+//                 'rgba(255, 13, 255, 1)',
+//                 'rgba(13, 255, 233, 1)',
+//                 'rgba(58, 12, 232, 1)',
+//                 'rgba(232, 160, 12, 1)',
+//                 'rgba(152, 255, 77, 1)',
+//                 'rgba(13, 137, 255, 1)',
+//                 'rgba(123, 12, 232, 1)',
+//                 'rgba(232, 134, 12, 1)',
+//                 'rgba(255, 248, 126, 1)'
+//
+//             ]
+
+var reporte1 = new Chart(ctx,{
+    type: 'bar',
+    data: {
+      datasets: [{
+          data: tiempo_operado,
+          backgroundColor: colors,
+      }],
+      labels: conductor,
+      },
+    });
+
+var reporte2 = new Chart(ctx1, {
+    type: 'bar',
+    data: {
+        labels: conductor,
+        datasets: [{
+            label: 'Adicional por conductor',
+            data: adicional_conductor,
+            backgroundColor: colors,
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        }
+    }
+});
+
+var reporte3 = new Chart(ctx2,{
+    type: 'doughnut',
+    data: {
+      datasets: [{
+          data: porcentaje_flota,
+          backgroundColor: colors_flota,
+      }],
+      labels: flota,
+      },
+    });
+/*--------------------------------------------------------------------------------
+ * Reporte 2
+ *--------------------------------------------------------------------------------*/
+</script>
 {% endblock %}
