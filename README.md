@@ -8,8 +8,8 @@ Instalación
 
 1. Crear base de datos (revisar settings.py)
 2. Ejecutar el archivo requirements.txt
-3. python manage.py makemigrations
-4. python manage.py migrate_schemas
+3. ``python manage.py makemigrations``
+4. ``python manage.py migrate_schemas``
 5. ejecutar los archivos sql que están en la carpeta querys en el siguiente orden:
 
   * 00_insertar_superusuario.sql
@@ -27,6 +27,7 @@ Configuración
 3. Ingrese a la nueva url de acuerdo al nombre comercial que haya digitado en el formulario de crear empresa, ejemplo:
 
   ``http://tenant2.localhost:8000/``
+  
 4. Ingrese con el usuario previamente creado
 5. Si desea cargar información al sistema, lo puede hacer por medio de la opción carga masiva que se encuentra en cada modulo y subiendo los archivos de excel que se encuentran en este repositorio.
 
