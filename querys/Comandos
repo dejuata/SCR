@@ -1,9 +1,0 @@
-manage.py create_tenant_superuser --username=admin --schema=customer1
-
-// Crear un backup de un BD de postgres
-PGPASSWORD=America27 pg_dump -Fc --no-acl --no-owner -h localhost -U dejuata scr_dev > scr_dev.dump
-
-// Ejecutar sentencias sql en una BD de postgres en heroku
-$ cat file.sql | heroku pg:psql --app app_name
-$ echo "select * from table;" | heroku pg:psql --app app_name
-$ heroku pg:psql --app app_name < file.sql
