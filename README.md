@@ -29,7 +29,7 @@ Configuración
    
    y cargue el archivo de excel llamado colombia.xls
 
-2. Cree una empresa, la información de la empresa es la que se utiliza para crear un tenant en el sitema
+2. Cree una empresa, la información de la empresa es la que se utiliza para crear un tenant en el sistema
 3. Ingrese a la nueva url de acuerdo al nombre comercial que haya digitado en el formulario de crear empresa, ejemplo:
 
   ``http://tenant2.localhost:8000/``
